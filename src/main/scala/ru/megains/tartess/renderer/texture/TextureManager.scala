@@ -46,6 +46,7 @@ class TextureManager {
 
 }
 object TextureManager {
+    implicit val tm:TextureManager = new TextureManager
     val missingTexture = new SimpleTexture("missing")
     missingTexture.loadTexture()
     val locationBlockTexture: String = "texture/blocks.png"

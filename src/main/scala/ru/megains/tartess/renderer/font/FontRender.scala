@@ -6,6 +6,7 @@ import org.lwjgl.stb.{STBTTAlignedQuad, STBTruetype}
 import org.lwjgl.system.MemoryStack
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
+import ru.megains.tartess.renderer.texture.TextureManager
 
 import scala.collection.mutable
 
@@ -50,7 +51,7 @@ class FontRender(tar: Tartess) {
         if (fontsMap.contains(name)) fontsMap(name)
         else {
             val font = new Font(name)
-            tar.textureManager.loadTexture(name, font)
+            TextureManager.tm.loadTexture(name, font)
             fontsMap += name -> font
             font
         }

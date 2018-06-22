@@ -3,6 +3,7 @@ package ru.megains.tartess.world
 import ru.megains.old.util.RayTraceResult
 import ru.megains.old.utils.{MathHelper, Vec3f}
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.world.chunk.{Chunk, ChunkVoid}
 
 
@@ -29,7 +30,7 @@ class World {
 
     def getBlock(blockPos: BlockPos): BlockState = {
         if (!blockPos.isValid(this)) {
-            return null
+            return Blocks.air.blockState
         }
         val chunk = getChunk(blockPos.x>>7,blockPos.y>>7,blockPos.z>>7)
         chunk.getBlock(blockPos)
@@ -59,8 +60,9 @@ class World {
         var j1: Int = MathHelper.floor_double(vec31.z)
         var blockpos: BlockPos = null
         val raytraceresult2: RayTraceResult = null
+        var chunk:Chunk = null
 
-
+        var xBS,yBS,zBS = 0
         var k1:Int = 200
         while (k1 >=0) {
             k1-=1
@@ -132,14 +134,35 @@ class World {
             l = MathHelper.floor_double(vec31.x) - (if (enumfacing == BlockDirection.EAST) 1 else 0)
             i1 = MathHelper.floor_double(vec31.y) - (if (enumfacing == BlockDirection.UP) 1 else 0)
             j1 = MathHelper.floor_double(vec31.z) - (if (enumfacing == BlockDirection.SOUTH) 1 else 0)
-            blockpos = new BlockPos(l, i1, j1)
-            val block1: BlockState = getBlock(blockpos)
-            if (block1 != null) {
-                val raytraceresult1: RayTraceResult = block1.collisionRayTrace(this,  vec31, vec32)
+
+            val l0 = (l>>3)<<3
+            val i10 = (i1>>3)<<3
+            val j110 = (j1>>3)<<3
+
+
+            if(xBS != l0 || yBS != i10 || zBS != j110){
+                xBS = l0
+                yBS = i10
+                zBS = j110
+                blockpos = new BlockPos(xBS, yBS, zBS)
+                chunk = getChunk(blockpos.x>>7,blockpos.y>>7,blockpos.z>>7)
+
+
+                val raytraceresult1: RayTraceResult = chunk.collisionRayTrace(blockpos,  vec31, vec32)
                 if (raytraceresult1 != null) {
                     return raytraceresult1
                 }
+                val block1: BlockState = getBlock(blockpos)
+                if (block1 != null && block1 != Blocks.air.blockState) {
+                    val raytraceresult1: RayTraceResult = block1.collisionRayTrace(this,  vec31, vec32)
+                    if (raytraceresult1 != null) {
+                        return raytraceresult1
+                    }
+                }
             }
+
+
+
 
         }
         null

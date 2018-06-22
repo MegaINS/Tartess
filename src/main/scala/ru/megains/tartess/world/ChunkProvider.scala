@@ -21,6 +21,10 @@ class ChunkProvider(world: World) {
             val i: Long = Chunk.getIndex(chunkX, chunkY, chunkZ)
             try {
                 chunk = ChunkLoader.load(world,chunkX,chunkY,chunkZ)
+                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(0,0,2)))
+                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(8,1,2)))
+                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(16,2,2)))
+                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(24,3,2)))
             } catch {
                 case throwable: Throwable =>
                     throwable.printStackTrace()
@@ -29,10 +33,7 @@ class ChunkProvider(world: World) {
         }
 
 
-        chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(0,0,2)))
-        chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(8,1,2)))
-        chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(16,2,2)))
-        chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(24,3,2)))
+
 
 
         chunk
@@ -45,6 +46,10 @@ class ChunkProvider(world: World) {
         var chunk: Chunk = getLoadedChunk(chunkX, chunkY, chunkZ)
         if (chunk == null) {
             chunk = ChunkLoader.load(world,chunkX,chunkY,chunkZ)
+            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(0,0,2)))
+            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(8,1,2)))
+            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(16,2,2)))
+            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(24,3,2)))
             if (chunk != null) {
                 chunkMap += Chunk.getIndex(chunkX, chunkY, chunkZ) -> chunk
             }

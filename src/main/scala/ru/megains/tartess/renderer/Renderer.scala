@@ -12,11 +12,10 @@ import ru.megains.old.utils.Utils
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.shader.ShaderProgram
-import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.world.chunk.ChunkPosition
 
-class Renderer(tar: Tartess, val textureManager: TextureManager) {
+class Renderer(tar: Tartess) {
 
 
     val FOV: Float = Math.toRadians(60.0f).toFloat
@@ -33,7 +32,7 @@ class Renderer(tar: Tartess, val textureManager: TextureManager) {
     var guiShaderProgram = new ShaderProgram
     var mesh:Mesh = _
 
-    def init(textureManager: TextureManager) {
+    def init() {
         setupSceneShader()
         setupGuiShader()
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -110,12 +109,12 @@ class Renderer(tar: Tartess, val textureManager: TextureManager) {
 
 
         sceneShaderProgram.setUniform("modelViewMatrix",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
-        mesh.render(textureManager)
+        mesh.render
 
 
 
         sceneShaderProgram.setUniform("modelViewMatrix",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,1)))
-        mesh.render(textureManager)
+        mesh.render
         worldRenderer.getRenderChunks(null/*tar.player*/).foreach((renderChunk: RenderChunk) => {
             //if(frustum.chunkInFrustum(renderChunk.chunkPosition)){
            // sceneShaderProgram.setUniform("modelViewMatrix",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
@@ -129,7 +128,7 @@ class Renderer(tar: Tartess, val textureManager: TextureManager) {
 
         val objectMouseOver = tar.objectMouseOver
         if (objectMouseOver != null) {
-            sceneShaderProgram.setUniform("modelViewMatrix", transformation.buildBlockModelViewMatrix(objectMouseOver.blockPos))
+            sceneShaderProgram.setUniform("modelViewMatrix", transformation.buildObjectMouseOverViewMatrix(objectMouseOver.blockPos))
             worldRenderer.renderBlockMouseOver()
         }
 

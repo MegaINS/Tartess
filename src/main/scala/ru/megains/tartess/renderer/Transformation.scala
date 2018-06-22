@@ -42,9 +42,9 @@ class Transformation {
         modelMatrix.scale(scale)
     }
 
-    def buildBlockModelViewMatrix(blockPos: BlockPos): Matrix4f = {
+    def buildObjectMouseOverViewMatrix(blockPos: BlockPos): Matrix4f = {
         modelViewMatrix.identity
-        modelViewMatrix.translate(blockPos.x , blockPos.y , blockPos.z )
+        modelViewMatrix.translate(blockPos.x /8f, blockPos.y /8f, blockPos.z /8f)
 
     }
 }

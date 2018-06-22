@@ -1,5 +1,7 @@
 package ru.megains.tartess.world.chunk
 
+import ru.megains.old.util.RayTraceResult
+import ru.megains.old.utils.Vec3f
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.world.World
@@ -67,6 +69,10 @@ class Chunk(val position: ChunkPosition,val world: World) {
             }
         }
         true
+    }
+
+    def collisionRayTrace(blockpos: BlockPos, vec31: Vec3f, vec32: Vec3f):RayTraceResult = {
+        blockStorage.collisionRayTrace(world, blockpos, vec31, vec32)
     }
 }
 

@@ -10,6 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 
 class Mesh private[mesh](val makeMode: Int,val vertexCount: Int) {
 
+
     val vaoId:Int = glGenVertexArrays
     val vboIdList =  ArrayBuffer[Int]()
 
@@ -54,7 +55,7 @@ class Mesh private[mesh](val makeMode: Int,val vertexCount: Int) {
         glBindVertexArray(0)
     }
 
-    def render(textureManager:TextureManager) {
+    def render(implicit textureManager:TextureManager) {
         initRender(textureManager)
         glDrawElements(makeMode, vertexCount, GL_UNSIGNED_INT, 0)
         endRender()

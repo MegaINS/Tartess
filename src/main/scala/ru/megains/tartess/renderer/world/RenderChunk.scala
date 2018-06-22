@@ -6,7 +6,7 @@ import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.world.chunk.Chunk
 
-class RenderChunk(var chunk: Chunk, textureManager: TextureManager){
+class RenderChunk(var chunk: Chunk){
 
 
     var isReRender: Boolean = true
@@ -56,7 +56,7 @@ class RenderChunk(var chunk: Chunk, textureManager: TextureManager){
 
     private def renderChunk(layer: Int) {
         if (blockRender != 0) if (meshes(layer) ne null) {
-            meshes(layer).render(textureManager)
+            meshes(layer).render
             //            chunk.chunkTileEntityMap.values.foreach(tileEntity =>
             //                    GameRegister.getTileEntityRender(tileEntity.getClass).render(tileEntity,world ,textureManager)
             //            )

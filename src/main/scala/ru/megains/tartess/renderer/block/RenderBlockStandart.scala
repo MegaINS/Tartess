@@ -18,9 +18,9 @@ object RenderBlockStandart extends RenderBlock {
         val minX = aabb.minX
         val minY = aabb.minY
         val minZ = aabb.minZ
-        val maxX = aabb.maxX
-        val maxY = aabb.maxY
-        val maxZ = aabb.maxZ
+        val maxX = aabb.maxX - 7
+        val maxY = aabb.maxY - 7
+        val maxZ = aabb.maxZ - 7
         var isRender = false
      //   val blockBody = blockState.getBoundingBox
 

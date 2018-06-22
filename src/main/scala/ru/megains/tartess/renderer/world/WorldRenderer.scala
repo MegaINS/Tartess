@@ -6,14 +6,13 @@ import org.lwjgl.opengl.GL11.GL_LINES
 import ru.megains.old.entity.player.EntityPlayer
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
-import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
-class WorldRenderer(val world: World,val textureManager: TextureManager) {
+class WorldRenderer(val world: World) {
 
 
 
@@ -67,11 +66,11 @@ class WorldRenderer(val world: World,val textureManager: TextureManager) {
     }
 
     def createChunkRen(x: Int, y: Int, z: Int): RenderChunk = {
-        new RenderChunk(world.getChunk(x,y,z), textureManager)
+        new RenderChunk(world.getChunk(x,y,z))
     }
 
     def renderBlockMouseOver(): Unit = if (blockMouseOver != null){
-        blockMouseOver.render(textureManager)
+        blockMouseOver.render
     }
 
     def updateBlockMouseOver(pos: BlockPos, blockState: BlockState): Unit = {
@@ -81,14 +80,17 @@ class WorldRenderer(val world: World,val textureManager: TextureManager) {
         }
 
         val mm = MeshMaker.getMeshMaker
+        if( blockState == null){
+            val aabb = blockState.getSelectedBoundingBox
+        }
         val aabb = blockState.getSelectedBoundingBox
 
-        val minX = aabb.minX - 0.01f
-        val minY = aabb.minY - 0.01f
-        val minZ = aabb.minZ - 0.01f
-        val maxX = aabb.maxX + 0.01f
-        val maxY = aabb.maxY + 0.01f
-        val maxZ = aabb.maxZ + 0.01f
+        val minX = aabb.minX/8f - 0.01f
+        val minY = aabb.minY/8f - 0.01f
+        val minZ = aabb.minZ/8f - 0.01f
+        val maxX = aabb.maxX/8f + 0.01f
+        val maxY = aabb.maxY/8f + 0.01f
+        val maxZ = aabb.maxZ/8f + 0.01f
 
 
 

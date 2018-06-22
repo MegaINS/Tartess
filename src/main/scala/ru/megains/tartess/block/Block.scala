@@ -11,7 +11,7 @@ class Block(val name:String) {
 
     var texture: TextureAtlas = _
     val blockBody:AABB = Block.FULL_AABB
-
+    val blockState = new BlockState(this,null)
 
     def registerTexture(textureRegister: TTextureRegister): Unit = {
         texture = textureRegister.registerTexture(name)
@@ -25,8 +25,8 @@ class Block(val name:String) {
 
     def collisionRayTrace(world: World, blockState: BlockState, start: Vec3f, end: Vec3f): RayTraceResult = {
         val pos = blockState.pos
-        val vec3d: Vec3f = new Vec3f(start.x toFloat, start.y toFloat, start.z toFloat).sub(pos.x, pos.y, pos.z)
-        val vec3d1: Vec3f = new Vec3f(end.x toFloat, end.y toFloat, end.z toFloat).sub(pos.x, pos.y, pos.z)
+        val vec3d: Vec3f = new Vec3f(start.x , start.y , start.z ).sub(pos.x, pos.y, pos.z)
+        val vec3d1: Vec3f = new Vec3f(end.x , end.y , end.z ).sub(pos.x, pos.y, pos.z)
         val rayTraceResult = getSelectedBoundingBox(blockState).calculateIntercept(vec3d, vec3d1)
 
         if (rayTraceResult == null) {
@@ -39,7 +39,7 @@ class Block(val name:String) {
 
 object Block{
 
-    val FULL_AABB = new AABB(0,0,0,1,1,1)
+    val FULL_AABB = new AABB(0,0,0,8,8,8)
     val NULL_AABB = new AABB(0,0,0,0,0,0)
 
 }

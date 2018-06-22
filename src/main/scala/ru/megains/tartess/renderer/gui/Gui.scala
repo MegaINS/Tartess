@@ -64,7 +64,7 @@ trait Gui {
         if (mesh ne null) {
             Renderer.currentShaderProgram.setUniform("modelMatrix", renderer.transformation.buildOrtoProjModelMatrix(xPos, yPos, scale))
             Renderer.currentShaderProgram.setUniform("colour", new Vec3f(1f, 1f, 1f))
-            mesh.render(renderer.textureManager)
+            mesh.render
         }
     }
 

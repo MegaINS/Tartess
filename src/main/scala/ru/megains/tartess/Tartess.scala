@@ -30,7 +30,6 @@ class Tartess extends Logger[TartessClient]  {
     val window: Window = new Window()
 
     var renderer:Renderer  = _
-    var textureManager:TextureManager  = _
     var worldRenderer: WorldRenderer = _
 
     var world:World = _
@@ -65,10 +64,8 @@ class Tartess extends Logger[TartessClient]  {
 
         Bootstrap.init()
 
-        log.info("TextureManager creating...")
-        textureManager = new TextureManager
         log.info("Renderer creating...")
-        renderer = new Renderer(this,textureManager)
+        renderer = new Renderer(this)
 
         log.info("Camera creating...")
         camera = new Camera
@@ -80,9 +77,9 @@ class Tartess extends Logger[TartessClient]  {
         log.info("FontRender creating...")
         fontRender = new FontRender(this)
 
-        renderer.init(textureManager)
+        renderer.init()
         log.info("TextureManager loadTexture...")
-        textureManager.loadTexture(TextureManager.locationBlockTexture, textureManager.textureMapBlock)
+        TextureManager.tm.loadTexture(TextureManager.locationBlockTexture, TextureManager.tm.textureMapBlock)
         // GameRegister.tileEntityData.idRender.values.foreach(_.init())
 
         log.info("RenderItem creating...")
@@ -93,7 +90,7 @@ class Tartess extends Logger[TartessClient]  {
         guiManager.init()
         world = new World()
         // world = new World(saveLoader.getSaveLoader("world"))
-        worldRenderer = new WorldRenderer(world, textureManager)
+        worldRenderer = new WorldRenderer(world)
         renderer.worldRenderer = worldRenderer
         player = new EntityPlayer
         player.setWorld(world)
@@ -179,7 +176,7 @@ class Tartess extends Logger[TartessClient]  {
 
         player.update(cameraInc.x, cameraInc.y, cameraInc.z)
 
-        camera.setPosition(player.posX, player.posY + player.levelView, player.posZ)
+        camera.setPosition(player.posX/8, (player.posY + player.levelView)/8, player.posZ/8)
         camera.setRotation(player.xRot, player.yRot, 0)
 
         guiManager.tick()
