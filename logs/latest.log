@@ -1,0 +1,48 @@
+[16:23:27:289] [Client/INFO]: Tartess v0.1.0
+[16:23:27:299] [Client/INFO]: Display creating...
+[16:23:28:098] [Client/INFO]: Display create successful
+[16:23:28:098] [Client/INFO]: Blocks init...
+[16:23:28:198] [Client/INFO]: TextureManager creating...
+[16:23:28:198] [Client/INFO]: Renderer creating...
+[16:23:28:214] [Client/INFO]: Camera creating...
+[16:23:28:214] [Client/INFO]: GuiManager creating...
+[16:23:28:214] [Client/INFO]: FontRender creating...
+[16:23:28:283] [Client/INFO]: TextureManager loadTexture...
+[16:23:28:314] [Client/INFO]: RenderItem creating...
+[16:23:28:314] [Client/INFO]: GuiManager init...
+[16:23:29:368] [Client/INFO]: 969 fps, 19 tick, 16 chunkRender, 27 chunkUpdate
+[16:23:30:370] [Client/INFO]: 3172 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:31:362] [Client/INFO]: 3198 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:32:372] [Client/INFO]: 3351 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:33:374] [Client/INFO]: 3319 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:34:361] [Client/INFO]: 3285 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:35:362] [Client/INFO]: 3295 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:36:376] [Client/INFO]: 3339 fps, 21 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:37:362] [Client/INFO]: 3266 fps, 19 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:38:364] [Client/INFO]: 3333 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:39:367] [Client/INFO]: 3341 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:40:369] [Client/INFO]: 3334 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:41:371] [Client/INFO]: 3333 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:42:373] [Client/INFO]: 3328 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:43:375] [Client/INFO]: 3322 fps, 21 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:44:361] [Client/INFO]: 3272 fps, 19 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:45:363] [Client/INFO]: 3278 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:46:366] [Client/INFO]: 3335 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:47:368] [Client/INFO]: 3323 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:48:370] [Client/INFO]: 3327 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:49:372] [Client/INFO]: 3351 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:50:374] [Client/INFO]: 3324 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:51:376] [Client/INFO]: 3337 fps, 21 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:52:362] [Client/INFO]: 3282 fps, 19 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:53:364] [Client/INFO]: 3321 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:54:366] [Client/INFO]: 3331 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:55:369] [Client/INFO]: 3340 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:56:371] [Client/INFO]: 3346 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:57:373] [Client/INFO]: 3340 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:58:374] [Client/INFO]: 3327 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:23:59:361] [Client/INFO]: 3288 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:24:00:367] [Client/INFO]: 3329 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:24:01:365] [Client/INFO]: 2980 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:24:02:371] [Client/INFO]: 3075 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:24:03:373] [Client/INFO]: 3070 fps, 20 tick, 17 chunkRender, 0 chunkUpdate
+[16:24:04:159] [Client/INFO]: Game stopped...
