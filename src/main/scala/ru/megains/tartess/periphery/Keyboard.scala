@@ -1,4 +1,4 @@
-package ru.megains.old.periphery
+package ru.megains.tartess.periphery
 
 import org.lwjgl.glfw.GLFW._
 import ru.megains.tartess.Tartess
@@ -9,10 +9,8 @@ object Keyboard {
     def init(window: Window, tartess:Tartess): Unit = {
         windowId = window.id
         glfwSetKeyCallback(windowId, (windowHnd: Long, key: Int, scancode: Int, action: Int, mods: Int) => {
-           // if (orangeCraft.guiManager.isGuiScreen) orangeCraft.guiManager.runTickKeyboard(key, action, mods)
-           // else
-            tartess.runTickKeyboard(key, action, mods)
-
+            if (tartess.guiManager.isGuiScreen) tartess.guiManager.runTickKeyboard(key, action, mods)
+            else tartess.runTickKeyboard(key, action, mods)
         })
 
 

@@ -1,6 +1,7 @@
-package ru.megains.old.periphery
+package ru.megains.tartess.periphery
 
 import org.lwjgl.glfw.GLFW._
+import ru.megains.tartess.Tartess
 
 object Mouse {
 
@@ -31,17 +32,15 @@ object Mouse {
         glfwPollEvents()
     }
 
-    def init(window: Window/*, orangeCraft: TartessClient*/): Unit = {
+    def init(window: Window, tartess:Tartess): Unit = {
         windowId = window.id
         glfwSetCursorPosCallback(window.id, (windowHnd, xpos, ypos) => {
             x = xpos
             y = ypos
         })
         glfwSetMouseButtonCallback(window.id, (windowHnd, button, action, mods) => {
-           // if (orangeCraft.guiManager.isGuiScreen) orangeCraft.guiManager.runTickMouse(button, action == GLFW_PRESS)
-         //   else orangeCraft.runTickMouse(button, action == GLFW_PRESS)
-
-
+            if (tartess.guiManager.isGuiScreen) tartess.guiManager.runTickMouse(button, action == GLFW_PRESS)
+            else tartess.runTickMouse(button, action == GLFW_PRESS)
         })
         glfwSetScrollCallback(windowId, (window: Long, xoffset: Double, yoffset: Double) => {
             DWheel = yoffset

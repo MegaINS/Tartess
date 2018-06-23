@@ -1,4 +1,4 @@
-package ru.megains.old.periphery
+package ru.megains.tartess.periphery
 
 import org.lwjgl.glfw.GLFW._
 import org.lwjgl.opengl.GL

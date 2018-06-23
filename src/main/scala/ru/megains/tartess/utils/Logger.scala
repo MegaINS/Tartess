@@ -1,4 +1,4 @@
-package ru.megains.old.utils
+package ru.megains.tartess.utils
 
 import org.apache.logging.log4j.LogManager
 

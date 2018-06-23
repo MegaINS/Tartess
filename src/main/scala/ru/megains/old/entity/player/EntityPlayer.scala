@@ -1,10 +1,10 @@
 package ru.megains.old.entity.player
 
-import ru.megains.old.entity.EntityLivingBase
+import ru.megains.tartess.entity.EntityLivingBase
 
 
-class EntityPlayer extends EntityLivingBase(1.8f*8, 0.6f*8, 1.6f*8) {
-    setPosition(0,3, 0)
+class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
+    setPosition(0,0, 0)
 
     def turn(xo: Float, yo: Float) {
         yRot += yo * 0.15f

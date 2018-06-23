@@ -1,8 +1,8 @@
 package ru.megains.old.entity
 
 import ru.megains.old.physics.AxisAlignedBB
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.{MathHelper, Vec3f}
+import ru.megains.old.utils.MathHelper
+import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
 
@@ -20,7 +20,7 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
     var goY:Float =0.5f
     var yRot: Float = 0
     var xRot: Float = 0
-    var speed: Float = 3
+    var speed: Float = 48
     var onGround:Boolean = false
     val body: AxisAlignedBB = new AxisAlignedBB()
 

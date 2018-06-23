@@ -1,8 +1,8 @@
 package ru.megains.tartess.renderer.gui
 
 import org.lwjgl.glfw.GLFW.GLFW_PRESS
-import ru.megains.old.periphery.Mouse
 import ru.megains.tartess.Tartess
+import ru.megains.tartess.periphery.Mouse
 
 import scala.collection.mutable
 

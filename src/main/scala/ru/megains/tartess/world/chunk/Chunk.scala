@@ -1,9 +1,9 @@
 package ru.megains.tartess.world.chunk
 
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.Vec3f
+
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
+import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
 import scala.collection.mutable
@@ -25,25 +25,13 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def getBlock(pos: BlockPos):BlockState = {
-        blockStorage.get(pos.x & 127,pos.y & 127,pos.z & 127)
+        blockStorage.get(pos.x & 255,pos.y & 255,pos.z & 255)
     }
 
     def setBlock(blockState: BlockState):Boolean = {
         val pos = blockState.pos
         val block = blockState.block
         val blockStatePrevious =  getBlock(pos)
-
-        //        val blockX = pos.x & 63
-        //        val blockY = pos.y & 63
-        //        val blockZ = pos.z & 63
-
-
-        //TODO Доделать
-        //        if((pos.isBase && blockState.block.blockSize == Block.baseBlockSize)||
-        //                (pos.isBase && blockState.block == Blocks.air && getBlock(blockState.pos).block.blockSize == Block.baseBlockSize)){
-        //            blockStorage.setDefaultBlock(blockX,blockY,blockZ,blockState)
-        //        }else{
-
 
         val aabb = if(block == Blocks.air){
             blockStatePrevious.getBoundingBox
@@ -62,10 +50,10 @@ class Chunk(val position: ChunkPosition,val world: World) {
             y <- minY until maxY;
             z <- minZ until maxZ){
 
-            if(x<=position.maxX && y<=position.maxY &&z<=position.maxZ){
-                blockStorage.setBlock(x &127,y & 127,z & 127,blockState)
+            if(x <= position.maxXP && y <= position.maxYP && z <= position.maxZP){
+                blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
             }else{
-                world.getChunk(x,y,z).blockStorage.setBlock(x & 127,y & 127,z & 127,blockState)
+                world.getChunk(x,y,z).blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
             }
         }
         true

@@ -2,7 +2,7 @@ package ru.megains.tech.world
 
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.old.entity.player.EntityPlayer
-import ru.megains.old.utils.Logger
+import ru.megains.tartess.utils.Logger
 import ru.megains.tech.world.storage.ChunkLoader
 
 import scala.reflect.io.{Directory, Path}

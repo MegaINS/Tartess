@@ -14,13 +14,13 @@ object RenderBlockStandart extends RenderBlock {
 
         val pos = blockState.pos
         val block = blockState.block
-        val aabb:AABB = blockState.getSelectedBoundingBox.sum(pos.rendX, pos.rendY, pos.rendZ)
+        val aabb:AABB = blockState.getSelectedBoundingBox.div(16).sum(pos.rendX, pos.rendY, pos.rendZ)
         val minX = aabb.minX
         val minY = aabb.minY
         val minZ = aabb.minZ
-        val maxX = aabb.maxX - 7
-        val maxY = aabb.maxY - 7
-        val maxZ = aabb.maxZ - 7
+        val maxX = aabb.maxX
+        val maxY = aabb.maxY
+        val maxZ = aabb.maxZ
         var isRender = false
      //   val blockBody = blockState.getBoundingBox
 

@@ -1,7 +1,6 @@
 package ru.megains.tartess.renderer.texture
 
 import org.lwjgl.opengl.GL11
-import ru.megains.old.graph.renderer.texture.TextureMap
 
 import scala.collection.mutable
 

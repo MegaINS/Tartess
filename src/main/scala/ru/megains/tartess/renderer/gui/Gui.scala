@@ -2,9 +2,9 @@ package ru.megains.tartess.renderer.gui
 
 import java.awt.Color
 
-import ru.megains.old.utils.Vec3f
 import ru.megains.tartess.renderer.Renderer
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
+import ru.megains.tartess.utils.Vec3f
 
 
 trait Gui {

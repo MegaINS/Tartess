@@ -64,6 +64,10 @@ class RenderChunk(var chunk: Chunk){
         }
     }
 
+    def reRender() {
+        isReRender = true
+    }
+
     def cleanUp() {
         for (mesh <- meshes) {
             if (mesh ne null) mesh.cleanUp()

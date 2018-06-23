@@ -1,14 +1,14 @@
 package ru.megains.old.block
 
-import ru.megains.old.blockdata.{ BlockSize, BlockWorldPos}
+import ru.megains.old.blockdata.{BlockSize, BlockWorldPos}
 import ru.megains.old.graph.renderer.block.RenderBlockGlass
 import ru.megains.old.physics.{AxisAlignedBB, BlockAxisAlignedBB}
 import ru.megains.old.register.{Blocks, GameRegister}
 import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.Vec3f
 import ru.megains.old.world.World
 import ru.megains.tartess.block.data.BlockDirection
+import ru.megains.tartess.utils.Vec3f
 
 import scala.util.Random
 

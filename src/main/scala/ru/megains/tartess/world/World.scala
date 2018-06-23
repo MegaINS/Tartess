@@ -1,16 +1,18 @@
 package ru.megains.tartess.world
 
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.{MathHelper, Vec3f}
+
+
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
+import ru.megains.tartess.renderer.world.WorldRenderer
+import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.chunk.{Chunk, ChunkVoid}
 
 
 
 class World {
 
-
+    var worldRenderer:WorldRenderer = _
 
 
     val length: Int = 1
@@ -32,7 +34,7 @@ class World {
         if (!blockPos.isValid(this)) {
             return Blocks.air.blockState
         }
-        val chunk = getChunk(blockPos.x>>7,blockPos.y>>7,blockPos.z>>7)
+        val chunk = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
         chunk.getBlock(blockPos)
     }
 
@@ -40,13 +42,17 @@ class World {
         if (!blockState.pos.isValid(this)) {
             return false
         }
-        // worldRenderer.reRender(block.pos)
-        val chunk = getChunk(blockState.pos.x&127,blockState.pos.y&127,blockState.pos.z&127)
+        worldRenderer.reRender(blockState.pos)
+        val chunk = getChunk(blockState.pos.x>>8,blockState.pos.y>>8,blockState.pos.z>>8)
         chunk.setBlock(blockState)
 
 
         //markAndNotifyBlock(pos, chunk, block, flag)
         true
+    }
+
+    def setAirBlock(pos: BlockPos):Boolean ={
+        setBlock(new BlockState(Blocks.air,pos))
     }
 
     def rayTraceBlocks(vec1: Vec3f, vec32: Vec3f, stopOnLiquid: Boolean, ignoreBlockWithoutBoundingBox: Boolean, returnLastUncollidableBlock: Boolean): RayTraceResult = {
@@ -135,9 +141,9 @@ class World {
             i1 = MathHelper.floor_double(vec31.y) - (if (enumfacing == BlockDirection.UP) 1 else 0)
             j1 = MathHelper.floor_double(vec31.z) - (if (enumfacing == BlockDirection.SOUTH) 1 else 0)
 
-            val l0 = (l>>3)<<3
-            val i10 = (i1>>3)<<3
-            val j110 = (j1>>3)<<3
+            val l0 = (l>>4)<<4
+            val i10 = (i1>>4)<<4
+            val j110 = (j1>>4)<<4
 
 
             if(xBS != l0 || yBS != i10 || zBS != j110){
@@ -145,7 +151,7 @@ class World {
                 yBS = i10
                 zBS = j110
                 blockpos = new BlockPos(xBS, yBS, zBS)
-                chunk = getChunk(blockpos.x>>7,blockpos.y>>7,blockpos.z>>7)
+                chunk = getChunk(blockpos.x>>8,blockpos.y>>8,blockpos.z>>8)
 
 
                 val raytraceresult1: RayTraceResult = chunk.collisionRayTrace(blockpos,  vec31, vec32)

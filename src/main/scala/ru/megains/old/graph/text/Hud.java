@@ -2,8 +2,8 @@ package ru.megains.old.graph.text;
 
 
 import ru.megains.old.TartessClient;
-import ru.megains.old.periphery.Window;
 import ru.megains.old.util.RayTraceResult;
+import ru.megains.tartess.periphery.Window;
 
 import java.util.HashMap;
 

@@ -5,10 +5,11 @@ import org.lwjgl.opengl.GL11
 import ru.megains.old.block.Block
 import ru.megains.old.entity.player.EntityPlayer
 import ru.megains.old.graph.{Camera, Renderer}
-import ru.megains.old.periphery.{Keyboard, Mouse, Window}
-import ru.megains.old.utils.{Logger, Timer, Vec3f}
+import ru.megains.old.utils.Timer
 import ru.megains.old.world.{World, WorldRenderer}
+import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.renderer.texture.TextureManager
+import ru.megains.tartess.utils.{Logger, Vec3f}
 
 import scala.reflect.io.Directory
 
@@ -48,7 +49,7 @@ class TartessClient(clientDir: Directory) extends Logger[TartessClient] {
         try {
             log.info("Display creating...")
              window.create()
-             Mouse.init(window)
+             Mouse.init(window,null)
              Keyboard.init(window,null)
             GL11.glClearColor(0.5f, 0.6f, 0.7f, 0.0F)
             log.info("Display create successful")

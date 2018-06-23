@@ -3,8 +3,8 @@ package ru.megains.tartess.renderer.world
 import java.awt.Color
 
 import org.lwjgl.opengl.GL11.GL_LINES
-import ru.megains.old.entity.player.EntityPlayer
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
+import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
@@ -14,7 +14,7 @@ import scala.collection.mutable.ArrayBuffer
 
 class WorldRenderer(val world: World) {
 
-
+    world.worldRenderer = this
 
     val renderChunks: mutable.HashMap[Long, RenderChunk] = new mutable.HashMap[Long, RenderChunk]
 
@@ -73,7 +73,7 @@ class WorldRenderer(val world: World) {
         blockMouseOver.render
     }
 
-    def updateBlockMouseOver(pos: BlockPos, blockState: BlockState): Unit = {
+    def updateBlockMouseOver(blockState: BlockState): Unit = {
         if (blockMouseOver != null) {
             blockMouseOver.cleanUp()
             blockMouseOver = null
@@ -83,14 +83,14 @@ class WorldRenderer(val world: World) {
         if( blockState == null){
             val aabb = blockState.getSelectedBoundingBox
         }
-        val aabb = blockState.getSelectedBoundingBox
+        val aabb = blockState.getSelectedBoundingBox.div(16)
 
-        val minX = aabb.minX/8f - 0.01f
-        val minY = aabb.minY/8f - 0.01f
-        val minZ = aabb.minZ/8f - 0.01f
-        val maxX = aabb.maxX/8f + 0.01f
-        val maxY = aabb.maxY/8f + 0.01f
-        val maxZ = aabb.maxZ/8f + 0.01f
+        val minX = aabb.minX - 0.01f
+        val minY = aabb.minY - 0.01f
+        val minZ = aabb.minZ - 0.01f
+        val maxX = aabb.maxX + 0.01f
+        val maxY = aabb.maxY + 0.01f
+        val maxZ = aabb.maxZ + 0.01f
 
 
 
@@ -123,5 +123,18 @@ class WorldRenderer(val world: World) {
 
 
         blockMouseOver = mm.makeMesh()
+    }
+
+    def reRender(pos: BlockPos) {
+        val x: Int = pos.x >> 8
+        val y: Int = pos.y >> 8
+        val z: Int = pos.z >> 8
+        getRenderChunk(x, y, z).reRender()
+        getRenderChunk(x + 1, y, z).reRender()
+        getRenderChunk(x - 1, y, z).reRender()
+        getRenderChunk(x, y + 1, z).reRender()
+        getRenderChunk(x, y - 1, z).reRender()
+        getRenderChunk(x, y, z + 1).reRender()
+        getRenderChunk(x, y, z - 1).reRender()
     }
 }

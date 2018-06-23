@@ -1,10 +1,10 @@
 package ru.megains.tartess.block
 
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.Vec3f
+
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
+import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
 class Block(val name:String) {
@@ -39,7 +39,7 @@ class Block(val name:String) {
 
 object Block{
 
-    val FULL_AABB = new AABB(0,0,0,8,8,8)
+    val FULL_AABB = new AABB(0,0,0,16,16,16)
     val NULL_AABB = new AABB(0,0,0,0,0,0)
 
 }

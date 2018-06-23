@@ -1,8 +1,8 @@
 package ru.megains.tartess.register
 
-import ru.megains.old.utils.Logger
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.{Block, BlockAir, BlockTest}
+import ru.megains.tartess.utils.Logger
 
 object Bootstrap extends Logger[Tartess] {
     var isNotInit = true

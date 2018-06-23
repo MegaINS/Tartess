@@ -10,6 +10,12 @@ object Blocks {
     lazy val dirt:Block = GameRegister.getBlockByName("dirt")
     lazy val stone:Block = GameRegister.getBlockByName("stone")
 
+    lazy val test0:Block = GameRegister.getBlockByName("test0")
+    lazy val test1:Block = GameRegister.getBlockByName("test1")
+    lazy val test2:Block = GameRegister.getBlockByName("test2")
+
+
+
 
     def getBlockById(id: Int): Block = {
         GameRegister.getBlockById(id)

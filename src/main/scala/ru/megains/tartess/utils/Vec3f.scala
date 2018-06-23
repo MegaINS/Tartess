@@ -1,4 +1,4 @@
-package ru.megains.old.utils
+package ru.megains.tartess.utils
 
 import org.joml.{Vector3f, Vector3fc}
 

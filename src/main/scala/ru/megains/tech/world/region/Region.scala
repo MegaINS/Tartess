@@ -2,7 +2,7 @@ package ru.megains.tech.world.region
 
 import java.io._
 
-import ru.megains.old.utils.Logger
+import ru.megains.tartess.utils.Logger
 import ru.megains.tech.world.region.Region.ChunkOutputStream
 
 import scala.collection.mutable.ArrayBuffer

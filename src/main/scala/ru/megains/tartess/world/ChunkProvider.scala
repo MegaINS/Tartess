@@ -1,12 +1,11 @@
 package ru.megains.tartess.world
 
-
-import ru.megains.old.world.chunk.ChunkLoader
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
-import ru.megains.tartess.world.chunk.Chunk
+import ru.megains.tartess.world.chunk.{Chunk, ChunkLoader}
 
 import scala.collection.mutable
+import scala.util.Random
 
 class ChunkProvider(world: World) {
 
@@ -21,10 +20,6 @@ class ChunkProvider(world: World) {
             val i: Long = Chunk.getIndex(chunkX, chunkY, chunkZ)
             try {
                 chunk = ChunkLoader.load(world,chunkX,chunkY,chunkZ)
-                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(0,0,2)))
-                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(8,1,2)))
-                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(16,2,2)))
-                chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(24,3,2)))
             } catch {
                 case throwable: Throwable =>
                     throwable.printStackTrace()
@@ -46,10 +41,18 @@ class ChunkProvider(world: World) {
         var chunk: Chunk = getLoadedChunk(chunkX, chunkY, chunkZ)
         if (chunk == null) {
             chunk = ChunkLoader.load(world,chunkX,chunkY,chunkZ)
-            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(0,0,2)))
-            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(8,1,2)))
-            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(16,2,2)))
-            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(24,3,2)))
+
+
+
+
+            chunk.setBlock(  new BlockState(Blocks.stone,new BlockPos(chunk.position.minXP +  0  ,chunk.position.minYP + 0  ,chunk.position.minZP + 2 )))
+            chunk.setBlock(  new BlockState(Blocks.test0,new BlockPos(chunk.position.minXP +  16  ,chunk.position.minYP +  1  ,chunk.position.minZP + 2 )))
+            chunk.setBlock(  new BlockState(Blocks.test1,new BlockPos(chunk.position.minXP +  32  ,chunk.position.minYP +  2  ,chunk.position.minZP + 2 )))
+            chunk.setBlock(  new BlockState(Blocks.test2,new BlockPos(chunk.position.minXP +  48  ,chunk.position.minYP +  3  ,chunk.position.minZP + 2 )))
+
+            chunk.setBlock(  new BlockState(Blocks.test0,new BlockPos(chunk.position.minXP +   Random.nextInt(60)  ,chunk.position.minYP +   Random.nextInt(60)  ,chunk.position.minZP +  Random.nextInt(60) )))
+            chunk.setBlock(  new BlockState(Blocks.test1,new BlockPos(chunk.position.minXP +   Random.nextInt(60)  ,chunk.position.minYP +   Random.nextInt(60)  ,chunk.position.minZP +  Random.nextInt(60) )))
+            chunk.setBlock(  new BlockState(Blocks.test2,new BlockPos(chunk.position.minXP +   Random.nextInt(60)  ,chunk.position.minYP +   Random.nextInt(60)  ,chunk.position.minZP +  Random.nextInt(60) )))
             if (chunk != null) {
                 chunkMap += Chunk.getIndex(chunkX, chunkY, chunkZ) -> chunk
             }

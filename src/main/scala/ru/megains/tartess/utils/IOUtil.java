@@ -2,7 +2,7 @@
  * Copyright LWJGL. All rights reserved.
  * License terms: https://www.lwjgl.org/license
  */
-package ru.megains.old.utils;
+package ru.megains.tartess.utils;
 
 import org.lwjgl.BufferUtils;
 

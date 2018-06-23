@@ -1,9 +1,8 @@
-package ru.megains.old.graph.renderer.texture
+package ru.megains.tartess.renderer.texture
 
 import org.lwjgl.opengl.GL11._
 import org.lwjgl.opengl.GL30._
 import ru.megains.tartess.register.GameRegister
-import ru.megains.tartess.renderer.texture.{ATexture, TTextureRegister, TextureAtlas}
 
 import scala.collection.immutable.HashMap
 

@@ -2,7 +2,7 @@ package ru.megains.tartess.renderer.shader
 
 import org.joml.Matrix4f
 import org.lwjgl.opengl.GL20._
-import ru.megains.old.utils.Vec3f
+import ru.megains.tartess.utils.Vec3f
 
 import scala.collection.mutable
 

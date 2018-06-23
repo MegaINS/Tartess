@@ -7,9 +7,9 @@ import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
 import ru.megains.old.graph.Frustum
-import ru.megains.old.periphery.Mouse
 import ru.megains.old.utils.Utils
 import ru.megains.tartess.Tartess
+import ru.megains.tartess.periphery.Mouse
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.shader.ShaderProgram
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}

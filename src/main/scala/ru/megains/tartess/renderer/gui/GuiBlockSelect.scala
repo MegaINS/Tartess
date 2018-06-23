@@ -2,11 +2,10 @@ package ru.megains.tartess.renderer.gui
 
 import java.awt.Color
 
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.Vec3f
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.BlockPos
+import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 
 
 class GuiBlockSelect extends GuiInGame with GuiText {
@@ -30,7 +29,7 @@ class GuiBlockSelect extends GuiInGame with GuiText {
         if (tar.objectMouseOver ne ray) {
             ray = tar.objectMouseOver
             if (ray ne null) {
-                val posB: BlockPos = ray.getBlockWorldPos
+                val posB: BlockPos = ray.blockPos
                 val vec: Vec3f = ray.hitVec
              //   val meta = oc.world.getBlockMeta(posB)
                // val hp = oc.world.getBlockHp(posB)

@@ -1,14 +1,16 @@
 package ru.megains.tartess.block.data
 
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.Vec3f
+
+import ru.megains.tartess.register.Blocks
+import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
 import scala.collection.mutable
 
 class BlockCell {
 
-
+    val blocks = new mutable.HashSet[BlockState]()
+    var blocksVal = 0
 
     def collisionRayTrace(world: World, vec31: Vec3f, vec32: Vec3f):RayTraceResult = {
         var rayTraceResult: RayTraceResult = null
@@ -21,13 +23,26 @@ class BlockCell {
     }
 
 
-    def getBlock(x: Int, y: Int, z: Int):BlockState = blocks.find(bs => bs.pos.x == x && bs.pos.y == y && bs.pos.z == z).orNull
-
-    def setBlock(x: Int, y: Int, z: Int, blockState: BlockState):Unit = {
-        blocks.+=(blockState)
+    def getBlock(x: Int, y: Int, z: Int):BlockState = {
+        blocks.find(bs =>
+                    (bs.pos.x & 255) == x &&
+                    (bs.pos.y & 255) == y &&
+                    (bs.pos.z & 255) == z)
+              .orNull
     }
 
-    val blocks = new mutable.HashSet[BlockState]()
+    def setBlock(blockState: BlockState):Unit = {
+        if(blockState.block == Blocks.air){
+            blocksVal-=1
+            blocks -= getBlock(blockState.pos.x,blockState.pos.y,blockState.pos.z)
+        }else{
+            blocksVal+=1
+            blocks.+=(blockState)
+        }
+
+    }
+
+
 
     def addBlocks(set: mutable.HashSet[BlockState]): Unit = {
         blocks.foreach(set += _)

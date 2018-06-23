@@ -1,8 +1,8 @@
 package ru.megains.tech.render.world
 
 import ru.megains.old.graph.renderer.mesh.{Mesh, MeshMaker}
-import ru.megains.old.utils.Logger
 import ru.megains.tartess.renderer.texture.TextureManager
+import ru.megains.tartess.utils.Logger
 import ru.megains.tech.world.World
 import ru.megains.tech.world.chunk.Chunk
 import ru.megains.tech.world.chunk.data.ChunkPosition

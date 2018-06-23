@@ -3,8 +3,8 @@ package ru.megains.tech.world
 import org.joml.Vector3d
 import ru.megains.old.physics.AxisAlignedBB
 import ru.megains.old.util.{MathHelper, RayTraceResult}
-import ru.megains.old.utils.Logger
 import ru.megains.tartess.block.data.BlockDirection
+import ru.megains.tartess.utils.Logger
 import ru.megains.tech.block.BlockState
 import ru.megains.tech.block.blockdata.{BlockPos, BlockSidePos}
 import ru.megains.tech.render.world.WorldRenderer

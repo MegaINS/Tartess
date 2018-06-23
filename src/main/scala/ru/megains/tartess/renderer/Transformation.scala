@@ -44,7 +44,7 @@ class Transformation {
 
     def buildObjectMouseOverViewMatrix(blockPos: BlockPos): Matrix4f = {
         modelViewMatrix.identity
-        modelViewMatrix.translate(blockPos.x /8f, blockPos.y /8f, blockPos.z /8f)
+        modelViewMatrix.translate(blockPos.x /16f, blockPos.y /16f, blockPos.z /16f)
 
     }
 }

@@ -6,9 +6,10 @@ import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
 import ru.megains.old.TartessClient
-import ru.megains.old.utils.{Logger, Utils}
+import ru.megains.old.utils.Utils
 import ru.megains.old.world.WorldRenderer
 import ru.megains.tartess.renderer.texture.TextureManager
+import ru.megains.tartess.utils.Logger
 
 import scala.collection.Iterable
 

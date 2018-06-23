@@ -5,8 +5,8 @@ import java.io.IOException
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
 import org.lwjgl.stb.{STBTTBakedChar, STBTruetype}
-import ru.megains.old.utils.IOUtil
 import ru.megains.tartess.renderer.texture.ATexture
+import ru.megains.tartess.utils.IOUtil
 
 
 class Font(val name: String) extends ATexture {

@@ -2,7 +2,7 @@ package ru.megains.tech.world.storage
 
 import java.io.IOException
 
-import ru.megains.old.utils.Logger
+import ru.megains.tartess.utils.Logger
 import ru.megains.tech.world.World
 import ru.megains.tech.world.chunk.{Chunk, ChunkVoid}
 import ru.megains.tech.world.chunk.data.ChunkPosition

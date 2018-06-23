@@ -1,13 +1,14 @@
 package ru.megains.old.world
 
 import ru.megains.old.block.Block
-import ru.megains.old.blockdata.{ BlockWorldPos}
+import ru.megains.old.blockdata.BlockWorldPos
 import ru.megains.old.physics.AxisAlignedBB
 import ru.megains.old.register.Blocks
 import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.{MathHelper, Vec3f}
-import ru.megains.old.world.chunk.{Chunk, ChunkLoader}
+import ru.megains.old.utils.MathHelper
+import ru.megains.old.world.chunk.Chunk
 import ru.megains.tartess.block.data.BlockDirection
+import ru.megains.tartess.utils.Vec3f
 
 import scala.collection.mutable
 import scala.util.Random
@@ -26,7 +27,7 @@ class World(val length: Int,val height: Int,val width: Int) {
 
 
         for(x <- -4 to 3;y <- -4 to 3;z <- -4 to 3){
-            chunks += Chunk.getIndex(x, y, z) -> ChunkLoader.load(this,x,y,z)
+          //  chunks += Chunk.getIndex(x, y, z) -> ChunkLoader.load(this,x,y,z)
         }
 
 //        for(i<-1 to 10){

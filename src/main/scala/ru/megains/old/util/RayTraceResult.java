@@ -2,7 +2,7 @@ package ru.megains.old.util;
 
 
 import org.joml.Vector3f;
-import ru.megains.old.utils.Vec3f;
+import ru.megains.tartess.utils.Vec3f;
 import ru.megains.tartess.block.Block;
 import ru.megains.tartess.block.data.BlockDirection;
 import ru.megains.tartess.block.data.BlockPos;

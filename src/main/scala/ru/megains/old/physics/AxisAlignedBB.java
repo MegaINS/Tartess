@@ -2,7 +2,7 @@ package ru.megains.old.physics;
 
 
 import ru.megains.old.util.RayTraceResult;
-import ru.megains.old.utils.Vec3f;
+import ru.megains.tartess.utils.Vec3f;
 import ru.megains.tartess.block.data.BlockDirection;
 
 

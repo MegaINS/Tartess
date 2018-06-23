@@ -2,20 +2,18 @@ package ru.megains.tartess
 
 import org.lwjgl.glfw.GLFW._
 import org.lwjgl.opengl.GL11
-import ru.megains.old.TartessClient
-import ru.megains.old.entity.player.EntityPlayer
-import ru.megains.old.periphery.{Keyboard, Mouse, Window}
-import ru.megains.old.util.RayTraceResult
-import ru.megains.old.utils.{Logger, Timer, Vec3f}
+import ru.megains.tartess.entity.player.EntityPlayer
+import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.register.Bootstrap
 import ru.megains.tartess.renderer.font.FontRender
 import ru.megains.tartess.renderer.gui.GuiManager
 import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.renderer.{Camera, Renderer}
+import ru.megains.tartess.utils.{Logger, RayTraceResult, Timer, Vec3f}
 import ru.megains.tartess.world.World
 
-class Tartess extends Logger[TartessClient]  {
+class Tartess extends Logger[Tartess]  {
 
 
     var frames: Int = 0
@@ -50,7 +48,7 @@ class Tartess extends Logger[TartessClient]  {
         try {
             log.info("Display creating...")
             window.create()
-            Mouse.init(window)
+            Mouse.init(window,this)
             Keyboard.init(window,this)
             GL11.glClearColor(0.5f, 0.6f, 0.7f, 0.0F)
             log.info("Display create successful")
@@ -93,7 +91,7 @@ class Tartess extends Logger[TartessClient]  {
         worldRenderer = new WorldRenderer(world)
         renderer.worldRenderer = worldRenderer
         player = new EntityPlayer
-        player.setWorld(world)
+        player.world = world
         //world.init()
        // worldRenderer.init()
         // playerController = new PlayerControllerMP(this)
@@ -147,7 +145,7 @@ class Tartess extends Logger[TartessClient]  {
 
         timer.update()
 
-        for (_ <- 0 until timer.getTick) {
+        for (_ <- 0 until timer.tick) {
             update()
             tick += 1
         }
@@ -176,20 +174,20 @@ class Tartess extends Logger[TartessClient]  {
 
         player.update(cameraInc.x, cameraInc.y, cameraInc.z)
 
-        camera.setPosition(player.posX/8, (player.posY + player.levelView)/8, player.posZ/8)
+        camera.setPosition(player.posX/16, (player.posY + player.levelView)/16, player.posZ/16)
         camera.setRotation(player.xRot, player.yRot, 0)
 
         guiManager.tick()
 
 
-        objectMouseOver = player.rayTrace(20, 0.1f)
+        objectMouseOver = player.rayTrace(20*16, 0.1f)
 
 
 
 
 
         if (objectMouseOver != null) {
-            worldRenderer.updateBlockMouseOver(objectMouseOver.blockPos, world.getBlock(objectMouseOver.blockPos))
+            worldRenderer.updateBlockMouseOver( world.getBlock(objectMouseOver.blockPos))
 
 //            val stack: ItemStack = player.inventory.getStackSelect
 //            if(stack ne null){
@@ -214,6 +212,22 @@ class Tartess extends Logger[TartessClient]  {
         running = false
     }
 
+
+    def runTickMouse(button: Int, buttonState: Boolean): Unit = {
+
+
+//        if (button == 1 && buttonState) {
+//            rightClickMouse()
+//        }
+
+
+
+        if (button == 0 && buttonState && objectMouseOver != null) {
+            // playerController.clickBlock(objectMouseOver.blockPos, BlockDirection.DOWN)
+            world.setAirBlock(objectMouseOver.blockPos)
+        }
+
+    }
 
     def runTickKeyboard(key: Int, action: Int, mods: Int): Unit = {
         if (action == GLFW_PRESS) {
