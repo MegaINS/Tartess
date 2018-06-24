@@ -2,14 +2,14 @@ package ru.megains.tartess.world
 
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
-import ru.megains.tartess.world.chunk.{Chunk, ChunkLoader}
+import ru.megains.tartess.world.chunk.{Chunk, ChunkLoader, ChunkVoid}
 
 import scala.collection.mutable
 import scala.util.Random
 
 class ChunkProvider(world: World) {
 
-
+    ChunkProvider.voidChunk = new ChunkVoid(world)
     val chunkMap = new mutable.HashMap[Long,Chunk]()
 
     def provideChunk(chunkX: Int, chunkY: Int, chunkZ: Int): Chunk = {
@@ -63,4 +63,7 @@ class ChunkProvider(world: World) {
     def getLoadedChunk(chunkX: Int, chunkY: Int, chunkZ: Int): Chunk = {
         chunkMap.getOrElse(Chunk.getIndex(chunkX, chunkY, chunkZ), null)
     }
+}
+object ChunkProvider{
+    var voidChunk:Chunk = _
 }

@@ -25,10 +25,11 @@ class BlockCell {
 
     def getBlock(x: Int, y: Int, z: Int):BlockState = {
         blocks.find(bs =>
-                    (bs.pos.x & 255) == x &&
-                    (bs.pos.y & 255) == y &&
-                    (bs.pos.z & 255) == z)
-              .orNull
+                    bs
+                    .getSelectedBoundingBox
+                    .sum(bs.pos.x & 255, bs.pos.y & 255, bs.pos.z & 255)
+                    .pointIsCube(x, y, z))
+              .getOrElse(Blocks.air.blockState)
     }
 
     def setBlock(blockState: BlockState):Unit = {

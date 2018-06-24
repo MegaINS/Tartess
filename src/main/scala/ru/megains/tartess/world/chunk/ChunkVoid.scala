@@ -1,5 +1,7 @@
 package ru.megains.tartess.world.chunk
 
-object ChunkVoid extends Chunk(new ChunkPosition(0,0,0),null) {
+import ru.megains.tartess.world.World
+
+class ChunkVoid(world:World) extends Chunk(new ChunkPosition(0,0,0),world) {
 
 }

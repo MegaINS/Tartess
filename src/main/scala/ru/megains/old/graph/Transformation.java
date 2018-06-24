@@ -105,7 +105,7 @@ public class Transformation {
         matrix.rotate((float)Math.toRadians(rotation.x), new Vector3f(1, 0, 0))
                 .rotate((float)Math.toRadians(rotation.y), new Vector3f(0, 1, 0));
         // Then do the translation
-        matrix.translate(-position.x, -position.y, -position.z);
+        matrix.translate((float) -position.x,(float) -position.y,(float) -position.z);
         return matrix;
     }
 

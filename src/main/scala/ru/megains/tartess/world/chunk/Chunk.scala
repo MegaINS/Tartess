@@ -5,6 +5,7 @@ import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
+import ru.megains.tech.block.blockdata.BlockSidePos
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -54,6 +55,27 @@ class Chunk(val position: ChunkPosition,val world: World) {
                 blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
             }else{
                 world.getChunk(x,y,z).blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
+            }
+        }
+        true
+    }
+
+    def isOpaqueCube(pos: BlockSidePos): Boolean = {
+
+
+        for(x<-pos.minX to pos.maxX;
+            y<-pos.minY to pos.maxY;
+            z<-pos.minZ to pos.maxZ){
+
+            val blockX = x & 255
+            val blockY = y & 255
+            val blockZ = z & 255
+            if(x <= position.maxXP && y<=position.maxYP &&z<=position.maxZP){
+                if(!blockStorage.get(blockX,blockY,blockZ).block.isOpaqueCube)
+                    return false
+            }else{
+                if(!world.getChunk(x>>8,y>>8,z>>8).blockStorage.get(blockX,blockY,blockZ).block.isOpaqueCube)
+                    return false
             }
         }
         true

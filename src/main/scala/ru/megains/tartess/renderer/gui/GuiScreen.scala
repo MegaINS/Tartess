@@ -1,9 +1,10 @@
 package ru.megains.tartess.renderer.gui
 
 import java.awt.Color
+
 import org.lwjgl.glfw.GLFW._
-import ru.megains.old.entity.player.EntityPlayer
 import ru.megains.tartess.Tartess
+import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.renderer.gui.element.{GuiButton, GuiElement}
 import ru.megains.tartess.renderer.mesh.Mesh
 

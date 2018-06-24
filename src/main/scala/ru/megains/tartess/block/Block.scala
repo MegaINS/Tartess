@@ -13,6 +13,9 @@ class Block(val name:String) {
     val blockBody:AABB = Block.FULL_AABB
     val blockState = new BlockState(this,null)
 
+
+    def isOpaqueCube = true
+
     def registerTexture(textureRegister: TTextureRegister): Unit = {
         texture = textureRegister.registerTexture(name)
     }

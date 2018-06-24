@@ -26,6 +26,7 @@ class Block(val name:String) {
 
   }
 
+
   def getATexture(blockDirection: BlockDirection): TextureAtlas =aTexture
 
   def setTextureName(textureName:String): Block ={

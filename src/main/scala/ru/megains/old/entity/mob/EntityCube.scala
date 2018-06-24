@@ -1,6 +1,6 @@
 package ru.megains.old.entity.mob
 
-import ru.megains.old.entity.EntityLivingBase
+import ru.megains.tartess.entity.EntityLivingBase
 
 
 class EntityCube(height: Float, wight: Float, levelView: Float) extends EntityLivingBase(height,wight,levelView){

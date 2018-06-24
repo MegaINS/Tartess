@@ -3,6 +3,7 @@ package ru.megains.tartess.physics
 
 import ru.megains.tartess.block.data.BlockDirection
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
+import ru.megains.tech.block.blockdata.BlockSidePos
 
 class AABB( var minX:Float = .0f,
             var minY:Float = .0f,
@@ -10,6 +11,13 @@ class AABB( var minX:Float = .0f,
             var maxX:Float = .0f,
             var maxY:Float = .0f,
             var maxZ:Float = .0f) {
+    def pointIsCube(x: Int, y: Int, z: Int): Boolean =
+                (x >= minX && x < maxX) &&
+                (y >= minY && y < maxY) &&
+                (z >= minZ && z < maxZ)
+
+
+
 
 
     def set(minX: Float, minY: Float, minZ: Float, maxX: Float, maxY: Float, maxZ: Float): Unit = {
@@ -21,6 +29,8 @@ class AABB( var minX:Float = .0f,
         this.maxZ = maxZ
     }
 
+        
+    
     def sum(x: Float, y: Float, z: Float) = new AABB(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z)
 
     def div(value: Float) = new AABB(minX / value, minY / value, minZ / value, maxX / value, maxY / value, maxZ / value)
@@ -100,4 +110,29 @@ class AABB( var minX:Float = .0f,
     def intersectsWithXZ(vec: Vec3f): Boolean = vec.x >= this.minX && vec.x <= this.maxX && vec.z >= this.minZ && vec.z <= this.maxZ
 
     def intersectsWithXY(vec: Vec3f): Boolean = vec.x >= this.minX && vec.x <= this.maxX && vec.y >= this.minY && vec.y <= this.maxY
+
+
+    def getSidePos(side: BlockDirection): BlockSidePos = {
+        side match {
+            case BlockDirection.EAST =>
+                new BlockSidePos(maxX.toInt, minY.toInt, minZ.toInt, maxX.toInt, maxY.toInt - 1, maxZ.toInt - 1)
+            case BlockDirection.WEST =>
+                new BlockSidePos(minX.toInt, minY.toInt, minZ.toInt, minX.toInt, maxY.toInt - 1, maxZ.toInt - 1)
+            case BlockDirection.SOUTH =>
+                new BlockSidePos(minX.toInt, minY.toInt, maxZ.toInt, maxX.toInt - 1, maxY.toInt - 1, maxZ.toInt)
+            case BlockDirection.NORTH =>
+                new BlockSidePos(minX.toInt, minY.toInt, minZ.toInt, maxX.toInt - 1, maxY.toInt - 1, minZ.toInt)
+            case BlockDirection.DOWN =>
+                new BlockSidePos(minX.toInt, minY.toInt, minZ.toInt, maxX.toInt - 1, minY.toInt, maxZ.toInt - 1)
+            case BlockDirection.UP =>
+                new BlockSidePos(minX.toInt, maxY.toInt, minZ.toInt, maxX.toInt - 1, maxY.toInt, maxZ.toInt - 1)
+            case _ =>
+                null
+
+        }
+
+    }
+
+
+
 }

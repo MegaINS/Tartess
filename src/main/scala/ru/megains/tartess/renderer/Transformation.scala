@@ -28,7 +28,7 @@ class Transformation {
 
     def buildChunkModelViewMatrix(position: ChunkPosition): Matrix4f = {
         modelViewMatrix.identity
-        modelViewMatrix.translate(position.minXR, position.minYR, position.minZR)
+        modelViewMatrix.translate(position.x * 16, position.y * 16, position.z * 16)
     }
 
     def getOrtho2DProjectionMatrix(left: Float, right: Float, bottom: Float, top: Float): Matrix4f = {

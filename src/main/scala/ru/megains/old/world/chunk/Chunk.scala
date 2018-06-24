@@ -6,6 +6,7 @@ import ru.megains.old.position.ChunkPosition
 import ru.megains.old.register.Blocks
 import ru.megains.old.world.World
 import ru.megains.old.world.chunk.storage.ExtendedBlockStorage
+import ru.megains.tartess.world.chunk.ChunkLoader
 
 import scala.util.Random
 

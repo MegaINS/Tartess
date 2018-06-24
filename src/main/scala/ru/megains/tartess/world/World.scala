@@ -6,7 +6,8 @@ import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
-import ru.megains.tartess.world.chunk.{Chunk, ChunkVoid}
+import ru.megains.tartess.world.chunk.Chunk
+import ru.megains.tech.block.blockdata.BlockSidePos
 
 
 
@@ -25,7 +26,7 @@ class World {
         if((x <= length && x >= -length) && (z <= width  && z >= -width) && (y <= height && y >= -height)){
             chunkProvider.provideChunk(x,y,z)
         } else{
-            ChunkVoid
+            ChunkProvider.voidChunk
         }
 
     }
@@ -49,6 +50,11 @@ class World {
 
         //markAndNotifyBlock(pos, chunk, block, flag)
         true
+    }
+
+
+    def isOpaqueCube(pos: BlockSidePos): Boolean  = {
+        getChunk(pos.minX>>8,pos.minY>>8,pos.minZ>>8).isOpaqueCube(pos)
     }
 
     def setAirBlock(pos: BlockPos):Boolean ={
