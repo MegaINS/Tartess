@@ -2,6 +2,7 @@ package ru.megains.tartess.register
 
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.{Block, BlockAir, BlockTest}
+import ru.megains.tartess.renderer.block.RenderBlockStandart
 import ru.megains.tartess.utils.Logger
 
 object Bootstrap extends Logger[Tartess] {
@@ -43,7 +44,9 @@ object Bootstrap extends Logger[Tartess] {
       //  GameRegister.registerBlock(11, new BlockDoor("door"))
 
       //  GameRegister.registerBlockRender(Blocks.door,RenderBlockDoor)
-      //  GameRegister.registerBlockRender(Blocks.chect,RenderBlockVoid)
+        GameRegister.registerBlockRender(Blocks.test0,RenderBlockStandart)
+        GameRegister.registerBlockRender(Blocks.test1,RenderBlockStandart)
+        GameRegister.registerBlockRender(Blocks.test2,RenderBlockStandart)
 
     }
 

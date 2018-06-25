@@ -13,6 +13,8 @@ import ru.megains.tech.block.blockdata.BlockSidePos
 
 class World {
 
+
+
     var worldRenderer:WorldRenderer = _
 
 
@@ -55,6 +57,10 @@ class World {
 
     def isOpaqueCube(pos: BlockSidePos): Boolean  = {
         getChunk(pos.minX>>8,pos.minY>>8,pos.minZ>>8).isOpaqueCube(pos)
+    }
+
+    def isOpaqueCube(pos: BlockPos, blockDirection: BlockDirection): Boolean = {
+        getChunk(pos.x>>8,pos.y>>8,pos.z>>8).isOpaqueCube(pos,blockDirection)
     }
 
     def setAirBlock(pos: BlockPos):Boolean ={

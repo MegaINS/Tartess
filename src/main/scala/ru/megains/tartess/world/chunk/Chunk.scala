@@ -1,7 +1,7 @@
 package ru.megains.tartess.world.chunk
 
 
-import ru.megains.tartess.block.data.{BlockPos, BlockState}
+import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
@@ -59,6 +59,13 @@ class Chunk(val position: ChunkPosition,val world: World) {
         }
         true
     }
+    def isOpaqueCube(pos: BlockPos,blockDirection: BlockDirection): Boolean = {
+        val blockPos = new BlockPos(pos.x+blockDirection.x*16,pos.y+blockDirection.y*16,pos.z+blockDirection.z*16)
+        if(world.getBlock(blockPos).block == Blocks.dirt) true
+        else false
+    }
+
+
 
     def isOpaqueCube(pos: BlockSidePos): Boolean = {
 

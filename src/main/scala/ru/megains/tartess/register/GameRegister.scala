@@ -2,12 +2,12 @@ package ru.megains.tartess.register
 
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.renderer.api.RenderBlock
-import ru.megains.tartess.renderer.block.RenderBlockStandart
+import ru.megains.tartess.renderer.block.RenderBlockWG
 
 object GameRegister {
 
     private val blockData = new RegisterNamespace[Block] with RegisterRender[RenderBlock] {
-        override val default: RenderBlock = RenderBlockStandart
+        override val default: RenderBlock = RenderBlockWG
     }
 
 
