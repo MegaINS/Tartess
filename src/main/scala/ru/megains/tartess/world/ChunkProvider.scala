@@ -53,6 +53,12 @@ class ChunkProvider(world: World) {
             chunk.setBlock(  new BlockState(Blocks.test0,new BlockPos(chunk.position.minXP +   Random.nextInt(60)  ,chunk.position.minYP +   Random.nextInt(60)  ,chunk.position.minZP +  Random.nextInt(60) )))
             chunk.setBlock(  new BlockState(Blocks.test1,new BlockPos(chunk.position.minXP +   Random.nextInt(60)  ,chunk.position.minYP +   Random.nextInt(60)  ,chunk.position.minZP +  Random.nextInt(60) )))
             chunk.setBlock(  new BlockState(Blocks.test2,new BlockPos(chunk.position.minXP +   Random.nextInt(60)  ,chunk.position.minYP +   Random.nextInt(60)  ,chunk.position.minZP +  Random.nextInt(60) )))
+
+
+
+
+
+
             if (chunk != null) {
                 chunkMap += Chunk.getIndex(chunkX, chunkY, chunkZ) -> chunk
             }

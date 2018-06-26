@@ -15,7 +15,7 @@ class GuiManager(val tar: Tartess) {
     private var guiScreen: GuiScreen = _
 
     def init(): Unit = {
-        //addGuiInGame("hotBar", new GuiHotBar())
+        addGuiInGame("hotBar", new GuiHotBar())
         addGuiInGame("debugInfo", new GuiDebugInfo())
         addGuiInGame("blockSelect", new GuiBlockSelect())
         addGuiInGame("ui", new GuiUI())
@@ -65,30 +65,30 @@ class GuiManager(val tar: Tartess) {
     }
 
     def handleInput(): Unit = {
-        //        while (Mouse.next()) {
-        //
-        //            val x = Mouse.getX
-        //            val y = Mouse.getY
-        //            val button = Mouse.getEventButton
-        //            val buttonState = Mouse.getEventButtonState
-        //            if (button == -1) {
-        //                guiScreen.mouseClickMove(x, y)
-        //            } else if (buttonState) {
-        //                guiScreen.mouseClicked(x, y, button, orangeCraft.player)
-        //            } else {
-        //                guiScreen.mouseReleased(x, y, button)
-        //            }
-        //        }
-
-        //
-        //
-        //        while (Keyboard.next()) {
-        //            if (Keyboard.getEventKeyState) {
-        //                guiScreen.keyTyped(Keyboard.getEventCharacter, Keyboard.getEventKey)
-        //            }
-        //
-        //
-        //        }
+//                while (Mouse.next()) {
+//
+//                    val x = Mouse.getX
+//                    val y = Mouse.getY
+//                    val button = Mouse.getEventButton
+//                    val buttonState = Mouse.getEventButtonState
+//                    if (button == -1) {
+//                        guiScreen.mouseClickMove(x, y)
+//                    } else if (buttonState) {
+//                        guiScreen.mouseClicked(x, y, button, orangeCraft.player)
+//                    } else {
+//                        guiScreen.mouseReleased(x, y, button)
+//                    }
+//                }
+//
+//
+//
+//                while (Keyboard.next()) {
+//                    if (Keyboard.getEventKeyState) {
+//                        guiScreen.keyTyped(Keyboard.getEventCharacter, Keyboard.getEventKey)
+//                    }
+//
+//
+//                }
     }
 
     def runTickKeyboard(key: Int, action: Int, mods: Int): Unit = {

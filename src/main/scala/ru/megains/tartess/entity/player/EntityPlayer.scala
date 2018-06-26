@@ -1,8 +1,12 @@
 package ru.megains.tartess.entity.player
 
 import ru.megains.tartess.entity.EntityLivingBase
+import ru.megains.tartess.inventory.InventoryPlayer
 
 class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
+
+
+    val inventory = new InventoryPlayer(this)
 
     def turn(xo: Float, yo: Float) {
         yRot += yo * 0.15f

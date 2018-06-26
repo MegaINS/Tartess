@@ -7,6 +7,7 @@ import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.register.Bootstrap
 import ru.megains.tartess.renderer.font.FontRender
 import ru.megains.tartess.renderer.gui.GuiManager
+import ru.megains.tartess.renderer.item.ItemRender
 import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.renderer.{Camera, Renderer}
@@ -38,6 +39,7 @@ class Tartess extends Logger[Tartess]  {
 
     var guiManager: GuiManager = _
     var fontRender:FontRender =_
+    var itemRender:ItemRender = _
 
     var objectMouseOver: RayTraceResult = _
     def startGame(): Unit = {
@@ -81,7 +83,7 @@ class Tartess extends Logger[Tartess]  {
         // GameRegister.tileEntityData.idRender.values.foreach(_.init())
 
         log.info("RenderItem creating...")
-        // itemRender = new RenderItem(this)
+         itemRender = new ItemRender(this)
 
 
         log.info("GuiManager init...")
@@ -179,7 +181,7 @@ class Tartess extends Logger[Tartess]  {
 
         guiManager.tick()
 
-
+        player.inventory.changeStackSelect(Mouse.getDWheel * -1)
         objectMouseOver = player.rayTrace(20*16, 0.1f)
 
 

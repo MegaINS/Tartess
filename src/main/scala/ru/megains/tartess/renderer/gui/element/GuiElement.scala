@@ -3,9 +3,11 @@ package ru.megains.tartess.renderer.gui.element
 import java.awt.Color
 
 import ru.megains.tartess.Tartess
+import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.renderer.Renderer
 import ru.megains.tartess.renderer.font.{FontRender, Fonts}
 import ru.megains.tartess.renderer.gui.Gui
+import ru.megains.tartess.renderer.item.ItemRender
 import ru.megains.tartess.renderer.mesh.Mesh
 
 abstract class GuiElement extends Gui {
@@ -15,15 +17,15 @@ abstract class GuiElement extends Gui {
         setData(tar)
     }
 
-   // var itemRender: RenderItem = _
+    var itemRender: ItemRender = _
     var renderer: Renderer = _
     var fontRender: FontRender = _
     var tar: Tartess = _
 
 
     def setData(tarIn: Tartess): Unit = {
-       // itemRender = tar.itemRender
         tar = tarIn
+        itemRender = tar.itemRender
         renderer = tar.renderer
         fontRender = tar.fontRender
 
@@ -39,5 +41,5 @@ abstract class GuiElement extends Gui {
 
     def createString(text: String, color: Color): Mesh = fontRender.createStringGui(text, color, Fonts.timesNewRomanR)
 
-   // def drawItemStack(itemStack: ItemStack, xPos: Int, yPos: Int): Unit = itemRender.renderItemStackToGui(xPos, yPos, itemStack)
+    def drawItemStack(itemStack: ItemStack, xPos: Int, yPos: Int): Unit = itemRender.renderItemStackToGui(xPos, yPos, itemStack)
 }

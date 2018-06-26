@@ -42,6 +42,13 @@ class Transformation {
         modelMatrix.scale(scale)
     }
 
+    def buildOrtoProjModelMatrix(xPos: Int, yPos: Int, zPos: Int, xPot: Int, yPot: Int, zPot: Int, scale: Float): Matrix4f ={
+        modelMatrix.identity
+        modelMatrix.translate(xPos, yPos, zPos)
+        modelMatrix.rotateXYZ(Math.toRadians(-xPot).toFloat, Math.toRadians(-yPot).toFloat, Math.toRadians(-zPot).toFloat)
+        modelMatrix.scale(scale)
+    }
+
     def buildObjectMouseOverViewMatrix(blockPos: BlockPos): Matrix4f = {
         modelViewMatrix.identity
         modelViewMatrix.translate(blockPos.x /16f, blockPos.y /16f, blockPos.z /16f)

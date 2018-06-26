@@ -13,6 +13,8 @@ object Blocks {
     lazy val test0:Block = GameRegister.getBlockByName("test0")
     lazy val test1:Block = GameRegister.getBlockByName("test1")
     lazy val test2:Block = GameRegister.getBlockByName("test2")
+    lazy val glass:Block = GameRegister.getBlockByName("glass")
+
 
 
 

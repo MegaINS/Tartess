@@ -4,10 +4,10 @@ import ru.megains.old.blockdata.{BlockSize, BlockWorldPos}
 import ru.megains.old.graph.renderer.block.RenderBlockGlass
 import ru.megains.old.physics.{AxisAlignedBB, BlockAxisAlignedBB}
 import ru.megains.old.register.{Blocks, GameRegister}
-import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.old.util.RayTraceResult
 import ru.megains.old.world.World
 import ru.megains.tartess.block.data.BlockDirection
+import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.utils.Vec3f
 
 import scala.util.Random
@@ -90,7 +90,6 @@ object Block{
       GameRegister.registerBlock(2,new Block("stone"))
       GameRegister.registerBlock(3,new Block("dirt"))
       GameRegister.registerBlock(4,new BlockGrass("grass"))
-      GameRegister.registerBlock(5,new BlockGlass("glass"))
       GameRegister.registerBlock(6,new BlockMicroTest("micro0",0))
       GameRegister.registerBlock(7,new BlockMicroTest("micro1",1))
       GameRegister.registerBlock(8,new BlockMicroTest("micro2",2))

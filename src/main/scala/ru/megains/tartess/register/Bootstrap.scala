@@ -1,7 +1,7 @@
 package ru.megains.tartess.register
 
 import ru.megains.tartess.Tartess
-import ru.megains.tartess.block.{Block, BlockAir, BlockTest}
+import ru.megains.tartess.block.{Block, BlockAir, BlockGlass, BlockTest}
 import ru.megains.tartess.renderer.block.RenderBlockStandart
 import ru.megains.tartess.utils.Logger
 
@@ -36,6 +36,7 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(3, new BlockTest("test0",0))
         GameRegister.registerBlock(4, new BlockTest("test1",1))
         GameRegister.registerBlock(5, new BlockTest("test2",2))
+        GameRegister.registerBlock(6,new BlockGlass("glass"))
       //  GameRegister.registerBlock(6, new BlockTest("test3",3))
       //  GameRegister.registerBlock(7, new BlockTest("test4",4))
       //  GameRegister.registerBlock(8, new BlockGlass("glass"))
@@ -44,6 +45,7 @@ object Bootstrap extends Logger[Tartess] {
       //  GameRegister.registerBlock(11, new BlockDoor("door"))
 
       //  GameRegister.registerBlockRender(Blocks.door,RenderBlockDoor)
+        GameRegister.registerBlockRender(Blocks.glass,RenderBlockStandart)
         GameRegister.registerBlockRender(Blocks.test0,RenderBlockStandart)
         GameRegister.registerBlockRender(Blocks.test1,RenderBlockStandart)
         GameRegister.registerBlockRender(Blocks.test2,RenderBlockStandart)

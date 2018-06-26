@@ -47,7 +47,7 @@ object Mouse {
         })
     }
 
-    def setGrabbed(mode: Boolean) = {
+    def setGrabbed(mode: Boolean): Unit = {
         if (mode) {
             glfwSetInputMode(windowId, GLFW_CURSOR, GLFW_CURSOR_DISABLED)
         } else {
