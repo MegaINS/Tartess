@@ -8,7 +8,7 @@ layout (location=3) in vec3 vertexNormal;
 
 out vec4 outColor;
 out vec2 outTexCoord;
-
+uniform mat4 viewPosition;
 uniform mat4 projectionMatrix;
 uniform mat4 modelMatrix;
 

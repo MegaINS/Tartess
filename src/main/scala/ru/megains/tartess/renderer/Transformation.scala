@@ -12,7 +12,7 @@ class Transformation {
     val ortho2DMatrix = new Matrix4f
     val modelMatrix = new Matrix4f
 
-    def updateProjectionMatrix(fov: Float, width: Float, height: Float, zNear: Float, zFar: Float, camera: Camera): Matrix4f = {
+    def updateProjectionMatrix(fov: Float, width: Float, height: Float, zNear: Float, zFar: Float): Matrix4f = {
         val aspectRatio = width / height
         projectionMatrix.identity
         projectionMatrix.perspective(fov, aspectRatio, zNear, zFar)

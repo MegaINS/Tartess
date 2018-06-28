@@ -60,6 +60,11 @@ class ShaderProgram {
         glUniform1i(uniformData.uniformLocation, if (value) 1 else 0)
     }
 
+    def setUniform(uniformName: String, value: Float): Unit = {
+        val uniformData = getUniform(uniformName)
+        glUniform1f(uniformData.uniformLocation, value)
+    }
+
     def setUniform(uniformName: String, value: Vec3f): Unit = {
         val uniformData = getUniform(uniformName)
         glUniform3f(uniformData.uniformLocation, value.x, value.y, value.z)

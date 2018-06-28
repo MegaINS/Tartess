@@ -1,27 +1,49 @@
-[23:05:35:843] [Client/INFO]: Start Game
-[23:05:35:847] [Client/INFO]: Tartess v0.1.0
-[23:05:35:848] [Client/INFO]: Display creating...
-[23:05:36:546] [Client/INFO]: Display create successful
-[23:05:36:547] [Client/INFO]: Blocks init...
-[23:05:36:771] [Client/INFO]: Renderer creating...
-[23:05:36:870] [Client/INFO]: Camera creating...
-[23:05:36:887] [Client/INFO]: GuiManager creating...
-[23:05:36:890] [Client/INFO]: FontRender creating...
-[23:05:37:029] [Client/INFO]: TextureManager loadTexture...
-[23:05:37:203] [Client/INFO]: RenderItem creating...
-[23:05:37:204] [Client/INFO]: GuiManager init...
-[23:05:38:517] [Client/INFO]: 2 fps, 14 tick, 1 chunkRender, 2 chunkUpdate
-[23:05:39:496] [Client/INFO]: 8 fps, 21 tick, 6 chunkRender, 8 chunkUpdate
-[23:05:40:297] [Client/INFO]: 3 fps, 24 tick, 12 chunkRender, 3 chunkUpdate
-[23:05:41:721] [Client/INFO]: 8 fps, 20 tick, 17 chunkRender, 8 chunkUpdate
-[23:05:42:292] [Client/INFO]: 296 fps, 20 tick, 26 chunkRender, 6 chunkUpdate
-[23:05:43:292] [Client/INFO]: 990 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:44:292] [Client/INFO]: 1069 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:45:292] [Client/INFO]: 1139 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:46:292] [Client/INFO]: 1143 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:47:658] [Client/INFO]: 468 fps, 19 tick, 27 chunkRender, 2 chunkUpdate
-[23:05:48:526] [Client/INFO]: 3 fps, 18 tick, 27 chunkRender, 3 chunkUpdate
-[23:05:49:292] [Client/INFO]: 798 fps, 23 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:50:292] [Client/INFO]: 1035 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:51:390] [Client/INFO]: 1184 fps, 19 tick, 27 chunkRender, 0 chunkUpdate
-[23:05:51:393] [Client/INFO]: Game stopped...
+[00:38:31:547] [Client/INFO]: Start Game
+[00:38:31:549] [Client/INFO]: Tartess v0.1.0
+[00:38:31:549] [Client/INFO]: Display creating...
+[00:38:32:170] [Client/INFO]: Display create successful
+[00:38:32:171] [Client/INFO]: Blocks init...
+[00:38:32:262] [Client/INFO]: Renderer creating...
+[00:38:32:273] [Client/INFO]: Camera creating...
+[00:38:32:274] [Client/INFO]: GuiManager creating...
+[00:38:32:275] [Client/INFO]: FontRender creating...
+[00:38:32:319] [Client/INFO]: TextureManager loadTexture...
+[00:38:32:359] [Client/INFO]: RenderItem creating...
+[00:38:32:360] [Client/INFO]: GuiManager init...
+[00:38:33:410] [Client/INFO]: 51 fps, 19 tick, 20 chunkRender, 27 chunkUpdate
+[00:38:34:410] [Client/INFO]: 42 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:35:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:36:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:37:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:38:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:39:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:40:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:41:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:42:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:43:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:44:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:45:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:46:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:47:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:48:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:49:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:50:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:51:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:52:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:53:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:54:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:55:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:56:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:57:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:58:410] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:38:59:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:00:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:01:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:02:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:03:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:04:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:05:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:06:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:07:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:08:411] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[00:39:09:294] [Client/INFO]: Game stopped...

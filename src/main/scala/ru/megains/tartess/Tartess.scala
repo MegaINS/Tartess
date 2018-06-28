@@ -52,7 +52,7 @@ class Tartess extends Logger[Tartess]  {
             window.create()
             Mouse.init(window,this)
             Keyboard.init(window,this)
-            GL11.glClearColor(0.5f, 0.6f, 0.7f, 0.0F)
+            GL11.glClearColor(0.5f, 0.6f, 0.7f, 1.0F)
             log.info("Display create successful")
         } catch {
             case e: RuntimeException =>
@@ -100,7 +100,7 @@ class Tartess extends Logger[Tartess]  {
         // world.spawnEntityInWorld(player)
         // guiManager.setGuiScreen(new GuiPlayerSelect())
 
-        camera.setPosition(player.posX, player.posY + player.levelView, player.posZ)
+        camera.setPosition(player.posX/16f, (player.posY + player.levelView)/16f, player.posZ/16f)
         camera.setRotation(player.xRot, player.yRot, 0)
     }
 

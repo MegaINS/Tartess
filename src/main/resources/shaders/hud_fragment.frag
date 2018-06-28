@@ -16,10 +16,10 @@ void main()
     fragColor *= outColor;
 
 
-    if ( useTexture == 1 )
-   {
+   //if ( useTexture == 1 )
+  // {
         fragColor *=  texture(texture_sampler, outTexCoord);
-   }
+  // }
 
 
 }

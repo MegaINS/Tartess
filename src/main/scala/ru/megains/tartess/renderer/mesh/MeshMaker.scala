@@ -133,8 +133,8 @@ object MeshMaker {
         }else{
             var mesh:Mesh = null
 
-            mesh = new MeshTexture(makeMode,textureName,indicesArray.toArray, posArray.toArray,colourArray.toArray,textCordsArray.toArray,textureName!="")
-
+            //mesh = new MeshTexture(makeMode,textureName,indicesArray.toArray, posArray.toArray,colourArray.toArray,textCordsArray.toArray,textureName!="")
+            mesh = new MeshTextureNormals(makeMode, textureName, indicesArray.toArray, posArray.toArray, colourArray.toArray, textCordsArray.toArray, normalsArray.toArray,textureName!="")
             isStartMake = false
             reset()
             mesh

@@ -1,6 +1,6 @@
 package ru.megains.tartess.renderer
 
-import org.joml.Vector3f
+import ru.megains.tartess.utils.Vec3f
 
 class Camera {
 
@@ -12,7 +12,7 @@ class Camera {
         position.set(posX,posY,posZ)
     }
 
-    val position:Vector3f = new Vector3f()
+    val position:Vec3f = new Vec3f()
 
-    val rotation:Vector3f = new Vector3f()
+    val rotation:Vec3f = new Vec3f()
 }
