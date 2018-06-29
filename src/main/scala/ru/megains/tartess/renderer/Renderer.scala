@@ -87,6 +87,21 @@ class Renderer(tar: Tartess) {
         sceneShaderProgram.createUniform("pointLight.ambient")
         sceneShaderProgram.createUniform("pointLight.diffuse")
         sceneShaderProgram.createUniform("pointLight.specular")
+
+        sceneShaderProgram.createUniform("spotLight.position")
+        sceneShaderProgram.createUniform("spotLight.direction")
+
+        sceneShaderProgram.createUniform("spotLight.ambient")
+        sceneShaderProgram.createUniform("spotLight.diffuse")
+        sceneShaderProgram.createUniform("spotLight.specular")
+
+        sceneShaderProgram.createUniform("spotLight.linear")
+        sceneShaderProgram.createUniform("spotLight.quadratic")
+
+        sceneShaderProgram.createUniform("spotLight.constant")
+        sceneShaderProgram.createUniform("spotLight.cutOff")
+
+        sceneShaderProgram.createUniform("spotLight.outerCutOff")
        // sceneShaderProgram.createUniform("lightPos")
        // sceneShaderProgram.createUniform("lightColor")
 
@@ -133,24 +148,37 @@ class Renderer(tar: Tartess) {
         sceneShaderProgram.setUniform("dirLight.direction",new Vec3f(-0.2,-1,-0.3))
         sceneShaderProgram.setUniform("dirLight.ambient",new Vec3f(0.3,0.3,0.3))
         sceneShaderProgram.setUniform("dirLight.diffuse",new Vec3f(0.5,0.5,0.5))
-        sceneShaderProgram.setUniform("dirLight.specular",new Vec3f(0.5,0.5,0.5))
+        sceneShaderProgram.setUniform("dirLight.specular",new Vec3f(0,0,0))
         sceneShaderProgram.setUniform("shininess",32)
 
 
 
-        sceneShaderProgram.setUniform("pointLight.position",new Vec3f(0,10,0))
+        sceneShaderProgram.setUniform("pointLight.position",new Vec3f(0,3,0))
         sceneShaderProgram.setUniform("pointLight.constant", 1.0f)
         sceneShaderProgram.setUniform("pointLight.linear",0.09f)
         sceneShaderProgram.setUniform("pointLight.quadratic",0.032f)
-        sceneShaderProgram.setUniform("pointLight.ambient",new Vec3f(0.05,0.05,0.05))
-        sceneShaderProgram.setUniform("pointLight.diffuse",new Vec3f(0.8,0.8,0.8))
-        sceneShaderProgram.setUniform("pointLight.specular",new Vec3f(1,1,1))
+        sceneShaderProgram.setUniform("pointLight.ambient",new Vec3f(0.2,0.25,0.4))
+        sceneShaderProgram.setUniform("pointLight.diffuse",new Vec3f(0.4,0.5,0.8))
+        sceneShaderProgram.setUniform("pointLight.specular",new Vec3f(0.4,0.5,0.8))
+
+        sceneShaderProgram.setUniform("spotLight.position",new Vec3f(-0.5,10,-0.5))
+        sceneShaderProgram.setUniform("spotLight.direction", new Vec3f(0.05,-1,0.05))
+
+        sceneShaderProgram.setUniform("spotLight.ambient",new Vec3f(0.5,0.25,0))
+        sceneShaderProgram.setUniform("spotLight.diffuse",new Vec3f(1,0.5,0))
+        sceneShaderProgram.setUniform("spotLight.specular",new Vec3f(1,1,1))
+
+        sceneShaderProgram.setUniform("spotLight.linear",0.09f)
+        sceneShaderProgram.setUniform("spotLight.quadratic",0.032f)
+
+        sceneShaderProgram.setUniform("spotLight.constant",1)
+        sceneShaderProgram.setUniform("spotLight.cutOff",Math.cos(Math.toRadians(12.5f)) toFloat)
+
+        sceneShaderProgram.setUniform("spotLight.outerCutOff",Math.cos(Math.toRadians(15.0f)) toFloat)
 
 
 
-
-
-       // sceneShaderProgram.setUniform("lightPos", new Vec3f(100,100,100))
+        // sceneShaderProgram.setUniform("lightPos", new Vec3f(100,100,100))
        // sceneShaderProgram.setUniform("lightColor", new Vec3f(1,1,1))
 
         glEnable(GL_CULL_FACE)
