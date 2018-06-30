@@ -1,5 +1,6 @@
 package ru.megains.tartess.entity
 
+import ru.megains.tartess.block.data.BlockDirection
 import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
@@ -20,6 +21,10 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
     var onGround:Boolean = false
     val body: AABB = new AABB()
     var world: World = _
+    var chunkCoordX = 0
+    var chunkCoordY = 0
+    var chunkCoordZ = 0
+    var side:BlockDirection = BlockDirection.DOWN
 
     def update(): Unit
 

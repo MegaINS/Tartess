@@ -211,7 +211,11 @@ class Renderer(tar: Tartess) {
             worldRenderer.renderBlockMouseOver()
         }
 
-
+        val blockSelectPosition = tar.blockSelectPosition
+        if (blockSelectPosition != null) {
+            sceneShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(blockSelectPosition.pos))
+            worldRenderer.renderBlockSelect()
+        }
 
 
         Renderer.unbindShaderProgram()

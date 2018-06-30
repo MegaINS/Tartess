@@ -1,30 +1,94 @@
-[18:07:33:021] [Client/INFO]: Start Game
-[18:07:33:021] [Client/INFO]: Tartess v0.1.0
-[18:07:33:021] [Client/INFO]: Display creating...
-[18:07:33:639] [Client/INFO]: Display create successful
-[18:07:33:639] [Client/INFO]: Blocks init...
-[18:07:33:739] [Client/INFO]: Renderer creating...
-[18:07:33:754] [Client/INFO]: Camera creating...
-[18:07:33:754] [Client/INFO]: GuiManager creating...
-[18:07:33:754] [Client/INFO]: FontRender creating...
-[18:07:33:754] [Client/INFO]: TextureManager loadTexture...
-[18:07:33:823] [Client/INFO]: RenderItem creating...
-[18:07:33:823] [Client/INFO]: GuiManager init...
-[18:07:34:903] [Client/INFO]: 48 fps, 20 tick, 19 chunkRender, 27 chunkUpdate
-[18:07:35:896] [Client/INFO]: 59 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:36:882] [Client/INFO]: 59 fps, 19 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:37:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:38:907] [Client/INFO]: 61 fps, 21 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:39:895] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:40:891] [Client/INFO]: 59 fps, 19 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:41:882] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:42:884] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:43:885] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:44:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:45:885] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 5 chunkUpdate
-[18:07:46:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 14 chunkUpdate
-[18:07:47:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 13 chunkUpdate
-[18:07:48:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 5 chunkUpdate
-[18:07:49:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:50:891] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
-[18:07:51:174] [Client/INFO]: Game stopped...
+[01:48:54:730] [Client/INFO]: Start Game
+[01:48:54:730] [Client/INFO]: Tartess v0.1.0
+[01:48:54:730] [Client/INFO]: Display creating...
+[01:48:55:370] [Client/INFO]: Display create successful
+[01:48:55:370] [Client/INFO]: Blocks init...
+[01:48:55:460] [Client/INFO]: Renderer creating...
+[01:48:55:470] [Client/INFO]: Camera creating...
+[01:48:55:474] [Client/INFO]: GuiManager creating...
+[01:48:55:474] [Client/INFO]: FontRender creating...
+[01:48:55:480] [Client/INFO]: TextureManager loadTexture...
+[01:48:55:540] [Client/INFO]: RenderItem creating...
+[01:48:55:550] [Client/INFO]: GuiManager init...
+[01:48:56:910] [Client/INFO]: 36 fps, 15 tick, 17 chunkRender, 27 chunkUpdate
+[01:48:57:629] [Client/INFO]: 42 fps, 24 tick, 27 chunkRender, 0 chunkUpdate
+[01:48:58:629] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:48:59:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:00:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 5 chunkUpdate
+[01:49:01:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 12 chunkUpdate
+[01:49:02:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:03:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 6 chunkUpdate
+[01:49:04:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 6 chunkUpdate
+[01:49:05:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:06:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:07:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 6 chunkUpdate
+[01:49:08:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:09:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 6 chunkUpdate
+[01:49:10:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:11:629] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:12:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:13:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:14:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:15:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:16:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:17:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:18:629] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:19:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:20:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:21:631] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 12 chunkUpdate
+[01:49:22:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:23:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 7 chunkUpdate
+[01:49:24:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:25:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:26:629] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:27:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:28:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:29:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:30:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:31:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 6 chunkUpdate
+[01:49:32:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:33:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:34:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:35:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:36:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:37:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:38:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:39:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:40:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:41:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:42:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:43:630] [Client/INFO]: 60 fps, 20 tick, 27 chunkRender, 0 chunkUpdate
+[01:49:44:580] [Client/FATAL]: Crash
+java.lang.NullPointerException: null
+	at ru.megains.tartess.block.Block.getBoundingBox(Block.scala:32) ~[classes/:?]
+	at ru.megains.tartess.block.data.BlockState.getBoundingBox(BlockState.scala:13) ~[classes/:?]
+	at ru.megains.tartess.world.chunk.Chunk.setBlock(Chunk.scala:40) ~[classes/:?]
+	at ru.megains.tartess.world.World.setBlock(World.scala:54) ~[classes/:?]
+	at ru.megains.tartess.item.ItemBlock.placeBlockAt(ItemBlock.scala:37) ~[classes/:?]
+	at ru.megains.tartess.item.ItemBlock.onItemUse(ItemBlock.scala:23) ~[classes/:?]
+	at ru.megains.tartess.item.itemstack.ItemStack.onItemUse(ItemStack.scala:50) ~[classes/:?]
+	at ru.megains.tartess.PlayerControllerMP.processRightClickBlock(PlayerControllerMP.scala:61) ~[classes/:?]
+	at ru.megains.tartess.Tartess.rightClickMouse(Tartess.scala:283) ~[classes/:?]
+	at ru.megains.tartess.Tartess.runTickMouse(Tartess.scala:240) ~[classes/:?]
+	at ru.megains.tartess.periphery.Mouse$.$anonfun$init$2(Mouse.scala:43) ~[classes/:?]
+	at org.lwjgl.glfw.GLFWMouseButtonCallbackI.callback(GLFWMouseButtonCallbackI.java:24) ~[lwjgl-glfw-3.1.5.jar:build 1]
+	at org.lwjgl.system.JNI.invokeV(Native Method) ~[lwjgl-3.1.5.jar:build 1]
+	at org.lwjgl.glfw.GLFW.glfwPollEvents(GLFW.java:2802) ~[lwjgl-glfw-3.1.5.jar:build 1]
+	at ru.megains.tartess.periphery.Mouse$.update(Mouse.scala:32) ~[classes/:?]
+	at ru.megains.tartess.Tartess.update(Tartess.scala:168) ~[classes/:?]
+	at ru.megains.tartess.Tartess.$anonfun$runGameLoop$1(Tartess.scala:156) ~[classes/:?]
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:156) ~[scala-library.jar:?]
+	at ru.megains.tartess.Tartess.runGameLoop(Tartess.scala:155) ~[classes/:?]
+	at ru.megains.tartess.Tartess.run(Tartess.scala:129) ~[classes/:?]
+	at ru.megains.StartTartess$.delayedEndpoint$ru$megains$StartTartess$1(StartTartess.scala:13) ~[classes/:?]
+	at ru.megains.StartTartess$delayedInit$body.apply(StartTartess.scala:7) ~[classes/:?]
+	at scala.Function0.apply$mcV$sp(Function0.scala:34) ~[scala-library.jar:?]
+	at scala.Function0.apply$mcV$sp$(Function0.scala:34) ~[scala-library.jar:?]
+	at scala.runtime.AbstractFunction0.apply$mcV$sp(AbstractFunction0.scala:12) ~[scala-library.jar:?]
+	at scala.App.$anonfun$main$1$adapted(App.scala:76) ~[scala-library.jar:?]
+	at scala.collection.immutable.List.foreach(List.scala:389) [scala-library.jar:?]
+	at scala.App.main(App.scala:76) [scala-library.jar:?]
+	at scala.App.main$(App.scala:74) [scala-library.jar:?]
+	at ru.megains.StartTartess$.main(StartTartess.scala:7) [classes/:?]
+	at ru.megains.StartTartess.main(StartTartess.scala) [classes/:?]
+[01:49:44:580] [Client/INFO]: Game stopped...

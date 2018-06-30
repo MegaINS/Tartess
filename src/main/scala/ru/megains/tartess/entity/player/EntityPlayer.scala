@@ -1,9 +1,11 @@
 package ru.megains.tartess.entity.player
 
 import ru.megains.tartess.Tartess
+import ru.megains.tartess.block.data.BlockDirection
 import ru.megains.tartess.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.entity.EntityLivingBase
 import ru.megains.tartess.inventory.InventoryPlayer
+import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.renderer.gui.GuiPlayerInventory
 
 class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
@@ -53,10 +55,32 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
         }
     }
 
-    override def update(): Unit = ???
+
+    override def update(): Unit = {
+        yRot match {
+            case y if y > 315 || y <45 => side = BlockDirection.NORTH
+            case y if y <135 => side = BlockDirection.EAST
+            case y if y <225 => side = BlockDirection.SOUTH
+            case y if y <315 => side = BlockDirection.WEST
+            case _ => side = BlockDirection.UP
+        }
+
+    }
+
+    def setHeldItem(stack: ItemStack): Unit = setItemStackToSlot(stack)
 
     def openInventory(): Unit = {
         openContainer = inventoryContainer
         Tartess.tartess.guiManager.setGuiScreen(new GuiPlayerInventory(this))
+    }
+    def getHeldItem: ItemStack = getItemStackFromSlot
+
+    def getItemStackFromSlot: ItemStack = inventory.getStackSelect
+    def setItemStackToSlot(stack: ItemStack) {
+
+        // playEquipSound(stack)
+        inventory.mainInventory(inventory.stackSelect) = stack
+
+
     }
 }

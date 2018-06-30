@@ -2,12 +2,14 @@ package ru.megains.tartess.world.chunk
 
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 import ru.megains.tech.block.blockdata.BlockSidePos
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.language.postfixOps
 
 
@@ -19,7 +21,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
 
 
     var blockStorage = new BlockStorage(position)
-
+    var chunkEntityMap: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
 
     def getBlocks:mutable.HashSet[BlockState] ={
         blockStorage.getBlocks
@@ -65,7 +67,14 @@ class Chunk(val position: ChunkPosition,val world: World) {
         else false
     }
 
-
+    def addEntity(entityIn: Entity): Unit = {
+        chunkEntityMap += entityIn
+        entityIn.chunkCoordX = position.x
+        entityIn.chunkCoordY = position.y
+        entityIn.chunkCoordZ = position.z
+        world.addEntity(entityIn)
+        entityIn.world = world
+    }
 
     def isOpaqueCube(pos: BlockSidePos): Boolean = {
 

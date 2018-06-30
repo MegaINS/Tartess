@@ -21,7 +21,7 @@ class WorldRenderer(val world: World) {
     val playerRenderChunks:ArrayBuffer[RenderChunk] =  mutable.ArrayBuffer[RenderChunk]()
 
     var blockMouseOver: Mesh = _
-
+    var blockSelect: Mesh = _
 
     def getRenderChunks(entityPlayer: EntityPlayer): ArrayBuffer[RenderChunk] = {
 //        // TODO:  OPTIMIZE
@@ -125,6 +125,55 @@ class WorldRenderer(val world: World) {
         blockMouseOver = mm.makeMesh()
     }
 
+    def updateBlockSelect(blockState: BlockState): Unit = {
+        if (blockSelect != null) {
+            blockSelect.cleanUp()
+            blockSelect = null
+        }
+
+        val mm = MeshMaker.getMeshMaker
+        val aabb = blockState.getSelectedBoundingBox.div(16)
+
+        val minX = aabb.minX
+        val minY = aabb.minY
+        val minZ = aabb.minZ
+        val maxX = aabb.maxX
+        val maxY = aabb.maxY
+        val maxZ = aabb.maxZ
+
+
+
+        mm.startMake(GL_LINES)
+        mm.addColor(Color.BLACK)
+        mm.addVertex(minX, minY, minZ)
+        mm.addVertex(minX, minY, maxZ)
+        mm.addVertex(minX, maxY, minZ)
+        mm.addVertex(minX, maxY, maxZ)
+        mm.addVertex(maxX, minY, minZ)
+        mm.addVertex(maxX, minY, maxZ)
+        mm.addVertex(maxX, maxY, minZ)
+        mm.addVertex(maxX, maxY, maxZ)
+
+        mm.addIndex(0, 1)
+        mm.addIndex(0, 2)
+        mm.addIndex(0, 4)
+
+        mm.addIndex(6, 2)
+        mm.addIndex(6, 4)
+        mm.addIndex(6, 7)
+
+        mm.addIndex(3, 1)
+        mm.addIndex(3, 2)
+        mm.addIndex(3, 7)
+
+        mm.addIndex(5, 1)
+        mm.addIndex(5, 4)
+        mm.addIndex(5, 7)
+
+
+        blockSelect = mm.makeMesh()
+    }
+
     def reRender(pos: BlockPos) {
         val x: Int = pos.x >> 8
         val y: Int = pos.y >> 8
@@ -140,5 +189,9 @@ class WorldRenderer(val world: World) {
 
     def reRenderWorld(): Unit = {
         renderChunks.values.foreach(_.reRender())
+    }
+
+    def renderBlockSelect(): Unit = if (blockSelect != null){
+        blockSelect.render
     }
 }

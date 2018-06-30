@@ -3,11 +3,14 @@ package ru.megains.tartess.world
 
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.chunk.Chunk
 import ru.megains.tech.block.blockdata.BlockSidePos
+
+import scala.collection.mutable.ArrayBuffer
 
 
 
@@ -22,7 +25,8 @@ class World {
     val width: Int = 1
     val height: Int = 1
     val chunkProvider:ChunkProvider = new ChunkProvider(this)
-
+    val entities: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
+    //val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
 
     def getChunk(x: Int, y: Int, z: Int): Chunk = {
         if((x <= length && x >= -length) && (z <= width  && z >= -width) && (y <= height && y >= -height)){
@@ -54,7 +58,26 @@ class World {
         true
     }
 
+    def spawnEntityInWorld(entity: Entity): Unit = {
+        val chunk = getChunk( entity.posX toInt,entity.posY toInt,entity.posZ toInt)
+        if (chunk != null){
+            chunk.addEntity(entity)
 
+        }
+    }
+
+    def update() {
+        entities.foreach(_.update())
+       // tickableTileEntities.foreach(_.update(this))
+    }
+
+    def addEntity(entityIn: Entity): Unit = {
+        entities += entityIn
+    }
+
+    def removeEntity(entityIn: Entity): Unit = {
+        entities -= entityIn
+    }
     def isOpaqueCube(pos: BlockSidePos): Boolean  = {
         getChunk(pos.minX>>8,pos.minY>>8,pos.minZ>>8).isOpaqueCube(pos)
     }

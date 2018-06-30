@@ -47,11 +47,11 @@ class GuiDebugInfo extends GuiInGame with GuiText {
 //            lastGameType = gameType
 //            addText("gameType", createString("Game type: " + gameType.name, Color.WHITE))
 //        }
-//        val side = tar.player.side
-//        if(side!= lastSide){
-//            lastSide = side
-//            addText("position.side", createString("side: "+side.name, Color.WHITE))
-//        }
+        val side = tar.player.side
+        if(side!= lastSide){
+            lastSide = side
+            addText("position.side", createString("side: "+side.name, Color.WHITE))
+        }
         tickI += 1
         if (tickI > 19) {
             tickI = 0

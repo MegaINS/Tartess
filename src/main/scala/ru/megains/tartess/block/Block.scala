@@ -2,10 +2,15 @@ package ru.megains.tartess.block
 
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.entity.Entity
+import ru.megains.tartess.entity.player.EntityPlayer
+import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
+
+import scala.language.postfixOps
 
 class Block(val name:String) {
 
@@ -37,6 +42,43 @@ class Block(val name:String) {
         } else {
             new RayTraceResult(rayTraceResult.hitVec.add(pos.x, pos.y, pos.z), rayTraceResult.sideHit, pos, this)
         }
+    }
+
+    def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemStack, blockDirection:BlockDirection, float1: Float, float2: Float): Boolean = {
+        false
+    }
+
+    def getSelectPosition(worldIn: World,entity: Entity, objectMouseOver: RayTraceResult): BlockState = {
+        val side = entity.side
+        //Todo доделать
+        val blockBodyTarget = objectMouseOver.block.blockBody
+        val posTarget: BlockPos = objectMouseOver.blockPos
+        var posSet: BlockPos = objectMouseOver.sideHit match {
+            case BlockDirection.DOWN => posTarget.sum(0,-blockBody.maxY toInt,0)
+            case BlockDirection.WEST => posTarget.sum(-blockBody.maxX toInt,0,0)
+            case BlockDirection.NORTH => posTarget.sum(0,0,-blockBody.maxZ toInt)
+            case BlockDirection.UP => posTarget.sum(0,blockBodyTarget.maxY toInt,0)
+            case BlockDirection.EAST => posTarget.sum(blockBodyTarget.maxX toInt,0,0)
+            case BlockDirection.SOUTH => posTarget.sum(0,0,blockBodyTarget.maxZ toInt)
+            case _ => posTarget
+        }
+//
+//        posSet = side match {
+//            case BlockDirection.EAST  => posTarget.sum(0,0,Math.floor(-blockSize.width/2f)  + 1 toInt)
+//            case BlockDirection.WEST => posTarget.sum(-blockSize.length+1,0,-blockSize.width/2 )
+//            case BlockDirection.SOUTH => posTarget.sum(-blockSize.width/2,0,0)
+//            case BlockDirection.NORTH => posTarget.sum(Math.floor(-blockSize.width/2f)  + 1 toInt,0,-blockSize.length+1)
+//            case _ => posTarget.sum(0,0,0)
+//        }
+//
+//
+//
+//
+        val blockState = new BlockState(this,posSet)
+       // if (worldIn.isAirBlock(blockState))
+            blockState
+       // else
+      //  null
     }
 }
 
