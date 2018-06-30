@@ -1,12 +1,17 @@
 package ru.megains.tartess.entity.player
 
+import ru.megains.tartess.Tartess
+import ru.megains.tartess.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.entity.EntityLivingBase
 import ru.megains.tartess.inventory.InventoryPlayer
+import ru.megains.tartess.renderer.gui.GuiPlayerInventory
 
 class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
 
-
+    var openContainer: Container = _
     val inventory = new InventoryPlayer(this)
+    val inventoryContainer: Container = new ContainerPlayerInventory(inventory)
+
 
     def turn(xo: Float, yo: Float) {
         yRot += yo * 0.15f
@@ -49,4 +54,9 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
     }
 
     override def update(): Unit = ???
+
+    def openInventory(): Unit = {
+        openContainer = inventoryContainer
+        Tartess.tartess.guiManager.setGuiScreen(new GuiPlayerInventory(this))
+    }
 }

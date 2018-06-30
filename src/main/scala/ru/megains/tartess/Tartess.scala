@@ -6,7 +6,7 @@ import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.register.Bootstrap
 import ru.megains.tartess.renderer.font.FontRender
-import ru.megains.tartess.renderer.gui.GuiManager
+import ru.megains.tartess.renderer.gui.{GuiInGameMenu, GuiManager}
 import ru.megains.tartess.renderer.item.ItemRender
 import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
@@ -171,8 +171,7 @@ class Tartess extends Logger[Tartess]  {
         if (glfwGetKey(window.id, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) cameraInc.y = -1
         if (glfwGetKey(window.id, GLFW_KEY_SPACE) == GLFW_PRESS) cameraInc.y = 1
 
-        player.turn( Mouse.getDY * -1 toFloat,Mouse.getDX   toFloat)
-
+        if (!guiManager.isGuiScreen) player.turn(Mouse.getDY * -1 toFloat,Mouse.getDX   toFloat)
 
         player.update(cameraInc.x, cameraInc.y, cameraInc.z)
 
@@ -234,9 +233,9 @@ class Tartess extends Logger[Tartess]  {
     def runTickKeyboard(key: Int, action: Int, mods: Int): Unit = {
         if (action == GLFW_PRESS) {
             key match {
-                //    case GLFW_KEY_E => player.openInventory()
-                //    case GLFW_KEY_ESCAPE => guiManager.setGuiScreen(new GuiInGameMenu())
-                //    case GLFW_KEY_R => worldRenderer.reRenderWorld()
+                case GLFW_KEY_E => player.openInventory()
+                case GLFW_KEY_ESCAPE => guiManager.setGuiScreen(new GuiInGameMenu())
+                case GLFW_KEY_R => worldRenderer.reRenderWorld()
                 case GLFW_KEY_N => grabMouseCursor()
                 case GLFW_KEY_M => ungrabMouseCursor()
                 case GLFW_KEY_ESCAPE=> ungrabMouseCursor()

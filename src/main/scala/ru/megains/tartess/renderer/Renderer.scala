@@ -1,6 +1,5 @@
 package ru.megains.tartess.renderer
 
-import java.awt.Color
 import java.nio.FloatBuffer
 
 import org.joml.Matrix4f
@@ -10,11 +9,9 @@ import ru.megains.old.graph.Frustum
 import ru.megains.old.utils.Utils
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.periphery.Mouse
-import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.shader.ShaderProgram
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.utils.Vec3f
-import ru.megains.tartess.world.chunk.ChunkPosition
 
 class Renderer(tar: Tartess) {
 
@@ -31,7 +28,7 @@ class Renderer(tar: Tartess) {
     var worldRenderer: WorldRenderer = _
     val sceneShaderProgram = new ShaderProgram
     var guiShaderProgram = new ShaderProgram
-    var mesh:Mesh = _
+   // var mesh:Mesh = _
 
 
     def init() {
@@ -41,23 +38,23 @@ class Renderer(tar: Tartess) {
         glEnable(GL_STENCIL_TEST)
         glEnable(GL_DEPTH_TEST)
 
-        val mm = MeshMaker
-
-        mm.startMakeTriangles()
-
-
-        mm.setCurrentIndex()
-        mm.addColor(Color.ORANGE)
-        mm.addVertex(0, 0, -20)
-        mm.addVertex(0, 16, -20)
-        mm.addVertex(16, 0, -20)
-        mm.addVertex(16, 16, -20)
-        mm.addVertex(8, 8, -20)
-        mm.addIndex(1, 0, 4)
-        mm.addIndex(4, 0, 2)
-        mm.addIndex(4, 2, 3)
-        mm.addIndex(3, 1, 4)
-        mesh = mm.makeMesh()
+//        val mm = MeshMaker
+//
+//        mm.startMakeTriangles()
+//
+//
+//        mm.setCurrentIndex()
+        //mm.addColor(Color.ORANGE)
+//        mm.addVertex(0, 0, -20)
+//        mm.addVertex(0, 16, -20)
+//        mm.addVertex(16, 0, -20)
+//        mm.addVertex(16, 16, -20)
+//        mm.addVertex(8, 8, -20)
+//        mm.addIndex(1, 0, 4)
+//        mm.addIndex(4, 0, 2)
+//        mm.addIndex(4, 2, 3)
+//        mm.addIndex(3, 1, 4)
+//        mesh = mm.makeMesh()
 
     }
 
@@ -70,7 +67,7 @@ class Renderer(tar: Tartess) {
         sceneShaderProgram.createUniform("projection")
         sceneShaderProgram.createUniform("view" )
         sceneShaderProgram.createUniform("model")
-      //  sceneShaderProgram.createUniform("useTexture")
+        sceneShaderProgram.createUniform("useTexture")
         sceneShaderProgram.createUniform("shininess")
 
         sceneShaderProgram.createUniform("viewPos")
@@ -80,30 +77,35 @@ class Renderer(tar: Tartess) {
         sceneShaderProgram.createUniform("dirLight.diffuse")
         sceneShaderProgram.createUniform("dirLight.specular")
 
-        sceneShaderProgram.createUniform("pointLight.position")
-        sceneShaderProgram.createUniform("pointLight.constant")
-        sceneShaderProgram.createUniform("pointLight.linear")
-        sceneShaderProgram.createUniform("pointLight.quadratic")
-        sceneShaderProgram.createUniform("pointLight.ambient")
-        sceneShaderProgram.createUniform("pointLight.diffuse")
-        sceneShaderProgram.createUniform("pointLight.specular")
 
-        sceneShaderProgram.createUniform("spotLight.position")
-        sceneShaderProgram.createUniform("spotLight.direction")
 
-        sceneShaderProgram.createUniform("spotLight.ambient")
-        sceneShaderProgram.createUniform("spotLight.diffuse")
-        sceneShaderProgram.createUniform("spotLight.specular")
+        sceneShaderProgram.createUniform("pointLightSize")
 
-        sceneShaderProgram.createUniform("spotLight.linear")
-        sceneShaderProgram.createUniform("spotLight.quadratic")
 
-        sceneShaderProgram.createUniform("spotLight.constant")
-        sceneShaderProgram.createUniform("spotLight.cutOff")
+            sceneShaderProgram.createUniform("pointLight.position")
+            sceneShaderProgram.createUniform("pointLight.constant")
+            sceneShaderProgram.createUniform("pointLight.linear")
+            sceneShaderProgram.createUniform("pointLight.quadratic")
+            sceneShaderProgram.createUniform("pointLight.ambient")
+            sceneShaderProgram.createUniform("pointLight.diffuse")
+            sceneShaderProgram.createUniform("pointLight.specular")
 
-        sceneShaderProgram.createUniform("spotLight.outerCutOff")
-       // sceneShaderProgram.createUniform("lightPos")
-       // sceneShaderProgram.createUniform("lightColor")
+
+        sceneShaderProgram.createUniform("spotLightSize")
+
+            sceneShaderProgram.createUniform("spotLight.position")
+            sceneShaderProgram.createUniform("spotLight.direction")
+            sceneShaderProgram.createUniform("spotLight.ambient")
+            sceneShaderProgram.createUniform("spotLight.diffuse")
+            sceneShaderProgram.createUniform("spotLight.specular")
+            sceneShaderProgram.createUniform("spotLight.linear")
+            sceneShaderProgram.createUniform("spotLight.quadratic")
+            sceneShaderProgram.createUniform("spotLight.constant")
+            sceneShaderProgram.createUniform("spotLight.cutOff")
+            sceneShaderProgram.createUniform("spotLight.outerCutOff")
+
+
+
 
     }
 
@@ -116,7 +118,7 @@ class Renderer(tar: Tartess) {
         guiShaderProgram.createUniform("projectionMatrix")
         guiShaderProgram.createUniform("modelMatrix")
         guiShaderProgram.createUniform("colour")
-       // guiShaderProgram.createUniform("useTexture")
+        guiShaderProgram.createUniform("useTexture")
     }
 
     def render(camera: Camera) {
@@ -125,7 +127,6 @@ class Renderer(tar: Tartess) {
         val viewMatrix: Matrix4f = transformation.updateViewMatrix(camera)
 
         projectionMatrix.get(_proj.clear().asInstanceOf[FloatBuffer])
-        //projectionMatrix.mul(viewMatrix)
         viewMatrix.get(_modl.clear().asInstanceOf[FloatBuffer])
 
         frustum = Frustum.getFrustum(_proj, _modl)
@@ -146,53 +147,53 @@ class Renderer(tar: Tartess) {
 
 
         sceneShaderProgram.setUniform("dirLight.direction",new Vec3f(-0.2,-1,-0.3))
-        sceneShaderProgram.setUniform("dirLight.ambient",new Vec3f(0.3,0.3,0.3))
-        sceneShaderProgram.setUniform("dirLight.diffuse",new Vec3f(0.5,0.5,0.5))
+        sceneShaderProgram.setUniform("dirLight.ambient",new Vec3f(1,1,1))
+        sceneShaderProgram.setUniform("dirLight.diffuse",new Vec3f(0.0,0.0,0.0))
         sceneShaderProgram.setUniform("dirLight.specular",new Vec3f(0,0,0))
-        sceneShaderProgram.setUniform("shininess",32)
+        sceneShaderProgram.setUniform("shininess",32f)
 
 
 
-        sceneShaderProgram.setUniform("pointLight.position",new Vec3f(0,3,0))
-        sceneShaderProgram.setUniform("pointLight.constant", 1.0f)
-        sceneShaderProgram.setUniform("pointLight.linear",0.09f)
-        sceneShaderProgram.setUniform("pointLight.quadratic",0.032f)
-        sceneShaderProgram.setUniform("pointLight.ambient",new Vec3f(0.2,0.25,0.4))
-        sceneShaderProgram.setUniform("pointLight.diffuse",new Vec3f(0.4,0.5,0.8))
-        sceneShaderProgram.setUniform("pointLight.specular",new Vec3f(0.4,0.5,0.8))
+        sceneShaderProgram.setUniform("pointLightSize",0)
 
-        sceneShaderProgram.setUniform("spotLight.position",new Vec3f(-0.5,10,-0.5))
-        sceneShaderProgram.setUniform("spotLight.direction", new Vec3f(0.05,-1,0.05))
-
-        sceneShaderProgram.setUniform("spotLight.ambient",new Vec3f(0.5,0.25,0))
-        sceneShaderProgram.setUniform("spotLight.diffuse",new Vec3f(1,0.5,0))
-        sceneShaderProgram.setUniform("spotLight.specular",new Vec3f(1,1,1))
-
-        sceneShaderProgram.setUniform("spotLight.linear",0.09f)
-        sceneShaderProgram.setUniform("spotLight.quadratic",0.032f)
-
-        sceneShaderProgram.setUniform("spotLight.constant",1)
-        sceneShaderProgram.setUniform("spotLight.cutOff",Math.cos(Math.toRadians(12.5f)) toFloat)
-
-        sceneShaderProgram.setUniform("spotLight.outerCutOff",Math.cos(Math.toRadians(15.0f)) toFloat)
+            sceneShaderProgram.setUniform("pointLight.position",new Vec3f(0,3,0))
+            sceneShaderProgram.setUniform("pointLight.constant", 1.0f)
+            sceneShaderProgram.setUniform("pointLight.linear",0.09f)
+            sceneShaderProgram.setUniform("pointLight.quadratic",0.032f)
+            sceneShaderProgram.setUniform("pointLight.ambient",new Vec3f(0.2,0.25,0.4))
+            sceneShaderProgram.setUniform("pointLight.diffuse",new Vec3f(0.4,0.5,0.8))
+            sceneShaderProgram.setUniform("pointLight.specular",new Vec3f(0.4,0.5,0.8))
 
 
+        sceneShaderProgram.setUniform("spotLightSize",0)
 
-        // sceneShaderProgram.setUniform("lightPos", new Vec3f(100,100,100))
-       // sceneShaderProgram.setUniform("lightColor", new Vec3f(1,1,1))
+            sceneShaderProgram.setUniform("spotLight.position",new Vec3f(-0.5,10,-0.5))
+            sceneShaderProgram.setUniform("spotLight.direction", new Vec3f(0.05,-1,0.05))
+            sceneShaderProgram.setUniform("spotLight.ambient",new Vec3f(0.5,0.25,0))
+            sceneShaderProgram.setUniform("spotLight.diffuse",new Vec3f(1,0.5,0))
+            sceneShaderProgram.setUniform("spotLight.specular",new Vec3f(1,1,1))
+            sceneShaderProgram.setUniform("spotLight.linear",0.09f)
+            sceneShaderProgram.setUniform("spotLight.quadratic",0.032f)
+            sceneShaderProgram.setUniform("spotLight.constant",1f)
+            sceneShaderProgram.setUniform("spotLight.cutOff",Math.cos(Math.toRadians(12.5f)) toFloat)
+            sceneShaderProgram.setUniform("spotLight.outerCutOff",Math.cos(Math.toRadians(15.0f)) toFloat)
+
+
+
+
 
         glEnable(GL_CULL_FACE)
 
         RenderChunk.clearRend()
 
 
-        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
-        mesh.render
-
-
-
-        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,1)))
-        mesh.render
+//        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
+//        mesh.render
+//
+//
+//
+//        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,1)))
+//        mesh.render
         worldRenderer.getRenderChunks(null/*tar.player*/).foreach((renderChunk: RenderChunk) => {
             //if(frustum.chunkInFrustum(renderChunk.chunkPosition)){
            // sceneShaderProgram.setUniform("modelViewMatrix",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))

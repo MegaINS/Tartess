@@ -32,7 +32,7 @@ trait Gui {
         val mm = MeshMaker.getMeshMaker
         mm.startMakeTriangles()
         mm.addColorRGBA(color2.getRed, color2.getGreen, color2.getBlue, color2.getAlpha)
-        mm.addVertex(xZero, zZero, zZero)
+        mm.addVertex(xZero, yZero, zZero)
         mm.addColorRGBA(color1.getRed, color1.getGreen, color1.getBlue, color1.getAlpha)
         mm.addVertex(xZero, height, zZero)
         mm.addColorRGBA(color1.getRed, color1.getGreen, color1.getBlue, color1.getAlpha)
@@ -64,6 +64,7 @@ trait Gui {
         if (mesh ne null) {
             Renderer.currentShaderProgram.setUniform("modelMatrix", renderer.transformation.buildOrtoProjModelMatrix(xPos, yPos, scale))
             Renderer.currentShaderProgram.setUniform("colour", new Vec3f(1f, 1f, 1f))
+
             mesh.render
         }
     }

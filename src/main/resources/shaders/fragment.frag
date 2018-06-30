@@ -1,11 +1,12 @@
 #version 400
 
 uniform sampler2D textureMap;
-//uniform int useTexture;
-//uniform vec3 lightPos;
-//uniform vec3 lightColor;
+uniform int useTexture;
 uniform vec3 viewPos;
 uniform float shininess;
+uniform int spotLightSize;
+uniform int pointLightSize;
+
 
 out vec4 fragColor;
 
@@ -127,11 +128,11 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 void main()
 {
 
-	//if( useTexture == 1 ){
+	if( useTexture == 1 ){
         if(texture(textureMap, Vert.texCoord).a<0.1){
         	discard;
         }
-   // }
+    }
 
     vec3 norm = normalize(Vert.normal);
 
@@ -139,10 +140,14 @@ void main()
 
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
 
+    for(int i = 0;i < pointLightSize;i++){
+        result += CalcPointLight(pointLight, norm, Vert.fragPos, viewDir);
+    }
 
-    result += CalcPointLight(pointLight, norm, Vert.fragPos, viewDir);
+    for(int i = 0;i < spotLightSize;i++){
+        result += CalcSpotLight(spotLight, norm,  Vert.fragPos, viewDir);
+    }
 
-    result += CalcSpotLight(spotLight, norm,  Vert.fragPos, viewDir);
 
     fragColor = vec4(result, 1.0);
 }

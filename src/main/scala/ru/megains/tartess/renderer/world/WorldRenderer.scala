@@ -137,4 +137,8 @@ class WorldRenderer(val world: World) {
         getRenderChunk(x, y, z + 1).reRender()
         getRenderChunk(x, y, z - 1).reRender()
     }
+
+    def reRenderWorld(): Unit = {
+        renderChunks.values.foreach(_.reRender())
+    }
 }
