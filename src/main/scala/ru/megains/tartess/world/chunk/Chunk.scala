@@ -1,12 +1,11 @@
 package ru.megains.tartess.world.chunk
 
 
-import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
-import ru.megains.tech.block.blockdata.BlockSidePos
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer

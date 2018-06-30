@@ -2,8 +2,8 @@ package ru.megains.old.graph.text;
 
 
 import org.joml.Vector3f;
-import ru.megains.old.graph.renderer.mesh.Mesh;
-import ru.megains.old.graph.renderer.mesh.MeshMaker$;
+import ru.megains.tartess.renderer.mesh.Mesh;
+import ru.megains.tartess.renderer.mesh.MeshMaker$;
 
 
 public class Text  {

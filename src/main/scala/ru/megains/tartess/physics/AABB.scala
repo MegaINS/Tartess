@@ -1,9 +1,8 @@
 package ru.megains.tartess.physics
 
 
-import ru.megains.tartess.block.data.BlockDirection
+import ru.megains.tartess.block.data.{BlockDirection, BlockSidePos}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
-import ru.megains.tech.block.blockdata.BlockSidePos
 
 class AABB( var minX:Float = .0f,
             var minY:Float = .0f,

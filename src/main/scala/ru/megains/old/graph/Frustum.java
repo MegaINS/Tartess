@@ -1,7 +1,8 @@
 package ru.megains.old.graph;
 
 import org.lwjgl.BufferUtils;
-import ru.megains.old.physics.AxisAlignedBB;
+import ru.megains.tartess.physics.AABB;
+
 
 import java.nio.FloatBuffer;
 
@@ -170,8 +171,8 @@ public class Frustum {
 
 
 
-    public boolean cubeInFrustum(AxisAlignedBB aabb) {
-        return this.cubeInFrustum(aabb.minX, aabb.minY, aabb.minZ, aabb.maxX, aabb.maxY, aabb.maxZ);
+    public boolean cubeInFrustum(AABB aabb) {
+        return this.cubeInFrustum(aabb.minX(), aabb.minY(), aabb.minZ(), aabb.maxX(), aabb.maxY(), aabb.maxZ());
     }
 
 }

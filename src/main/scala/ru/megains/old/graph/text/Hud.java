@@ -1,8 +1,8 @@
 package ru.megains.old.graph.text;
 
 
-import ru.megains.old.TartessClient;
-import ru.megains.old.util.RayTraceResult;
+
+
 import ru.megains.tartess.periphery.Window;
 
 import java.util.HashMap;
@@ -11,11 +11,11 @@ public class Hud implements IHud {
 
     private final HashMap<String, Text> texts;
     private Window window;
-    private TartessClient megaGame;
+
     long lastTime;
     public static int frames;
-    public Hud(TartessClient megaGame){
-        this.megaGame=megaGame;
+    public Hud(){
+
         //this.window = megaGame.window;
         texts = new HashMap<>();
         putText("playerPos", new Text("Player position:"));
@@ -92,7 +92,7 @@ public class Hud implements IHud {
 //            }
 //        }
     }
-    private RayTraceResult ray = null;
+
 
     public void updatePos(){
 

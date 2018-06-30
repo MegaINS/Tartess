@@ -1,12 +1,6 @@
-package ru.megains.tech.block.blockdata
-
-import ru.megains.tartess.block.data.BlockDirection
+package ru.megains.tartess.block.data
 
 class BlockSidePos(val minX: Int,val  minY: Int,val  minZ: Int,val  maxX: Int,val  maxY: Int,val  maxZ: Int) {
-
-
-
-
 
     def sum(direction: BlockDirection) =
         BlockSidePos(
