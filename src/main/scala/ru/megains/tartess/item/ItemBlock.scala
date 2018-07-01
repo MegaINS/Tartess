@@ -34,6 +34,7 @@ class ItemBlock(val block: Block) extends Item(block.name) {
     override def registerTexture(textureRegister: TTextureRegister): Unit = {}
 
     def placeBlockAt(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockState, side: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
+        if(pos == null) return false
         if (!world.setBlock(pos)) return false
 
         // setTileEntityNBT(world, player, pos, stack)

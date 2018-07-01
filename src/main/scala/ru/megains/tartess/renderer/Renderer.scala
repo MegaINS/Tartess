@@ -194,27 +194,28 @@ class Renderer(tar: Tartess) {
 //
 //        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,1)))
 //        mesh.render
-        worldRenderer.getRenderChunks(null/*tar.player*/).foreach((renderChunk: RenderChunk) => {
-            //if(frustum.chunkInFrustum(renderChunk.chunkPosition)){
-           // sceneShaderProgram.setUniform("modelViewMatrix",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
+        worldRenderer.getRenderChunks(tar.player).foreach((renderChunk: RenderChunk) => {
+            if(frustum.chunkInFrustum(renderChunk.chunk.position)){
                 sceneShaderProgram.setUniform("model", transformation.buildChunkModelViewMatrix(renderChunk.chunk.position))
                 renderChunk.render(0)
-           // }
+            }
         })
 
 
         glDisable(GL_CULL_FACE)
 
-        val objectMouseOver = tar.objectMouseOver
-        if (objectMouseOver != null) {
-            sceneShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(objectMouseOver.blockPos))
-            worldRenderer.renderBlockMouseOver()
-        }
+
 
         val blockSelectPosition = tar.blockSelectPosition
         if (blockSelectPosition != null) {
             sceneShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(blockSelectPosition.pos))
             worldRenderer.renderBlockSelect()
+        }else{
+            val objectMouseOver = tar.objectMouseOver
+            if (objectMouseOver != null) {
+                sceneShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(objectMouseOver.blockPos))
+                worldRenderer.renderBlockMouseOver()
+            }
         }
 
 

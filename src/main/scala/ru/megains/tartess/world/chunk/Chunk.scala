@@ -1,9 +1,11 @@
 package ru.megains.tartess.world.chunk
 
 
+import ru.megains.tartess.block.BlockContainer
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.register.Blocks
+import ru.megains.tartess.tileentity.{TileEntity, TileEntityContainer}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
@@ -21,7 +23,56 @@ class Chunk(val position: ChunkPosition,val world: World) {
 
     var blockStorage = new BlockStorage(position)
     var chunkEntityMap: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
+    var chunkTileEntityMap = new mutable.HashMap[Long,TileEntity]()
 
+
+    def isAirBlock(pos: BlockPos): Boolean = {
+        getBlock(pos).block == Blocks.air
+    }
+
+    def isAirBlock(blockState: BlockState): Boolean = {
+        //todo
+        var empty = true
+
+        val aabb = blockState.getBoundingBox
+
+        val minX = aabb.minX toInt
+        val minY = aabb.minY toInt
+        val minZ = aabb.minZ toInt
+        val maxX = aabb.maxX toInt
+        val maxY = aabb.maxY toInt
+        val maxZ = aabb.maxZ toInt
+
+        for(x<-minX until maxX;
+            y<-minY until maxY;
+            z<-minZ until maxZ){
+
+            val blockX = x & 255
+            val blockY = y & 255
+            val blockZ = z & 255
+            if(x <= position.maxXP && y<=position.maxYP &&z<=position.maxZP){
+                if( blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.blockState){
+                    empty = false
+                }
+            }else{
+                if(world.getChunk(x,y,z).blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.blockState) empty = false
+            }
+        }
+        empty
+    }
+    def getTileEntity(pos: BlockPos): TileEntity = {
+        var tileentity = chunkTileEntityMap.get( Chunk.getIndex(pos.x,pos.y,pos.z))
+        //        if (tileentity != null) {
+        //            chunkTileEntityMap.remove(pos)
+        //            tileentity = null
+        //        }
+        //        if (tileentity == null) if (p_177424_2_ eq Chunk.EnumCreateEntityType.IMMEDIATE) {
+        //            tileentity = this.createNewTileEntity(pos)
+        //            this.world.setTileEntity(pos, tileentity)
+        //        }
+        // else if (p_177424_2_ eq Chunk.EnumCreateEntityType.QUEUED) this.tileEntityPosQueue.add(pos.toImmutable)
+        tileentity.get
+    }
     def getBlocks:mutable.HashSet[BlockState] ={
         blockStorage.getBlocks
     }
@@ -47,18 +98,74 @@ class Chunk(val position: ChunkPosition,val world: World) {
         val maxX = aabb.maxX toInt
         val maxY = aabb.maxY toInt
         val maxZ = aabb.maxZ toInt
+        var xT = Integer.MIN_VALUE
+        var yT = Integer.MIN_VALUE
+        var zT = Integer.MIN_VALUE
 
+        //ToDo
         for(x <- minX until maxX;
             y <- minY until maxY;
             z <- minZ until maxZ){
-
-            if(x <= position.maxXP && y <= position.maxYP && z <= position.maxZP){
-                blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
-            }else{
-                world.getChunk(x,y,z).blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
+            if(xT != (x >> 8) || yT != (y >> 8)  ||zT != (z >> 8)){
+                xT =  x >> 8
+                yT =  y >> 8
+                zT =  z >> 8
+                if(x <= position.maxXP && y <= position.maxYP && z <= position.maxZP){
+                    blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
+                }else{
+                    world.getChunk(x,y,z).blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
+                }
             }
         }
+
+
+        blockStatePrevious.block match {
+            case _:BlockContainer =>
+                world.removeTileEntity(blockStatePrevious.pos)
+            case _ =>
+        }
+
+
+
+
+        block match {
+            case container:TileEntityContainer =>
+                val  tileEntity = container.createNewTileEntity(world,blockState)
+                world.setTileEntity(pos, tileEntity)
+            // }
+            // if (tileEntity != null) tileEntity.updateContainingBlockInfo()
+            case _ =>
+        }
         true
+    }
+
+
+    def removeTileEntity(pos: BlockPos): Unit = {
+        chunkTileEntityMap -= Chunk.getIndex(pos.x,pos.y,pos.z)
+    }
+
+
+    def addTileEntity(tileEntityIn: TileEntity): Unit = {
+        addTileEntity(tileEntityIn.pos,tileEntityIn)
+        world.addTileEntity(tileEntityIn)
+    }
+    def addTileEntity(pos: BlockPos, tileEntityIn: TileEntity): Unit = {
+        //        if (tileEntityIn.getWorld ne this.world) { //Forge don't call unless it's changed, could screw up bad mods.
+        //            tileEntityIn.setWorld(this.world)
+        //        }
+        //  tileEntityIn.setPos(pos)
+        getBlock(pos).block match {
+            case _:BlockContainer =>
+                chunkTileEntityMap += Chunk.getIndex(pos.x,pos.y,pos.z) -> tileEntityIn
+            case _ =>
+        }
+
+        //        if (getBlockState(pos).getBlock.hasTileEntity(getBlockState(pos))) {
+        //          //  if (chunkTileEntityMap.containsKey(pos)) chunkTileEntityMap.get(pos).asInstanceOf[TileEntity].invalidate()
+        //            tileEntityIn.validate()
+        //            chunkTileEntityMap.put(pos, tileEntityIn)
+        //            tileEntityIn.onLoad()
+        //        }
     }
     def isOpaqueCube(pos: BlockPos,blockDirection: BlockDirection): Boolean = {
         val blockPos = new BlockPos(pos.x+blockDirection.x*16,pos.y+blockDirection.y*16,pos.z+blockDirection.z*16)

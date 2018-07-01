@@ -1,7 +1,6 @@
 package ru.megains.tartess.renderer.gui
 
 import org.lwjgl.glfw.GLFW._
-import ru.megains.tartess.Tartess
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.renderer.mesh.Mesh
 
@@ -10,7 +9,7 @@ class GuiPlayerInventory(entityPlayer: EntityPlayer) extends GuiContainer(entity
 
     var playerInventory: Mesh = _
 
-    override def initGui(orangeCraft: Tartess): Unit = {
+    override def initGui(): Unit = {
         playerInventory = createTextureRect(500, 240, "gui/playerInventory")
     }
 

@@ -75,10 +75,8 @@ class Block(val name:String) {
 //
 //
         val blockState = new BlockState(this,posSet)
-       // if (worldIn.isAirBlock(blockState))
-            blockState
-       // else
-      //  null
+        if (worldIn.isAirBlock(blockState)) blockState
+        else null
     }
 }
 

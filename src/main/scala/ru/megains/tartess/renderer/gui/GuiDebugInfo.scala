@@ -2,7 +2,6 @@ package ru.megains.tartess.renderer.gui
 
 import java.awt.Color
 
-import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.data.BlockDirection
 
 class GuiDebugInfo extends GuiInGame with GuiText {
@@ -10,7 +9,7 @@ class GuiDebugInfo extends GuiInGame with GuiText {
    // var lastGameType: GameType = NOT_SET
     var lastSide:BlockDirection = BlockDirection.UP
 
-    override def initGui(tar: Tartess): Unit = {
+    override def initGui(): Unit = {
 
 
         addText("position", createString("Player position:", Color.WHITE))

@@ -1,13 +1,12 @@
 package ru.megains.tartess.renderer.gui
 
-import ru.megains.tartess.Tartess
 import ru.megains.tartess.renderer.mesh.Mesh
 
 class GuiUI extends GuiInGame{
 
     var target: Mesh = _
 
-    override def initGui(tar: Tartess): Unit = {
+    override def initGui(): Unit = {
         target = createTextureRect(40, 40, "gui/target")
 
     }

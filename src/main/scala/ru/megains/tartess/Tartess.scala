@@ -275,7 +275,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
               //  case RayTraceResult.Type.BLOCK =>
                     val blockpos: BlockPos = objectMouseOver.blockPos
-                   // if (!world.isAirBlock(blockpos)) {
+                    if (!world.isAirBlock(blockpos)) {
                         // val i: Int = if (itemstack != null) itemstack.stackSize
                         //else 0
 
@@ -286,7 +286,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
                             //    else if (itemstack.stackSize != i || playerController.isInCreativeMode) entityRenderer.itemRenderer.resetEquippedProgress()
                             return
                         }
-                  //  }
+                    }
               //  case _ =>
                 // }
            // }

@@ -1,15 +1,14 @@
 package ru.megains.tartess.renderer.gui
 
-import ru.megains.tartess.Tartess
 import ru.megains.tartess.renderer.gui.element.GuiButton
 
 class GuiInGameMenu extends GuiScreen {
 
 
-    override def initGui(orangeCraft: Tartess): Unit = {
-        buttonList += new GuiButton(0, orangeCraft, "Main menu", 250, 310, 300, 50)
-        buttonList += new GuiButton(1, orangeCraft, "Option", 250, 380, 300, 50)
-        buttonList += new GuiButton(2, orangeCraft, "Return to game", 250, 450, 300, 50)
+    override def initGui(): Unit = {
+        buttonList += new GuiButton(0, tar, "Main menu", 250, 310, 300, 50)
+        buttonList += new GuiButton(1, tar, "Option", 250, 380, 300, 50)
+        buttonList += new GuiButton(2, tar, "Return to game", 250, 450, 300, 50)
 
     }
 

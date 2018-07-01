@@ -1,6 +1,5 @@
 package ru.megains.tartess.renderer.gui
 
-import ru.megains.tartess.Tartess
 import ru.megains.tartess.renderer.mesh.Mesh
 
 class GuiHotBar extends GuiInGame {
@@ -8,7 +7,7 @@ class GuiHotBar extends GuiInGame {
     var hotBar: Mesh = _
     var stackSelect: Mesh = _
 
-    override def initGui(tar: Tartess): Unit = {
+    override def initGui(): Unit = {
         stackSelect = createTextureRect(56, 54, "gui/stackSelect")
         hotBar = createTextureRect(484, 52, "gui/hotBar")
     }

@@ -30,10 +30,10 @@ abstract class GuiElement extends Gui {
         fontRender = tar.fontRender
 
 
-        initGui(tar)
+        initGui()
     }
 
-    def initGui(tar: Tartess): Unit = {}
+    def initGui(): Unit = {}
 
     def drawObject(mesh: Mesh, xPos: Int, yPos: Int): Unit = super.drawObject(xPos, yPos, 1, mesh, renderer)
 

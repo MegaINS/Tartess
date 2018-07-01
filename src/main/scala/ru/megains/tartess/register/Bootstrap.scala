@@ -1,8 +1,9 @@
 package ru.megains.tartess.register
 
 import ru.megains.tartess.Tartess
-import ru.megains.tartess.block.{Block, BlockAir, BlockGlass, BlockTest}
+import ru.megains.tartess.block._
 import ru.megains.tartess.renderer.block.RenderBlockStandart
+import ru.megains.tartess.tileentity.TileEntityChest
 import ru.megains.tartess.utils.Logger
 
 object Bootstrap extends Logger[Tartess] {
@@ -36,12 +37,26 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(3, new BlockTest("test0",0))
         GameRegister.registerBlock(4, new BlockTest("test1",1))
         GameRegister.registerBlock(5, new BlockTest("test2",2))
-        GameRegister.registerBlock(6,new BlockGlass("glass"))
+        GameRegister.registerBlock(6, new BlockTest("test3",3))
+        GameRegister.registerBlock(7, new BlockTest("test4",4))
+        GameRegister.registerBlock(8, new BlockTest("test5",5))
+        GameRegister.registerBlock(9, new BlockTest("test6",6))
+        GameRegister.registerBlock(10, new BlockTest("test7",7))
+        GameRegister.registerBlock(11, new BlockTest("test8",8))
+        GameRegister.registerBlock(12, new BlockTest("test9",9))
+        GameRegister.registerBlock(13, new BlockTest("test10",10))
+        GameRegister.registerBlock(14, new BlockTest("test11",11))
+        GameRegister.registerBlock(15, new BlockTest("test12",12))
+        GameRegister.registerBlock(16, new BlockTest("test13",13))
+        GameRegister.registerBlock(17, new BlockTest("test14",14))
+
+
+        GameRegister.registerBlock(18,new BlockGlass("glass"))
       //  GameRegister.registerBlock(6, new BlockTest("test3",3))
       //  GameRegister.registerBlock(7, new BlockTest("test4",4))
       //  GameRegister.registerBlock(8, new BlockGlass("glass"))
       //  GameRegister.registerBlock(9, new BlockGrass("grass"))
-      //  GameRegister.registerBlock(10, new BlockChest("tileEntityTest"))
+        GameRegister.registerBlock(10, new BlockChest("tileEntityTest"))
       //  GameRegister.registerBlock(11, new BlockDoor("door"))
 
       //  GameRegister.registerBlockRender(Blocks.door,RenderBlockDoor)
@@ -58,13 +73,13 @@ object Bootstrap extends Logger[Tartess] {
 //        GameRegister.registerItem(1002, new ItemArmor("helmet"))
 //    }
 //
-//    def initTileEntity(): Unit = {
-//
-//
-//
-//        GameRegister.registerTileEntity(0,classOf[TileEntityChest])
-//        GameRegister.registerTileEntityRender(classOf[TileEntityChest],RenderChest)
-//    }
+    def initTileEntity(): Unit = {
+
+
+
+        GameRegister.registerTileEntity(0,classOf[TileEntityChest])
+       // GameRegister.registerTileEntityRender(classOf[TileEntityChest],RenderChest)
+    }
 //
 //    def initEntity(): Unit = {
 //

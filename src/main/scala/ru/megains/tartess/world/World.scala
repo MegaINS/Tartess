@@ -6,6 +6,7 @@ import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, Bl
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
+import ru.megains.tartess.tileentity.TileEntity
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.chunk.Chunk
 
@@ -20,12 +21,12 @@ class World {
     var worldRenderer:WorldRenderer = _
 
 
-    val length: Int = 1
-    val width: Int = 1
-    val height: Int = 1
+    val length: Int = 100
+    val width: Int = 100
+    val height: Int = 100
     val chunkProvider:ChunkProvider = new ChunkProvider(this)
     val entities: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
-    //val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
+    val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
 
     def getChunk(x: Int, y: Int, z: Int): Chunk = {
         if((x <= length && x >= -length) && (z <= width  && z >= -width) && (y <= height && y >= -height)){
@@ -44,6 +45,64 @@ class World {
         chunk.getBlock(blockPos)
     }
 
+    def removeTileEntity(blockPos: BlockPos): Unit = {
+
+
+        val chunk = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
+        if (chunk != null) {
+            tickableTileEntities -= chunk.getTileEntity(blockPos)
+            chunk.removeTileEntity(blockPos)
+
+        }
+
+    }
+    def setTileEntity(blockPos: BlockPos, tileEntityIn: TileEntity): Unit = {
+        //  pos = pos.toImmutable // Forge - prevent mutable BlockPos leaks
+
+        //        if (!this.isOutsideBuildHeight(pos)) if (tileEntityIn != null && !tileEntityIn.isInvalid) if (this.processingLoadedTiles) {
+        //
+        //
+        //            val iterator = this.addedTileEntityList.iterator
+        //            while ( {
+        //                iterator.hasNext
+        //            }) {
+        //                val tileentity = iterator.next.asInstanceOf[TileEntity]
+        //                if (tileentity.getPos == pos) {
+        //                    tileentity.invalidate()
+        //                    iterator.remove()
+        //                }
+        //            }
+        //          //  this.addedTileEntityList.add(tileEntityIn)
+        //        }
+        //        else {
+        val chunk = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
+        if (chunk != null) chunk.addTileEntity(blockPos, tileEntityIn)
+        addTileEntity(tileEntityIn)
+        //  }
+    }
+
+
+    def isAirBlock(blockPos: BlockPos): Boolean = if (blockPos.isValid(this)) getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8).isAirBlock(blockPos) else true
+
+    def isAirBlock(blockState: BlockState): Boolean = {
+        if (blockState.pos.isValid(this)) getChunk(blockState.pos.x>>8,blockState.pos.y>>8,blockState.pos.z>>8).isAirBlock(blockState) else true
+    }
+
+    def addTileEntity(tile: TileEntity): Unit = {
+
+
+        //  val dest = if (processingLoadedTiles) addedTileEntityList
+        //   else loadedTileEntityList
+        //   val flag = dest.add(tile)
+        // if (flag && tile.isInstanceOf[ITickable])
+        tickableTileEntities += tile
+        //        if (this.isRemote) {
+        //            val blockpos = tile.pos
+        //            val iblockstate = getBlock(blockpos)
+        //            this.notifyBlockUpdate(blockpos, iblockstate, iblockstate, 2)
+        //        }
+        //        flag
+    }
     def setBlock(blockState: BlockState): Boolean ={
         if (!blockState.pos.isValid(this)) {
             return false
@@ -56,7 +115,18 @@ class World {
         //markAndNotifyBlock(pos, chunk, block, flag)
         true
     }
-
+    def getTileEntity(blockPos: BlockPos): TileEntity ={
+        if (!blockPos.isValid(this)){
+            null
+        } else {
+            // var tileentity = null
+            // if (this.processingLoadedTiles) tileentity = this.getPendingTileEntityAt(pos)
+            //  if (tileentity == null)
+            var   tileentity = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8).getTileEntity(blockPos)
+            //if (tileentity == null) tileentity = this.getPendingTileEntityAt(pos)
+            tileentity
+        }
+    }
     def spawnEntityInWorld(entity: Entity): Unit = {
         val chunk = getChunk( entity.posX toInt,entity.posY toInt,entity.posZ toInt)
         if (chunk != null){
@@ -67,7 +137,7 @@ class World {
 
     def update() {
         entities.foreach(_.update())
-       // tickableTileEntities.foreach(_.update(this))
+        tickableTileEntities.foreach(_.update(this))
     }
 
     def addEntity(entityIn: Entity): Unit = {

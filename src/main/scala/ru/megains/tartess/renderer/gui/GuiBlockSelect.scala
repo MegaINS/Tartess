@@ -2,7 +2,6 @@ package ru.megains.tartess.renderer.gui
 
 import java.awt.Color
 
-import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.BlockPos
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
@@ -13,7 +12,7 @@ class GuiBlockSelect extends GuiInGame with GuiText {
     var ray: RayTraceResult = _
     var blockSelect: Block = _
 
-    override def initGui(tar: Tartess): Unit = {
+    override def initGui(): Unit = {
 
 
         addText("Block.name", createString("", Color.WHITE))

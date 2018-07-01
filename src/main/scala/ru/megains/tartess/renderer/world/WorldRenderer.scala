@@ -22,36 +22,41 @@ class WorldRenderer(val world: World) {
 
     var blockMouseOver: Mesh = _
     var blockSelect: Mesh = _
+    val range = 5
+    var lastX = 0
+    var lastY = 0
+    var lastZ = 0
+
 
     def getRenderChunks(entityPlayer: EntityPlayer): ArrayBuffer[RenderChunk] = {
 //        // TODO:  OPTIMIZE
-//        val posX: Int = entityPlayer.posX / 64 - (if (entityPlayer.posX < 0) 1 else 0) toInt
-//        val posY: Int = entityPlayer.posY / 64 - (if (entityPlayer.posY < 0) 1 else 0) toInt
-//        val posZ: Int = entityPlayer.posZ / 64 - (if (entityPlayer.posZ < 0) 1 else 0) toInt
-//
-//        if(posX != lastX ||
-//                posY != lastY ||
-//                posZ != lastZ ||
-//                playerRenderChunks.isEmpty){
-//            lastX = posX
-//            lastY = posY
-//            lastZ = posZ
-//            playerRenderChunks.clear()
-//            for(x <- posX - range to posX + range;
-//                y <- posY - range to posY + range;
-//                z <- posZ - range to posZ + range){
-//                playerRenderChunks += getRenderChunk(x, y, z)
-//            }
-//        }
+        val posX: Int = entityPlayer.posX / 256 - (if (entityPlayer.posX < 0) 1 else 0) toInt
+        val posY: Int = entityPlayer.posY / 256 - (if (entityPlayer.posY < 0) 1 else 0) toInt
+        val posZ: Int = entityPlayer.posZ / 256 - (if (entityPlayer.posZ < 0) 1 else 0) toInt
 
-
-        if(playerRenderChunks.isEmpty){
-            for(x <- -world.length to world.length;
-                y <- -world.height to world.height;
-                z <- -world.width to world.width){
+        if(posX != lastX ||
+                posY != lastY ||
+                posZ != lastZ ||
+                playerRenderChunks.isEmpty){
+            lastX = posX
+            lastY = posY
+            lastZ = posZ
+            playerRenderChunks.clear()
+            for(x <- posX - range to posX + range;
+                y <- posY - range to posY + range;
+                z <- posZ - range to posZ + range){
                 playerRenderChunks += getRenderChunk(x, y, z)
             }
         }
+
+
+//        if(playerRenderChunks.isEmpty){
+//            for(x <- -world.length to world.length;
+//                y <- -world.height to world.height;
+//                z <- -world.width to world.width){
+//                playerRenderChunks += getRenderChunk(x, y, z)
+//            }
+//        }
         playerRenderChunks
     }
 
