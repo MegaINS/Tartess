@@ -5,6 +5,7 @@ import ru.megains.tartess.block.data.{BlockCell, BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
+import ru.megains.tartess.world.chunk.data.ChunkPosition
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -13,7 +14,6 @@ class BlockStorage(position: ChunkPosition) {
 
     val blocksId: Array[Short] = new Array[Short](4096)
     val containers = new mutable.HashMap[Short,BlockCell]()
-
 
     def get(x: Int, y: Int, z: Int): BlockState = {
         val x1 = x>>4
@@ -28,8 +28,6 @@ class BlockStorage(position: ChunkPosition) {
         }
     }
 
-
-
     def collisionRayTrace(world: World, blockpos: BlockPos, vec31: Vec3f, vec32: Vec3f):RayTraceResult = {
         val x1 = (blockpos.x & 255) >> 4
         val y1 = (blockpos.y & 255) >> 4
@@ -42,7 +40,6 @@ class BlockStorage(position: ChunkPosition) {
             case id => new BlockState(Blocks.getBlockById(id),new BlockPos(position.minXP +(x1<<4),position.minYP  +(y1<<4),position.minZP +(z1<<4))).collisionRayTrace( world, vec31, vec32)
         }
     }
-
 
     def getBlocks: mutable.HashSet[BlockState] ={
         val blocks = new  mutable.HashSet[BlockState]()
@@ -67,7 +64,7 @@ class BlockStorage(position: ChunkPosition) {
         val index = getIndex(x>>4,y>>4,z>>4)
         containers.getOrElseUpdate(index,defaultValue ={
             blocksId(index) = -1
-            new BlockCell(/*position.aabb*/)
+            new BlockCell()
         }).setBlock(blockState)
         if(containers(index).blocksVal==0){
             containers -= index

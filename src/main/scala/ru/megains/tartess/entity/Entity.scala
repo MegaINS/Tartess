@@ -7,7 +7,6 @@ import ru.megains.tartess.world.World
 
 abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
-
     var posX:Float =0
     var posY:Float =0
     var posZ:Float =0
@@ -107,11 +106,6 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
             motionZ += (z1 * f5 + x1 * f4)
         }
     }
-
-
-
-
-
 
     def rayTrace(blockReachDistance: Float, partialTicks: Float): RayTraceResult = {
 

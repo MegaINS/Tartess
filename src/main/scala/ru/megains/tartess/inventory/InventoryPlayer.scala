@@ -7,9 +7,7 @@ import ru.megains.tartess.item.Item
 import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.register.GameRegister
 
-class InventoryPlayer(val entityPlayer: EntityPlayer) extends AInventory {
-
-
+class InventoryPlayer(val entityPlayer: EntityPlayer) extends Inventory {
 
     val mainInventory: Array[ItemStack] = new Array[ItemStack](40)
     var stackSelect: Int = 0
@@ -17,7 +15,6 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends AInventory {
     GameRegister.getItems.foreach(item=>
         addItemStackToInventory(new ItemStack(item,10))
     )
-
 
     def changeStackSelect(value: Int): Unit = {
         var offset: Int = 0
@@ -39,57 +36,24 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends AInventory {
 
     def addItemStackToInventory(itemStack: ItemStack): Boolean = {
 
-      //  itemStack.item.itemType match {
-//            case ItemType.single =>
-//                val index = getEmptyStack
-//                if (index != -1) {
-//                    mainInventory(index) = itemStack
-//                    true
-//                } else {
-//                    false
-//                }
-
-           // case ItemType.base =>
-               val itemOp =  mainInventory.filter(_ ne null).find(_.item ==itemStack.item)
-                if(itemOp.nonEmpty){
-                    itemOp.get.stackSize += itemStack.stackSize
-                   // itemOp.get.stackMass += itemStack.stackMass
-                    true
-                }else{
-                    val index = getEmptyStack
-                    if (index != -1) {
-                        mainInventory(index) = itemStack
-                        true
-                    } else {
-                        false
-                    }
-                }
-//            case ItemType.mass =>
-//                val itemOp =  mainInventory.filter(_ ne null).find(_.item ==itemStack.item)
-//                if(itemOp.nonEmpty){
-//                    itemOp.get.stackMass += itemStack.stackMass
-//                    true
-//                }else{
-//                    val index = getEmptyStack
-//                    if (index != -1) {
-//                        mainInventory(index) = itemStack
-//                        true
-//                    } else {
-//                        false
-//                    }
-//                }
-
-      //  }
-
-
-
+        val itemOp =  mainInventory.filter(_ ne null).find(_.item ==itemStack.item)
+        if(itemOp.nonEmpty){
+            itemOp.get.stackSize += itemStack.stackSize
+            true
+        }else{
+            val index = getEmptyStack
+            if (index != -1) {
+                mainInventory(index) = itemStack
+                true
+            } else {
+                false
+            }
+        }
     }
-
 
     def getEmptyStack: Int = mainInventory.indexOf(null)
 
     def getStackSelect: ItemStack = mainInventory(stackSelect)
-
 
     override def getStackInSlot(index: Int): ItemStack = mainInventory(index)
 
@@ -102,29 +66,15 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends AInventory {
         val stack = mainInventory(index)
         var newStack: ItemStack = null
         if (stack ne null) {
-           // stack.item.itemType match {
-               // case ItemType.base | ItemType.single  =>
-                    if (stack.stackSize <= size) {
-                        newStack = stack
-                        mainInventory(index) = null
-                    } else {
-                        newStack = stack.splitStack(size)
-                        if (stack.stackSize < 1) {
-                            mainInventory(index) = null
-                        }
-                    }
-//                case ItemType.mass =>
-//                    if (stack.stackMass <= size) {
-//                        newStack = stack
-//                        mainInventory(index) = null
-//                    } else {
-//                        newStack = stack.splitStack(size)
-//                        if (stack.stackMass < 1) {
-//                            mainInventory(index) = null
-//                        }
-//                    }
-           // }
-
+            if (stack.stackSize <= size) {
+                newStack = stack
+                mainInventory(index) = null
+            } else {
+                newStack = stack.splitStack(size)
+                if (stack.stackSize < 1) {
+                    mainInventory(index) = null
+                }
+            }
         }
         newStack
 
@@ -160,9 +110,9 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends AInventory {
 }
 
 object InventoryPlayer {
+
     def isHotBar(index: Int): Boolean = index > -1 && index < hotBarSize
 
     val hotBarSize = 10
-
 
 }

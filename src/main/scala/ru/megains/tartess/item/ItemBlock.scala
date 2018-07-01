@@ -14,21 +14,10 @@ class ItemBlock(val block: Block) extends Item(block.name) {
 
     override def onItemUse(stack: ItemStack, playerIn: EntityPlayer, worldIn: World, pos: BlockState, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
 
-
-         //  val block: Block = worldIn.getBlock(pos)
-       //  if (!block.isReplaceable(worldIn, pos)) pos = pos.offset(facing)
-     //   if (stack.stackSize != 0 && /* playerIn.canPlayerEdit(pos, facing, stack)*//* &&*/ worldIn.canBlockBePlaced(this.block, pos, false, facing, null, stack)) {
-            //  val i: Int = getMetadata(stack.getMetadata)
-            // val iblockstate1: IBlockState = block.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, i, playerIn)
-            if (placeBlockAt(stack, playerIn, worldIn, pos, facing, hitX, hitY, hitZ)) {
-                //   val soundtype: SoundType = block.getSoundType
-                //  worldIn.playSound(playerIn, pos, soundtype.getPlaceSound, SoundCategory.BLOCKS, (soundtype.getVolume + 1.0F) / 2.0F, soundtype.getPitch * 0.8F)
-                stack.stackSize -= 1
-            }
-            EnumActionResult.SUCCESS
-      //  }
-      //  else
-       //     EnumActionResult.FAIL
+        if (placeBlockAt(stack, playerIn, worldIn, pos, facing, hitX, hitY, hitZ)) {
+            stack.stackSize -= 1
+        }
+        EnumActionResult.SUCCESS
     }
 
     override def registerTexture(textureRegister: TTextureRegister): Unit = {}
@@ -37,16 +26,7 @@ class ItemBlock(val block: Block) extends Item(block.name) {
         if(pos == null) return false
         if (!world.setBlock(pos)) return false
 
-        // setTileEntityNBT(world, player, pos, stack)
-      //  block.onBlockPlacedBy(world, pos, player, stack)
         true
     }
 
-//    def canPlaceBlockOnSide(worldIn: World, pos: BlockPos, side: BlockDirection, player: EntityPlayer, stack: ItemStack): Boolean = {
-//        val block: Block = worldIn.getBlock(pos)
-//        //  if ((block eq Blocks.SNOW_LAYER) && block.isReplaceable(worldIn, pos)) side = EnumFacing.UP
-//        //  else if (!block.isReplaceable(worldIn, pos)) pos = pos.offset(side)
-//        worldIn.canBlockBePlaced(this.block, pos, false, side, null, stack)
-//        true
-//    }
 }

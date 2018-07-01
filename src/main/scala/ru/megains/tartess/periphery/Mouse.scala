@@ -9,6 +9,8 @@ object Mouse {
     var y: Double = 0
     var preX: Double = 0
     var preY: Double = 0
+    var DWheel: Double = 0
+    var windowId: Long = 0
 
     def getY: Int = 600 - y toInt
 
@@ -18,11 +20,7 @@ object Mouse {
 
     def getDY: Double = (y - preY) * -1
 
-    var windowId: Long = 0
-
     def getDWheel: Int = DWheel.toInt
-
-    var DWheel: Double = 0
 
     def update(window: Window): Unit = {
 

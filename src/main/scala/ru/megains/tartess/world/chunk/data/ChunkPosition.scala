@@ -1,4 +1,6 @@
-package ru.megains.tartess.world.chunk
+package ru.megains.tartess.world.chunk.data
+
+import ru.megains.tartess.world.chunk.Chunk
 
 class ChunkPosition(val x:Int,val y:Int,val z:Int) {
 

@@ -2,7 +2,7 @@ package ru.megains.old.graph;
 
 import org.lwjgl.BufferUtils;
 import ru.megains.tartess.physics.AABB;
-import ru.megains.tartess.world.chunk.ChunkPosition;
+import ru.megains.tartess.world.chunk.data.ChunkPosition;
 
 import java.nio.FloatBuffer;
 

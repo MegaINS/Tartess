@@ -2,7 +2,7 @@ package ru.megains.tartess.renderer
 
 import org.joml.{Matrix4f, Vector3f}
 import ru.megains.tartess.block.data.BlockPos
-import ru.megains.tartess.world.chunk.ChunkPosition
+import ru.megains.tartess.world.chunk.data.ChunkPosition
 
 class Transformation {
 

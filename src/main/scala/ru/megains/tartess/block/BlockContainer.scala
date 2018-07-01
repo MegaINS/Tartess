@@ -10,8 +10,7 @@ abstract class BlockContainer(name:String) extends Block(name) with TileEntityCo
 
     override def isOpaqueCube: Boolean = false
 
-
-   override def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, p_onBlockActivated_6:ItemStack, ponBlockActivated7:BlockDirection, p_onBlockActivated_8: Float, p_onBlockActivated_9: Float): Boolean = {
+    override def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemStack, blockDirection: BlockDirection, float1: Float, float2: Float): Boolean = {
         if (world.getTileEntity(pos) == null) {
             false
         }else{
@@ -19,6 +18,5 @@ abstract class BlockContainer(name:String) extends Block(name) with TileEntityCo
             true
         }
    }
-
 
 }

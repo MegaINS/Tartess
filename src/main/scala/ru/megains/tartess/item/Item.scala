@@ -16,7 +16,6 @@ class Item(val name: String) {
 
     var maxStackSize: Int = 64
     var mass:Int = 1
-  //  val itemType:ItemType = ItemType.base
     var aTexture: TextureAtlas = _
 
     def registerTexture(textureRegister: TTextureRegister): Unit = {
@@ -40,7 +39,6 @@ object Item {
     def getIdFromItem(item: Item): Int = {
         GameRegister.getIdByItem(item)
     }
-
 
     def initItems(): Unit = {
         GameRegister.registerItem(1000, new Item("stick"))

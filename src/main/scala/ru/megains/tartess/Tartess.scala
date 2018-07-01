@@ -50,6 +50,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     var objectMouseOver: RayTraceResult = _
 
     var blockSelectPosition: BlockState = _
+
     def startGame(): Unit = {
 
 
@@ -97,19 +98,17 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         log.info("GuiManager init...")
         guiManager.init()
         world = new World()
-        // world = new World(saveLoader.getSaveLoader("world"))
+        //world = new World(saveLoader.getSaveLoader("world"))
         worldRenderer = new WorldRenderer(world)
         renderer.worldRenderer = worldRenderer
         player = new EntityPlayer
-         playerController = new PlayerControllerMP(this)
-         world.spawnEntityInWorld(player)
+        playerController = new PlayerControllerMP(this)
+        world.spawnEntityInWorld(player)
         // guiManager.setGuiScreen(new GuiPlayerSelect())
 
         camera.setPosition(player.posX/16f, (player.posY + player.levelView)/16f, player.posZ/16f)
         camera.setRotation(player.xRot, player.yRot, 0)
     }
-
-
 
     def run(): Unit = {
         try {
@@ -163,7 +162,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
     }
 
-    private def update(): Unit = {
+    def update(): Unit = {
         Mouse.update(window)
         if (rightClickDelayTimer > 0) rightClickDelayTimer -= 1
         cameraInc.set(0, 0, 0)
@@ -222,15 +221,14 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
     }
 
-    private def render(): Unit = {
+    def render(): Unit = {
         renderer.render(camera)
     }
 
-    private def cleanup(): Unit = {
+    def cleanup(): Unit = {
         log.info("Game stopped...")
         running = false
     }
-
 
     def runTickMouse(button: Int, buttonState: Boolean): Unit = {
 
@@ -239,10 +237,8 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
             rightClickMouse()
         }
 
-
-
         if (button == 0 && buttonState && objectMouseOver != null) {
-           // playerController.clickBlock(objectMouseOver.blockPos, BlockDirection.DOWN)
+
             world.setAirBlock(objectMouseOver.blockPos)
         }
 
@@ -265,37 +261,22 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         if (!playerController.isHittingBlock) {
             rightClickDelayTimer = 4
             val itemstack: ItemStack = player.getHeldItem
-            //            if (blockSelectPosition == null) {
-            //                // log.warn("Null returned as \'hitResult\', this shouldn\'t happen!")
-            //            } else {
-          //  objectMouseOver.typeOfHit match {
-               // case RayTraceResult.Type.ENTITY =>
-                // if (playerController.interactWithEntity(player, objectMouseOver.entityHit, objectMouseOver, player.getHeldItem(enumhand), enumhand) eq EnumActionResult.SUCCESS) return
-                // if (playerController.interactWithEntity(player, objectMouseOver.entityHit, player.getHeldItem(enumhand), enumhand) eq EnumActionResult.SUCCESS) return
 
-              //  case RayTraceResult.Type.BLOCK =>
-                    val blockpos: BlockPos = objectMouseOver.blockPos
-                    if (!world.isAirBlock(blockpos)) {
-                        // val i: Int = if (itemstack != null) itemstack.stackSize
-                        //else 0
+            val blockpos: BlockPos = objectMouseOver.blockPos
+            if (!world.isAirBlock(blockpos)) {
 
-                        val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
-                        if (enumactionresult eq EnumActionResult.SUCCESS) {
-                            //   player.swingArm()
-                            if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
-                            //    else if (itemstack.stackSize != i || playerController.isInCreativeMode) entityRenderer.itemRenderer.resetEquippedProgress()
-                            return
-                        }
-                    }
-              //  case _ =>
-                // }
-           // }
-            val itemstack1: ItemStack = player.getHeldItem
-            if (itemstack1 != null && (playerController.processRightClick(player, world, itemstack1) eq EnumActionResult.SUCCESS)) {
-                //   entityRenderer.itemRenderer.resetEquippedProgress()
-                return
+
+                val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
+                if (enumactionresult eq EnumActionResult.SUCCESS) {
+                    if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
+                    return
+                }
             }
 
+            val itemstack1: ItemStack = player.getHeldItem
+            if (itemstack1 != null && (playerController.processRightClick(player, world, itemstack1) eq EnumActionResult.SUCCESS)) {
+                return
+            }
         }
     }
 

@@ -33,6 +33,7 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
             yRot += 360.0F
         }
     }
+
     def openGui(world: World, pos: BlockPos): Unit = {
         val tileEntity = world.getTileEntity(pos)
         tileEntity match {
@@ -44,6 +45,7 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
         }
 
     }
+
     def update(xo: Float, yo: Float, zo: Float) {
 
         if (yo > 0) {
@@ -67,7 +69,6 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
         }
     }
 
-
     override def update(): Unit = {
         yRot match {
             case y if y > 315 || y <45 => side = BlockDirection.NORTH
@@ -85,14 +86,13 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
         openContainer = inventoryContainer
         Tartess.tartess.guiManager.setGuiScreen(new GuiPlayerInventory(this))
     }
+
     def getHeldItem: ItemStack = getItemStackFromSlot
 
     def getItemStackFromSlot: ItemStack = inventory.getStackSelect
+
     def setItemStackToSlot(stack: ItemStack) {
 
-        // playEquipSound(stack)
         inventory.mainInventory(inventory.stackSelect) = stack
-
-
     }
 }

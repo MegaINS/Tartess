@@ -8,6 +8,7 @@ import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.tileentity.{TileEntity, TileEntityContainer}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
+import ru.megains.tartess.world.chunk.data.ChunkPosition
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -60,19 +61,12 @@ class Chunk(val position: ChunkPosition,val world: World) {
         }
         empty
     }
+
     def getTileEntity(pos: BlockPos): TileEntity = {
         var tileentity = chunkTileEntityMap.get( Chunk.getIndex(pos.x,pos.y,pos.z))
-        //        if (tileentity != null) {
-        //            chunkTileEntityMap.remove(pos)
-        //            tileentity = null
-        //        }
-        //        if (tileentity == null) if (p_177424_2_ eq Chunk.EnumCreateEntityType.IMMEDIATE) {
-        //            tileentity = this.createNewTileEntity(pos)
-        //            this.world.setTileEntity(pos, tileentity)
-        //        }
-        // else if (p_177424_2_ eq Chunk.EnumCreateEntityType.QUEUED) this.tileEntityPosQueue.add(pos.toImmutable)
         tileentity.get
     }
+
     def getBlocks:mutable.HashSet[BlockState] ={
         blockStorage.getBlocks
     }
@@ -125,48 +119,32 @@ class Chunk(val position: ChunkPosition,val world: World) {
             case _ =>
         }
 
-
-
-
         block match {
             case container:TileEntityContainer =>
                 val  tileEntity = container.createNewTileEntity(world,blockState)
                 world.setTileEntity(pos, tileEntity)
-            // }
-            // if (tileEntity != null) tileEntity.updateContainingBlockInfo()
             case _ =>
         }
         true
     }
 
-
     def removeTileEntity(pos: BlockPos): Unit = {
         chunkTileEntityMap -= Chunk.getIndex(pos.x,pos.y,pos.z)
     }
-
 
     def addTileEntity(tileEntityIn: TileEntity): Unit = {
         addTileEntity(tileEntityIn.pos,tileEntityIn)
         world.addTileEntity(tileEntityIn)
     }
+
     def addTileEntity(pos: BlockPos, tileEntityIn: TileEntity): Unit = {
-        //        if (tileEntityIn.getWorld ne this.world) { //Forge don't call unless it's changed, could screw up bad mods.
-        //            tileEntityIn.setWorld(this.world)
-        //        }
-        //  tileEntityIn.setPos(pos)
         getBlock(pos).block match {
             case _:BlockContainer =>
                 chunkTileEntityMap += Chunk.getIndex(pos.x,pos.y,pos.z) -> tileEntityIn
             case _ =>
         }
-
-        //        if (getBlockState(pos).getBlock.hasTileEntity(getBlockState(pos))) {
-        //          //  if (chunkTileEntityMap.containsKey(pos)) chunkTileEntityMap.get(pos).asInstanceOf[TileEntity].invalidate()
-        //            tileEntityIn.validate()
-        //            chunkTileEntityMap.put(pos, tileEntityIn)
-        //            tileEntityIn.onLoad()
-        //        }
     }
+
     def isOpaqueCube(pos: BlockPos,blockDirection: BlockDirection): Boolean = {
         val blockPos = new BlockPos(pos.x+blockDirection.x*16,pos.y+blockDirection.y*16,pos.z+blockDirection.z*16)
         if(world.getBlock(blockPos).block == Blocks.dirt) true
@@ -183,7 +161,6 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def isOpaqueCube(pos: BlockSidePos): Boolean = {
-
 
         for(x<-pos.minX to pos.maxX;
             y<-pos.minY to pos.maxY;

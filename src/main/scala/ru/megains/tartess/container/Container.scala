@@ -40,19 +40,8 @@ abstract class Container {
                         slot.putStack(inventoryPlayer.itemStack)
                         inventoryPlayer.itemStack = null
                     } else if (slot.getStack.item == inventoryPlayer.itemStack.item) {
-//                        slot.getStack.item.itemType match {
-//                            case ItemType.single =>
-//                                val temp = slot.getStack
-//                                slot.putStack(inventoryPlayer.itemStack)
-//                                inventoryPlayer.itemStack = temp
-//                            case ItemType.mass =>
-//                                //slot.getStack.stackMass += inventoryPlayer.itemStack.stackMass
-//                                inventoryPlayer.itemStack = null
-                          //  case ItemType.base =>
-                                slot.getStack.stackSize += inventoryPlayer.itemStack.stackSize
-                                //slot.getStack.stackMass += inventoryPlayer.itemStack.stackMass
-                                inventoryPlayer.itemStack = null
-                      //  }
+                        slot.getStack.stackSize += inventoryPlayer.itemStack.stackSize
+                        inventoryPlayer.itemStack = null
                     }else{
                         val temp = slot.getStack
                         slot.putStack(inventoryPlayer.itemStack)
@@ -64,29 +53,15 @@ abstract class Container {
                     if (slot.isEmpty) {
                         slot.putStack(inventoryPlayer.itemStack.splitStack(1))
                     } else if (slot.getStack.item == inventoryPlayer.itemStack.item) {
-//                        slot.getStack.item.itemType match {
-//                            case ItemType.single =>
-//
-//                            case ItemType.mass =>
-//
-//                            case ItemType.base =>
-                                slot.getStack.stackSize += 1
-                              //  slot.getStack.stackMass += inventoryPlayer.itemStack.item.mass
-                                inventoryPlayer.itemStack.stackSize -= 1
-                              //  inventoryPlayer.itemStack.stackMass -= inventoryPlayer.itemStack.item.mass
-                       // }
+                        slot.getStack.stackSize += 1
+                        inventoryPlayer.itemStack.stackSize -= 1
                     }
                     if (inventoryPlayer.itemStack.stackSize < 1) {
                         inventoryPlayer.itemStack = null
                     }
                 } else {
                     if (!slot.isEmpty) {
-                        val size: Int =  //slot.getStack.item.itemType match {
-                           // case ItemType.mass =>
-                             //  slot.getStack.stackMass
-                            //case ItemType.base | ItemType.single =>
-                               slot.getStack.stackSize
-                     //  }
+                        val size: Int = slot.getStack.stackSize
                         inventoryPlayer.itemStack = slot.decrStackSize(Math.ceil( size/ 2.0).toInt)
                     }
                 }
@@ -95,31 +70,11 @@ abstract class Container {
 
     }
 
-//    val listeners: ArrayBuffer[EntityPlayerMP] = ArrayBuffer[EntityPlayerMP]()
-//
-//    def addListener(listener: EntityPlayerMP) {
-//        if (listeners.contains(listener)) throw new IllegalArgumentException("Listener already listening")
-//        else {
-//            listeners += listener
-//            listener.updateCraftingInventory(this, getInventory)
-//            detectAndSendChanges()
-//        }
-//    }
-
     def getInventory: Array[ItemStack] = {
         val array = ArrayBuffer[ItemStack]()
         inventorySlots.foreach(array += _.getStack)
         array.toArray
     }
-
-//    def detectAndSendChanges() {
-//
-//        for (i <- inventorySlots.indices) {
-//            val itemStack = inventorySlots(i).getStack
-//            listeners.foreach(_.sendSlotContents(this, i, itemStack))
-//        }
-//
-//    }
 
     def putStackInSlot(slot: Int, item: ItemStack): Unit = {
         if (slot < inventorySlots.length) {

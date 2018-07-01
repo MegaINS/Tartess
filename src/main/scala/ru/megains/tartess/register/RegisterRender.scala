@@ -5,7 +5,6 @@ import scala.collection.mutable
 
 trait RegisterRender[T] {
 
-
     val default: T
 
     val idRender: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]

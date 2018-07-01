@@ -2,7 +2,7 @@ package ru.megains.tartess.renderer.api
 
 import ru.megains.tartess.block.data.BlockState
 import ru.megains.tartess.world.World
-import ru.megains.tartess.world.chunk.ChunkPosition
+import ru.megains.tartess.world.chunk.data.ChunkPosition
 
 abstract class RenderBlock {
 

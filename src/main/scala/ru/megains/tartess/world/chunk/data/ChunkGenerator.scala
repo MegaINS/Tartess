@@ -1,7 +1,8 @@
-package ru.megains.tartess.world.chunk
+package ru.megains.tartess.world.chunk.data
 
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.world.World
+import ru.megains.tartess.world.chunk.{BlockStorage, Chunk}
 
 class ChunkGenerator(world: World) {
 
@@ -17,17 +18,6 @@ class ChunkGenerator(world: World) {
                 blockData(i) = Blocks.getIdByBlock(Blocks.dirt).toShort
             }
        }
-        //else {
-//
-////            val array = world.heightMap.generateHeightMap(chunkX, chunkZ)
-////            for (x1 <- 0 to 15; y1 <- 0 to 15; z1 <- 0 to 15) {
-////                if (array(x1)(z1) > y1 + (chunkY * 16)) {
-////                    blockStorage.setWorldGet(x1, y1, z1, Blocks.stone)
-////                } else if (array(x1)(z1) == y1 + (chunkY * 16)) {
-////                    blockStorage.setWorldGet(x1, y1, z1, Blocks.dirt)
-////                }
-////            }
-//        }
 
         chunk
     }

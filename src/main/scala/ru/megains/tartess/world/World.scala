@@ -9,6 +9,7 @@ import ru.megains.tartess.renderer.world.WorldRenderer
 import ru.megains.tartess.tileentity.TileEntity
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.chunk.Chunk
+import ru.megains.tartess.world.chunk.data.ChunkProvider
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -16,21 +17,27 @@ import scala.collection.mutable.ArrayBuffer
 
 class World {
 
-
+    val length: Int = 100000
+    val width: Int = 100000
+    val height: Int = 1000
 
     var worldRenderer:WorldRenderer = _
-
-
-    val length: Int = 100
-    val width: Int = 100
-    val height: Int = 100
     val chunkProvider:ChunkProvider = new ChunkProvider(this)
     val entities: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
     val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
 
     def getChunk(x: Int, y: Int, z: Int): Chunk = {
-        if((x <= length && x >= -length) && (z <= width  && z >= -width) && (y <= height && y >= -height)){
+        if((x<<8 <= length && x<<8 >= -length) && (z<<8 <= width  && z<<8 >= -width) && (y<<8 <= height && y<<8 >= -height)){
             chunkProvider.provideChunk(x,y,z)
+        } else{
+            ChunkProvider.voidChunk
+        }
+
+    }
+
+    def getChunk(blockPos: BlockPos): Chunk = {
+        if((blockPos.x <= length && blockPos.x >= -length) && (blockPos.z <= width  && blockPos.z >= -width) && (blockPos.y <= height && blockPos.y >= -height)){
+            chunkProvider.provideChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
         } else{
             ChunkProvider.voidChunk
         }
@@ -41,14 +48,14 @@ class World {
         if (!blockPos.isValid(this)) {
             return Blocks.air.blockState
         }
-        val chunk = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
+        val chunk = getChunk(blockPos)
         chunk.getBlock(blockPos)
     }
 
     def removeTileEntity(blockPos: BlockPos): Unit = {
 
 
-        val chunk = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
+        val chunk = getChunk(blockPos)
         if (chunk != null) {
             tickableTileEntities -= chunk.getTileEntity(blockPos)
             chunk.removeTileEntity(blockPos)
@@ -56,82 +63,46 @@ class World {
         }
 
     }
-    def setTileEntity(blockPos: BlockPos, tileEntityIn: TileEntity): Unit = {
-        //  pos = pos.toImmutable // Forge - prevent mutable BlockPos leaks
 
-        //        if (!this.isOutsideBuildHeight(pos)) if (tileEntityIn != null && !tileEntityIn.isInvalid) if (this.processingLoadedTiles) {
-        //
-        //
-        //            val iterator = this.addedTileEntityList.iterator
-        //            while ( {
-        //                iterator.hasNext
-        //            }) {
-        //                val tileentity = iterator.next.asInstanceOf[TileEntity]
-        //                if (tileentity.getPos == pos) {
-        //                    tileentity.invalidate()
-        //                    iterator.remove()
-        //                }
-        //            }
-        //          //  this.addedTileEntityList.add(tileEntityIn)
-        //        }
-        //        else {
-        val chunk = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
+    def setTileEntity(blockPos: BlockPos, tileEntityIn: TileEntity): Unit = {
+
+        val chunk = getChunk(blockPos)
         if (chunk != null) chunk.addTileEntity(blockPos, tileEntityIn)
         addTileEntity(tileEntityIn)
-        //  }
+
     }
 
-
-    def isAirBlock(blockPos: BlockPos): Boolean = if (blockPos.isValid(this)) getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8).isAirBlock(blockPos) else true
+    def isAirBlock(blockPos: BlockPos): Boolean = if (blockPos.isValid(this)) getChunk(blockPos).isAirBlock(blockPos) else true
 
     def isAirBlock(blockState: BlockState): Boolean = {
-        if (blockState.pos.isValid(this)) getChunk(blockState.pos.x>>8,blockState.pos.y>>8,blockState.pos.z>>8).isAirBlock(blockState) else true
+        if (blockState.pos.isValid(this)) getChunk(blockState.pos).isAirBlock(blockState) else true
     }
 
     def addTileEntity(tile: TileEntity): Unit = {
-
-
-        //  val dest = if (processingLoadedTiles) addedTileEntityList
-        //   else loadedTileEntityList
-        //   val flag = dest.add(tile)
-        // if (flag && tile.isInstanceOf[ITickable])
         tickableTileEntities += tile
-        //        if (this.isRemote) {
-        //            val blockpos = tile.pos
-        //            val iblockstate = getBlock(blockpos)
-        //            this.notifyBlockUpdate(blockpos, iblockstate, iblockstate, 2)
-        //        }
-        //        flag
     }
+
     def setBlock(blockState: BlockState): Boolean ={
         if (!blockState.pos.isValid(this)) {
             return false
         }
         worldRenderer.reRender(blockState.pos)
-        val chunk = getChunk(blockState.pos.x>>8,blockState.pos.y>>8,blockState.pos.z>>8)
+        val chunk = getChunk(blockState.pos)
         chunk.setBlock(blockState)
-
-
-        //markAndNotifyBlock(pos, chunk, block, flag)
-        true
     }
+
     def getTileEntity(blockPos: BlockPos): TileEntity ={
         if (!blockPos.isValid(this)){
             null
         } else {
-            // var tileentity = null
-            // if (this.processingLoadedTiles) tileentity = this.getPendingTileEntityAt(pos)
-            //  if (tileentity == null)
-            var   tileentity = getChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8).getTileEntity(blockPos)
-            //if (tileentity == null) tileentity = this.getPendingTileEntityAt(pos)
-            tileentity
+            getChunk(blockPos).getTileEntity(blockPos)
         }
     }
+
     def spawnEntityInWorld(entity: Entity): Unit = {
         val chunk = getChunk( entity.posX toInt,entity.posY toInt,entity.posZ toInt)
         if (chunk != null){
             chunk.addEntity(entity)
-
         }
     }
 
@@ -147,12 +118,13 @@ class World {
     def removeEntity(entityIn: Entity): Unit = {
         entities -= entityIn
     }
+
     def isOpaqueCube(pos: BlockSidePos): Boolean  = {
         getChunk(pos.minX>>8,pos.minY>>8,pos.minZ>>8).isOpaqueCube(pos)
     }
 
     def isOpaqueCube(pos: BlockPos, blockDirection: BlockDirection): Boolean = {
-        getChunk(pos.x>>8,pos.y>>8,pos.z>>8).isOpaqueCube(pos,blockDirection)
+        getChunk(pos).isOpaqueCube(pos,blockDirection)
     }
 
     def setAirBlock(pos: BlockPos):Boolean ={
@@ -255,7 +227,7 @@ class World {
                 yBS = i10
                 zBS = j110
                 blockpos = new BlockPos(xBS, yBS, zBS)
-                chunk = getChunk(blockpos.x>>8,blockpos.y>>8,blockpos.z>>8)
+                chunk = getChunk(blockpos)
 
 
                 val raytraceresult1: RayTraceResult = chunk.collisionRayTrace(blockpos,  vec31, vec32)
@@ -276,8 +248,6 @@ class World {
 
         }
         null
-       // if (returnLastUncollidableBlock) raytraceresult2 else null
-
     }
 
 }

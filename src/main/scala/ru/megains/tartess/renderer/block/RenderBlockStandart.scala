@@ -4,7 +4,7 @@ import ru.megains.tartess.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.renderer.api.RenderBlock
 import ru.megains.tartess.world.World
-import ru.megains.tartess.world.chunk.ChunkPosition
+import ru.megains.tartess.world.chunk.data.ChunkPosition
 
 
 object RenderBlockStandart extends RenderBlock {

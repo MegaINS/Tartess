@@ -13,12 +13,6 @@ class TileEntityChest(pos:BlockPos, world: World) extends TileEntityInventory(po
     log.info("Set tile entity")
 
 
-    override def update(world: World): Unit = {
-
-    }
-
-
-
     override def getGui(player: EntityPlayer): GuiContainer = new GuiChest(player.inventory,this)
 
     override def getContainer(player: EntityPlayer): Container = new ContainerChest(player.inventory,this)

@@ -2,7 +2,7 @@ package ru.megains.tartess.inventory
 
 import ru.megains.tartess.item.itemstack.ItemStack
 
-class Slot(inventory: AInventory, val index: Int, val xPos: Int, val yPos: Int) {
+class Slot(inventory: Inventory, val index: Int, val xPos: Int, val yPos: Int) {
 
     var slotNumber: Int = 0
 

@@ -11,5 +11,4 @@ class ContainerPlayerInventory(inventoryPlayer: InventoryPlayer) extends Contain
         addSlotToContainer(new Slot(inventoryPlayer, 10 + i + j * 10, 164 + i * 48, 78 + j * 46))
     }
 
-
 }

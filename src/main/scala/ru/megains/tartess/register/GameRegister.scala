@@ -13,10 +13,10 @@ object GameRegister {
     private val blockData = new RegisterNamespace[Block] with RegisterRender[RenderBlock] {
         override val default: RenderBlock = RenderBlockWG
     }
+
     private val itemData = new RegisterNamespace[Item] with RegisterRender[RenderItem] {
         override val default = null
     }
-
 
     val tileEntityData = new RegisterNamespace[Class[_<:TileEntity]] //with RegisterRender[TRenderTileEntity] {
       //  override val default = null
@@ -26,42 +26,13 @@ object GameRegister {
         override val default = null
     }*/
 
-    def registerTileEntity(id: Int, tileEntity: Class[_<:TileEntity]): Unit = {
-        privateRegisterTileEntity(id, tileEntity)
-    }
-
-    def getTileEntityById(id: Int):Class[_<:TileEntity] = {
-        tileEntityData.getObject(id)
-    }
-
-    def getIdByTileEntity(tileEntity: Class[_ <: TileEntity]): Int = {
-        tileEntityData.getIdByObject(tileEntity)
-    }
-    private def privateRegisterTileEntity(id: Int, tileEntity: Class[_<:TileEntity]): Boolean = {
-        if (tileEntityData.contains(tileEntity)) {
-            println("TileEntity \"" + tileEntity.toString + "\" already register")
-        } else {
-            if (tileEntityData.contains(id)) {
-                println("Id \"" + id + "\" not single")
-            } else {
-                if (tileEntityData.contains(tileEntity.toString)) {
-                    println("Name \"" + tileEntity.toString + "\" not single")
-                } else {
-                    tileEntityData.registerObject(id, tileEntity.toString, tileEntity)
-                    return true
-                }
-            }
-        }
-        false
-    }
-
     def registerBlock(id: Int, block: Block): Unit = {
         if (privateRegisterBlock(id, block)) {
-
-            val item = new ItemBlock(block)
-
-            if (privateRegisterItem(id, item)) {
-                itemData.registerRender(id, new RenderItemBlock(item))
+            if(block.name != "air"){
+                val item = new ItemBlock(block)
+                if (privateRegisterItem(id, item)) {
+                    itemData.registerRender(id, new RenderItemBlock(item))
+                }
             }
         }
     }
@@ -120,6 +91,36 @@ object GameRegister {
         false
     }
 
+    def registerTileEntity(id: Int, tileEntity: Class[_<:TileEntity]): Unit = {
+        privateRegisterTileEntity(id, tileEntity)
+    }
+
+    def getTileEntityById(id: Int):Class[_<:TileEntity] = {
+        tileEntityData.getObject(id)
+    }
+
+    def getIdByTileEntity(tileEntity: Class[_ <: TileEntity]): Int = {
+        tileEntityData.getIdByObject(tileEntity)
+    }
+
+    private def privateRegisterTileEntity(id: Int, tileEntity: Class[_<:TileEntity]): Boolean = {
+        if (tileEntityData.contains(tileEntity)) {
+            println("TileEntity \"" + tileEntity.toString + "\" already register")
+        } else {
+            if (tileEntityData.contains(id)) {
+                println("Id \"" + id + "\" not single")
+            } else {
+                if (tileEntityData.contains(tileEntity.toString)) {
+                    println("Name \"" + tileEntity.toString + "\" not single")
+                } else {
+                    tileEntityData.registerObject(id, tileEntity.toString, tileEntity)
+                    return true
+                }
+            }
+        }
+        false
+    }
+
     def getIdByBlock(block: Block): Int = blockData.getIdByObject(block)
 
     def getBlockById(id: Int): Block = blockData.getObject(id)
@@ -137,4 +138,6 @@ object GameRegister {
     def getItems: Iterable[Item] = itemData.getObjects
 
     def getItemFromBlock(block: Block): Item = itemData.getObject(blockData.getIdByObject(block))
+
+
 }

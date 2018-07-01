@@ -5,9 +5,6 @@ import org.lwjgl.opengl.GL
 import org.lwjgl.system.MemoryUtil.NULL
 
 class Window {
-    def getHeight(): Int = height
-
-    def getWidth(): Int = width
 
 
     var width: Int = 800

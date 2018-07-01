@@ -96,18 +96,18 @@ public class Hud implements IHud {
 
     public void updatePos(){
 
-        getText("playerPos").setPosition(0, window.getHeight() - 20, 0);
-        getText("playerPos.x").setPosition(0, window.getHeight() - 40, 0);
-        getText("playerPos.y").setPosition(0, window.getHeight() - 60, 0);
-        getText("playerPos.z").setPosition(0, window.getHeight() - 80, 0);
-        getText("BlockWorldPos").setPosition(0, window.getHeight() - 100, 0);
-        getText("BlockWorldPos.name").setPosition(0, window.getHeight() - 120, 0);
-        getText("BlockWorldPos.side").setPosition(0, window.getHeight() - 140, 0);
-        getText("BlockWorldPos.x").setPosition(0, window.getHeight() - 160, 0);
-        getText("BlockWorldPos.y").setPosition(0, window.getHeight() - 180, 0);
-        getText("BlockWorldPos.z").setPosition(0, window.getHeight()- 200, 0);
-        getText("Memory use").setPosition(window.getWidth() - 200, window.getHeight()- 20, 0);
-        getText("fps").setPosition(window.getWidth()-200, window.getHeight() - 40, 0);
+        getText("playerPos").setPosition(0, window.height() - 20, 0);
+        getText("playerPos.x").setPosition(0, window.height() - 40, 0);
+        getText("playerPos.y").setPosition(0, window.height() - 60, 0);
+        getText("playerPos.z").setPosition(0, window.height() - 80, 0);
+        getText("BlockWorldPos").setPosition(0, window.height() - 100, 0);
+        getText("BlockWorldPos.name").setPosition(0, window.height() - 120, 0);
+        getText("BlockWorldPos.side").setPosition(0, window.height() - 140, 0);
+        getText("BlockWorldPos.x").setPosition(0, window.height() - 160, 0);
+        getText("BlockWorldPos.y").setPosition(0, window.height() - 180, 0);
+        getText("BlockWorldPos.z").setPosition(0, window.height()- 200, 0);
+        getText("Memory use").setPosition(window.width() - 200, window.height()- 20, 0);
+        getText("fps").setPosition(window.width()-200, window.height() - 40, 0);
 
     }
 }

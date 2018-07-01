@@ -15,7 +15,6 @@ sealed abstract class BlockDirection private(val x: Int, val y: Int, val z: Int,
 
 object BlockDirection {
 
-
     case object DOWN extends BlockDirection(0, -1, 0, "down", 0)
 
     case object UP extends BlockDirection(0, 1, 0, "up", 1)

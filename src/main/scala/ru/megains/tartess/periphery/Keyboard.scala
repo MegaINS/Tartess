@@ -12,7 +12,5 @@ object Keyboard {
             if (tartess.guiManager.isGuiScreen) tartess.guiManager.runTickKeyboard(key, action, mods)
             else tartess.runTickKeyboard(key, action, mods)
         })
-
-
     }
 }
