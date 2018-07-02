@@ -34,9 +34,9 @@ class GuiBlockSelect extends GuiInGame with GuiText {
                // val hp = oc.world.getBlockHp(posB)
                 blockSelect = ray.block
                 addText("Block.name", createString(ray.block.name, Color.WHITE))
-                addText("Block.x", createString("x: " + posB.x + "  " + vec.x, Color.WHITE))
-                addText("Block.y", createString("y: " + posB.y + "  " + vec.y, Color.WHITE))
-                addText("Block.z", createString("z: " + posB.z + "  " + vec.z, Color.WHITE))
+                addText("Block.x", createString("x: " + posB.x + "  " + (vec.x - posB.x), Color.WHITE))
+                addText("Block.y", createString("y: " + posB.y + "  " + (vec.y - posB.y), Color.WHITE))
+                addText("Block.z", createString("z: " + posB.z + "  " + (vec.z - posB.z), Color.WHITE))
                 addText("Block.side", createString("side: " + ray.sideHit.name, Color.WHITE))
               //  addText("Block.hp", createString("HP: " + hp, Color.WHITE))
                // addText("Block.meta", createString("Meta: "+ meta, Color.WHITE))

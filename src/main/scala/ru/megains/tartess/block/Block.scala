@@ -48,19 +48,21 @@ class Block(val name:String) {
     }
 
     def getSelectPosition(worldIn: World,entity: Entity, objectMouseOver: RayTraceResult): BlockState = {
-        val side = entity.side
+        //val side = entity.side
         //Todo доделать
-        val blockBodyTarget = objectMouseOver.block.blockBody
+        //val blockBodyTarget = objectMouseOver.block.blockBody
         val posTarget: BlockPos = objectMouseOver.blockPos
+        val hitVec: Vec3f = objectMouseOver.hitVec
         var posSet: BlockPos = objectMouseOver.sideHit match {
             case BlockDirection.DOWN => posTarget.sum(0,-blockBody.maxY toInt,0)
             case BlockDirection.WEST => posTarget.sum(-blockBody.maxX toInt,0,0)
             case BlockDirection.NORTH => posTarget.sum(0,0,-blockBody.maxZ toInt)
-            case BlockDirection.UP => posTarget.sum(0,blockBodyTarget.maxY toInt,0)
-            case BlockDirection.EAST => posTarget.sum(blockBodyTarget.maxX toInt,0,0)
-            case BlockDirection.SOUTH => posTarget.sum(0,0,blockBodyTarget.maxZ toInt)
+            //case BlockDirection.UP => posTarget.sum(0,blockBodyTarget.maxY toInt,0)
+           // case BlockDirection.EAST => posTarget.sum(blockBodyTarget.maxX toInt,0,0)
+           // case BlockDirection.SOUTH => posTarget.sum(0,0,blockBodyTarget.maxZ toInt)
             case _ => posTarget
         }
+        posSet =  posSet.sum(hitVec.x  - posTarget.x toInt,hitVec.y - posTarget.y toInt,hitVec.z - posTarget.z toInt)
 //
 //        posSet = side match {
 //            case BlockDirection.EAST  => posTarget.sum(0,0,Math.floor(-blockSize.width/2f)  + 1 toInt)
