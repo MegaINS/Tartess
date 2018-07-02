@@ -2,7 +2,7 @@ package ru.megains.tartess.world.chunk.data
 
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.world.World
-import ru.megains.tartess.world.chunk.{BlockStorage, Chunk}
+import ru.megains.tartess.world.chunk.Chunk
 
 class ChunkGenerator(world: World) {
 

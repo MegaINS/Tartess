@@ -11,5 +11,8 @@ class ChunkPosition(val x:Int,val y:Int,val z:Int) {
     def maxXP: Int = minXP + 255
     def maxYP: Int = minYP + 255
     def maxZP: Int = minZP + 255
-
+    def pointIsCube(x: Int, y: Int, z: Int): Boolean =
+        (x >= minXP && x < maxXP) &&
+                (y >= minYP && y < maxYP) &&
+                (z >= minZP && z < maxZP)
 }

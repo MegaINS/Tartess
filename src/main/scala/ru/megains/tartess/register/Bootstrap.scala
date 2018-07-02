@@ -50,6 +50,9 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(18,new BlockGlass("glass"))
         GameRegister.registerBlock(19, new BlockChest("tileEntityTest"))
 
+       // GameRegister.registerBlock(20, new BlockTest("test15",15))
+       // GameRegister.registerBlock(21, new BlockTest("test16",16))
+       // GameRegister.registerBlock(22, new BlockTest("test17",17))
         GameRegister.registerBlockRender(Blocks.glass,RenderBlockStandart)
         GameRegister.registerBlockRender(Blocks.test0,RenderBlockStandart)
         GameRegister.registerBlockRender(Blocks.test1,RenderBlockStandart)

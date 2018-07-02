@@ -20,7 +20,12 @@ class BlockTest(name:String,i:Int) extends Block(name){
         new AABB(0,0,0,4,4,4),
         new AABB(0,0,0,3,3,3),
         new AABB(0,0,0,2,2,2),
-        new AABB(0,0,0,1,1,1)
+        new AABB(0,0,0,1,1,1),
+
+        new AABB(0,0,0,160,16,160),
+        new AABB(0,0,0,16,160,16),
+        new AABB(0,0,0,4,32,4)
+
     )
 
     override val blockBody = blockBodys(i)

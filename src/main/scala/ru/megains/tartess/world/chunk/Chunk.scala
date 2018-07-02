@@ -2,13 +2,13 @@ package ru.megains.tartess.world.chunk
 
 
 import ru.megains.tartess.block.BlockContainer
-import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
+import ru.megains.tartess.block.data._
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.tileentity.{TileEntity, TileEntityContainer}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
-import ru.megains.tartess.world.chunk.data.ChunkPosition
+import ru.megains.tartess.world.chunk.data.{BlockStorage, ChunkPosition}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -22,7 +22,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
 
 
 
-    var blockStorage = new BlockStorage(position)
+    var blockStorage = new BlockStorage(this,position)
     var chunkEntityMap: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
     var chunkTileEntityMap = new mutable.HashMap[Long,TileEntity]()
 
@@ -32,7 +32,6 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def isAirBlock(blockState: BlockState): Boolean = {
-        //todo
         var empty = true
 
         val aabb = blockState.getBoundingBox
@@ -56,7 +55,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
                     empty = false
                 }
             }else{
-                if(world.getChunk(x,y,z).blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.blockState) empty = false
+                if(world.getChunk(x>>8,y>>8,z>>8).blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.blockState) empty = false
             }
         }
         empty
@@ -92,26 +91,18 @@ class Chunk(val position: ChunkPosition,val world: World) {
         val maxX = aabb.maxX toInt
         val maxY = aabb.maxY toInt
         val maxZ = aabb.maxZ toInt
-        var xT = Integer.MIN_VALUE
-        var yT = Integer.MIN_VALUE
-        var zT = Integer.MIN_VALUE
+        val blockCell = new mutable.HashSet[BlockCell]()
 
-        //ToDo
         for(x <- minX until maxX;
             y <- minY until maxY;
             z <- minZ until maxZ){
-            if(xT != (x >> 8) || yT != (y >> 8)  ||zT != (z >> 8)){
-                xT =  x >> 8
-                yT =  y >> 8
-                zT =  z >> 8
-                if(x <= position.maxXP && y <= position.maxYP && z <= position.maxZP){
-                    blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
-                }else{
-                    world.getChunk(x,y,z).blockStorage.setBlock(x & 255,y & 255,z & 255,blockState)
-                }
+            if(x <= position.maxXP && y <= position.maxYP && z <= position.maxZP){
+                blockCell += blockStorage.getBlockCell(x & 255,y & 255,z & 255)
+            }else{
+                blockCell +=   world.getChunk(x>>8,y>>8,z>>8).blockStorage.getBlockCell(x & 255,y & 255,z & 255)
             }
         }
-
+        blockCell.foreach(_.setBlock(blockState))
 
         blockStatePrevious.block match {
             case _:BlockContainer =>

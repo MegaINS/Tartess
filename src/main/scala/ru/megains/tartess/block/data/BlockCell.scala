@@ -4,10 +4,11 @@ package ru.megains.tartess.block.data
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
+import ru.megains.tartess.world.chunk.Chunk
 
 import scala.collection.mutable
 
-class BlockCell {
+class BlockCell(val chunk: Chunk,val x:Int,val y:Int,val z:Int) {
 
     val blocks = new mutable.HashSet[BlockState]()
     var blocksVal = 0
@@ -44,6 +45,6 @@ class BlockCell {
     }
 
     def addBlocks(set: mutable.HashSet[BlockState]): Unit ={
-        blocks.foreach(set += _)
+        blocks.filter(block => chunk.position.pointIsCube(block.pos.x,block.pos.y,block.pos.z) ).foreach(set += _)
     }
 }
