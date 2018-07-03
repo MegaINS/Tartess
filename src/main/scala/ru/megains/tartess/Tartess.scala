@@ -252,6 +252,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
                 case GLFW_KEY_R => worldRenderer.reRenderWorld()
                 case GLFW_KEY_N => grabMouseCursor()
                 case GLFW_KEY_M => ungrabMouseCursor()
+                case GLFW_KEY_L => renderer.isLight = !renderer.isLight
                 case _ =>
             }
         }

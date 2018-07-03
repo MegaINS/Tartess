@@ -17,7 +17,7 @@ class RenderChunk(var chunk: Chunk){
     def render(layer: Int) {
         // if (!isVoid) {
         if (isReRender) {
-            if (RenderChunk.rend < 20) {
+            if (RenderChunk.rend < 5) {
                 // if (!chunk.isVoid) {
 
                 blockRender = 0

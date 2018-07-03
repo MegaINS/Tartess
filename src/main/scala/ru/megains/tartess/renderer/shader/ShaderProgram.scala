@@ -2,20 +2,35 @@ package ru.megains.tartess.renderer.shader
 
 import org.joml.Matrix4f
 import org.lwjgl.opengl.GL20._
+import ru.megains.old.utils.Utils
+import ru.megains.tartess.renderer.Renderer
 import ru.megains.tartess.utils.Vec3f
 
 import scala.collection.mutable
 
-class ShaderProgram {
+abstract class ShaderProgram {
+
+
 
     val programId: Int = glCreateProgram
     if (programId == 0) throw new Exception("Could not create Shader")
 
     var vertexShaderId:Int = 0
     var fragmentShaderId:Int  = 0
+    val dir:String = ""
 
     var uniforms:mutable.HashMap[String, UniformData] = new mutable.HashMap()
 
+    def create(): Unit = {
+        createVertexShader(Utils.loadResource(s"/shaders/$dir/vertex.vs"))
+        createFragmentShader(Utils.loadResource(s"/shaders/$dir/fragment.frag"))
+        link()
+        createUniforms()
+    }
+
+    def createUniforms(): Unit
+
+    def setUniforms(renderer: Renderer): Unit
 
     def createShader(shaderCode: String, shaderType: Int): Int = {
         val shaderId = glCreateShader(shaderType)
@@ -41,7 +56,6 @@ class ShaderProgram {
         glValidateProgram(programId)
         if (glGetProgrami(programId, GL_VALIDATE_STATUS) == 0) println("Warning validating Shader code: " + glGetShaderInfoLog(programId, 1024))
     }
-
 
     def createUniform(uniformName: String): Unit = {
         val uniformLocation = glGetUniformLocation(programId, uniformName)
@@ -73,7 +87,6 @@ class ShaderProgram {
         val uniformData = getUniform(uniformName)
         glUniform3f(uniformData.uniformLocation, value.x, value.y, value.z)
     }
-
 
     def getUniform(uniformName: String): UniformData ={
         val uniformData = uniforms(uniformName)

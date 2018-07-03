@@ -6,16 +6,15 @@ import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
 import ru.megains.old.graph.Frustum
-import ru.megains.old.utils.Utils
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.periphery.Mouse
-import ru.megains.tartess.renderer.shader.ShaderProgram
+import ru.megains.tartess.renderer.light.DirLight
+import ru.megains.tartess.renderer.shader.{GuiShaderProgram, LightShaderProgram, SceneShaderProgram, ShaderProgram}
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
-import ru.megains.tartess.utils.Vec3f
 
-class Renderer(tar: Tartess) {
+class Renderer(val tar: Tartess) {
 
-
+    Renderer.renderer = this
     val FOV: Float = Math.toRadians(60.0f).toFloat
     val Z_NEAR: Float = 0.01f
     val Z_FAR: Float = 1000f
@@ -26,8 +25,11 @@ class Renderer(tar: Tartess) {
     var frustum: Frustum = _
     val transformation = new Transformation
     var worldRenderer: WorldRenderer = _
-    val sceneShaderProgram = new ShaderProgram
-    var guiShaderProgram = new ShaderProgram
+    var sceneShaderProgram:ShaderProgram = new SceneShaderProgram
+    val sceneLightShaderProgram = new LightShaderProgram
+    var guiShaderProgram = new GuiShaderProgram
+    val dirLight = new DirLight
+    var isLight = true
    // var mesh:Mesh = _
 
 
@@ -37,6 +39,13 @@ class Renderer(tar: Tartess) {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         glEnable(GL_STENCIL_TEST)
         glEnable(GL_DEPTH_TEST)
+
+        dirLight.direction.set(-0.2f,-1f,-0.3f)
+        dirLight.ambient.set(1f,0.8f,0.5f)
+        dirLight.diffuse.set(0)
+        dirLight.specular.set(0)
+        dirLight.shininess = 32
+
 
 //        val mm = MeshMaker
 //
@@ -59,66 +68,12 @@ class Renderer(tar: Tartess) {
     }
 
     def setupSceneShader():Unit = {
-        sceneShaderProgram.createVertexShader(Utils.loadResource("/shaders/vertex.vs"))
-        sceneShaderProgram.createFragmentShader(Utils.loadResource("/shaders/fragment.frag"))
-        sceneShaderProgram.link()
-
-
-        sceneShaderProgram.createUniform("projection")
-        sceneShaderProgram.createUniform("view" )
-        sceneShaderProgram.createUniform("model")
-        sceneShaderProgram.createUniform("useTexture")
-        sceneShaderProgram.createUniform("shininess")
-
-        sceneShaderProgram.createUniform("viewPos")
-
-        sceneShaderProgram.createUniform("dirLight.direction")
-        sceneShaderProgram.createUniform("dirLight.ambient")
-        sceneShaderProgram.createUniform("dirLight.diffuse")
-        sceneShaderProgram.createUniform("dirLight.specular")
-
-
-
-        sceneShaderProgram.createUniform("pointLightSize")
-
-
-            sceneShaderProgram.createUniform("pointLight.position")
-            sceneShaderProgram.createUniform("pointLight.constant")
-            sceneShaderProgram.createUniform("pointLight.linear")
-            sceneShaderProgram.createUniform("pointLight.quadratic")
-            sceneShaderProgram.createUniform("pointLight.ambient")
-            sceneShaderProgram.createUniform("pointLight.diffuse")
-            sceneShaderProgram.createUniform("pointLight.specular")
-
-
-        sceneShaderProgram.createUniform("spotLightSize")
-
-            sceneShaderProgram.createUniform("spotLight.position")
-            sceneShaderProgram.createUniform("spotLight.direction")
-            sceneShaderProgram.createUniform("spotLight.ambient")
-            sceneShaderProgram.createUniform("spotLight.diffuse")
-            sceneShaderProgram.createUniform("spotLight.specular")
-            sceneShaderProgram.createUniform("spotLight.linear")
-            sceneShaderProgram.createUniform("spotLight.quadratic")
-            sceneShaderProgram.createUniform("spotLight.constant")
-            sceneShaderProgram.createUniform("spotLight.cutOff")
-            sceneShaderProgram.createUniform("spotLight.outerCutOff")
-
-
-
-
+        sceneLightShaderProgram.create()
+        sceneShaderProgram.create()
     }
 
     private def setupGuiShader() {
-        guiShaderProgram = new ShaderProgram
-        guiShaderProgram.createVertexShader(Utils.loadResource("/shaders/hud_vertex.vs"))
-        guiShaderProgram.createFragmentShader(Utils.loadResource("/shaders/hud_fragment.frag"))
-        guiShaderProgram.link()
-
-        guiShaderProgram.createUniform("projectionMatrix")
-        guiShaderProgram.createUniform("modelMatrix")
-        guiShaderProgram.createUniform("colour")
-        guiShaderProgram.createUniform("useTexture")
+        guiShaderProgram.create()
     }
 
     def render(camera: Camera) {
@@ -138,47 +93,13 @@ class Renderer(tar: Tartess) {
 
     private def renderScene() {
 
-        Renderer.bindShaderProgram(sceneShaderProgram)
+        if(isLight){
+            Renderer.bindShaderProgram(sceneLightShaderProgram)
+        }else{
+            Renderer.bindShaderProgram(sceneShaderProgram)
+        }
 
-        sceneShaderProgram.setUniform("projection", transformation.projectionMatrix)
-        sceneShaderProgram.setUniform("view", transformation.viewMatrix)
-
-        sceneShaderProgram.setUniform("viewPos",tar.camera.position )
-
-
-        sceneShaderProgram.setUniform("dirLight.direction",new Vec3f(-0.2,-1,-0.3))
-        sceneShaderProgram.setUniform("dirLight.ambient",new Vec3f(1,1,1))
-        sceneShaderProgram.setUniform("dirLight.diffuse",new Vec3f(0.0,0.0,0.0))
-        sceneShaderProgram.setUniform("dirLight.specular",new Vec3f(0,0,0))
-        sceneShaderProgram.setUniform("shininess",32f)
-
-
-
-        sceneShaderProgram.setUniform("pointLightSize",0)
-
-            sceneShaderProgram.setUniform("pointLight.position",new Vec3f(0,3,0))
-            sceneShaderProgram.setUniform("pointLight.constant", 1.0f)
-            sceneShaderProgram.setUniform("pointLight.linear",0.09f)
-            sceneShaderProgram.setUniform("pointLight.quadratic",0.032f)
-            sceneShaderProgram.setUniform("pointLight.ambient",new Vec3f(0.2,0.25,0.4))
-            sceneShaderProgram.setUniform("pointLight.diffuse",new Vec3f(0.4,0.5,0.8))
-            sceneShaderProgram.setUniform("pointLight.specular",new Vec3f(0.4,0.5,0.8))
-
-
-        sceneShaderProgram.setUniform("spotLightSize",0)
-
-            sceneShaderProgram.setUniform("spotLight.position",new Vec3f(-0.5,10,-0.5))
-            sceneShaderProgram.setUniform("spotLight.direction", new Vec3f(0.05,-1,0.05))
-            sceneShaderProgram.setUniform("spotLight.ambient",new Vec3f(0.5,0.25,0))
-            sceneShaderProgram.setUniform("spotLight.diffuse",new Vec3f(1,0.5,0))
-            sceneShaderProgram.setUniform("spotLight.specular",new Vec3f(1,1,1))
-            sceneShaderProgram.setUniform("spotLight.linear",0.09f)
-            sceneShaderProgram.setUniform("spotLight.quadratic",0.032f)
-            sceneShaderProgram.setUniform("spotLight.constant",1f)
-            sceneShaderProgram.setUniform("spotLight.cutOff",Math.cos(Math.toRadians(12.5f)) toFloat)
-            sceneShaderProgram.setUniform("spotLight.outerCutOff",Math.cos(Math.toRadians(15.0f)) toFloat)
-
-
+        Renderer.setUniforms()
 
 
 
@@ -196,7 +117,7 @@ class Renderer(tar: Tartess) {
 //        mesh.render
         worldRenderer.getRenderChunks(tar.player).foreach((renderChunk: RenderChunk) => {
             if(frustum.chunkInFrustum(renderChunk.chunk.position)){
-                sceneShaderProgram.setUniform("model", transformation.buildChunkModelViewMatrix(renderChunk.chunk.position))
+                Renderer.currentShaderProgram.setUniform("model", transformation.buildChunkModelViewMatrix(renderChunk.chunk.position))
                 renderChunk.render(0)
             }
         })
@@ -208,12 +129,12 @@ class Renderer(tar: Tartess) {
 
         val blockSelectPosition = tar.blockSelectPosition
         if (blockSelectPosition != null) {
-            sceneShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(blockSelectPosition.pos))
+            Renderer.currentShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(blockSelectPosition.pos))
             worldRenderer.renderBlockSelect()
         }else{
             val objectMouseOver = tar.objectMouseOver
             if (objectMouseOver != null) {
-                sceneShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(objectMouseOver.blockPos))
+                Renderer.currentShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(objectMouseOver.blockPos))
                 worldRenderer.renderBlockMouseOver()
             }
         }
@@ -230,8 +151,9 @@ class Renderer(tar: Tartess) {
         Renderer.bindShaderProgram(guiShaderProgram)
 
 
-        val ortho: Matrix4f = transformation.getOrtho2DProjectionMatrix(0, 800, 0, 600)
-        guiShaderProgram.setUniform("projectionMatrix", ortho)
+
+        Renderer.setUniforms()
+
         tar.guiManager.draw(Mouse.getX, Mouse.getY)
 
 
@@ -246,12 +168,18 @@ class Renderer(tar: Tartess) {
 }
 
 object Renderer {
+
     var currentShaderProgram: ShaderProgram = _
+    var renderer:Renderer = _
 
     def bindShaderProgram(shaderProgram: ShaderProgram): Unit = {
         if (currentShaderProgram ne null) currentShaderProgram.unbind()
         currentShaderProgram = shaderProgram
         currentShaderProgram.bind()
+    }
+
+    def setUniforms(): Unit ={
+        currentShaderProgram.setUniforms(renderer)
     }
 
     def unbindShaderProgram(): Unit = {
