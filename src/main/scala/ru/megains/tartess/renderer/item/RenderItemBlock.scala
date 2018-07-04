@@ -25,25 +25,12 @@ class RenderItemBlock(item: ItemBlock) extends RenderItem {
     def createInventoryMesh(): Mesh = {
 
 
-        val aabb = new BlockState(block,new BlockPos(0,0,0)/*,BlockDirection.EAST*/).getSelectedBoundingBox
+        val aabb = new BlockState(block,new BlockPos(0,0,0)/*,BlockDirection.EAST*/).getBlockBody
 
 
-
-
-
-//        var size:Float =  block.blockSize.length
-//        if(size<block.blockSize.height){
-//            size =block.blockSize.height
-//        }
-//        if(size<block.blockSize.width){
-//            size =block.blockSize.width
-//        }
-        var size:Float = 16
-
-
-        val maxX: Double = (aabb.maxX / 2f) /size
-        val maxY: Double =( aabb.maxY / 2f) /size
-        val maxZ: Double = (aabb.maxZ / 2f) /size
+        val maxX: Double = aabb.maxX / 2f
+        val maxY: Double = aabb.maxY / 2f
+        val maxZ: Double = aabb.maxZ / 2f
         val minX: Double = -maxX
         val minY: Double = -maxY
         val minZ: Double = -maxZ

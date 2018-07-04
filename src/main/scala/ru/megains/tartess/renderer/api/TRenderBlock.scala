@@ -4,7 +4,7 @@ import ru.megains.tartess.block.data.BlockState
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.data.ChunkPosition
 
-abstract class RenderBlock {
+trait TRenderBlock {
 
     def render(blockState: BlockState, world: World, posWorld: ChunkPosition): Boolean
 }

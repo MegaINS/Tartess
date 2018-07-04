@@ -5,6 +5,7 @@ import java.awt.Color
 import org.lwjgl.opengl.GL11.GL_LINES
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.entity.player.EntityPlayer
+import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
@@ -85,10 +86,8 @@ class WorldRenderer(val world: World) {
         }
 
         val mm = MeshMaker.getMeshMaker
-        if( blockState == null){
-            val aabb = blockState.getSelectedBoundingBox
-        }
-        val aabb = blockState.getSelectedBoundingBox.div(16)
+
+        val aabb:AABB= blockState.getBlockBody
 
         val minX = aabb.minX - 0.01f
         val minY = aabb.minY - 0.01f
@@ -137,7 +136,7 @@ class WorldRenderer(val world: World) {
         }
 
         val mm = MeshMaker.getMeshMaker
-        val aabb = blockState.getSelectedBoundingBox.div(16)
+        val aabb:AABB = blockState.getBlockBody
 
         val minX = aabb.minX
         val minY = aabb.minY

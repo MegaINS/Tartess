@@ -1,9 +1,10 @@
 package ru.megains.tartess.world.chunk
 
 
-import ru.megains.tartess.block.BlockContainer
 import ru.megains.tartess.block.data._
+import ru.megains.tartess.block.{BlockContainer, BlockWG}
 import ru.megains.tartess.entity.Entity
+import ru.megains.tartess.physics.BoundingBox
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.tileentity.{TileEntity, TileEntityContainer}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
@@ -34,14 +35,14 @@ class Chunk(val position: ChunkPosition,val world: World) {
     def isAirBlock(blockState: BlockState): Boolean = {
         var empty = true
 
-        val aabb = blockState.getBoundingBox
+        val aabb:BoundingBox = blockState.getSelectedBoundingBox
 
-        val minX = aabb.minX toInt
-        val minY = aabb.minY toInt
-        val minZ = aabb.minZ toInt
-        val maxX = aabb.maxX toInt
-        val maxY = aabb.maxY toInt
-        val maxZ = aabb.maxZ toInt
+        val minX = aabb.minX
+        val minY = aabb.minY
+        val minZ = aabb.minZ
+        val maxX = aabb.maxX
+        val maxY = aabb.maxY
+        val maxZ = aabb.maxZ
 
         for(x<-minX until maxX;
             y<-minY until maxY;
@@ -79,18 +80,18 @@ class Chunk(val position: ChunkPosition,val world: World) {
         val block = blockState.block
         val blockStatePrevious =  getBlock(pos)
 
-        val aabb = if(block == Blocks.air){
-            blockStatePrevious.getBoundingBox
+        val aabb:BoundingBox = if(block == Blocks.air){
+            blockStatePrevious.getSelectedBoundingBox
         }else{
-            blockState.getBoundingBox
+            blockState.getSelectedBoundingBox
         }
 
-        val minX = aabb.minX toInt
-        val minY = aabb.minY toInt
-        val minZ = aabb.minZ toInt
-        val maxX = aabb.maxX toInt
-        val maxY = aabb.maxY toInt
-        val maxZ = aabb.maxZ toInt
+        val minX = aabb.minX
+        val minY = aabb.minY
+        val minZ = aabb.minZ
+        val maxX = aabb.maxX
+        val maxY = aabb.maxY
+        val maxZ = aabb.maxZ
         val blockCell = new mutable.HashSet[BlockCell]()
 
         for(x <- minX until maxX;
@@ -137,9 +138,12 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def isOpaqueCube(pos: BlockPos,blockDirection: BlockDirection): Boolean = {
-        val blockPos = new BlockPos(pos.x+blockDirection.x*16,pos.y+blockDirection.y*16,pos.z+blockDirection.z*16)
-        if(world.getBlock(blockPos).block == Blocks.dirt) true
-        else false
+        if(pos.x % 16 == 0 && pos.y % 16 == 0 && pos.z % 16==0){
+            val blockState = world.getBlock(new BlockPos(pos.x+blockDirection.x*16,pos.y+blockDirection.y*16,pos.z+blockDirection.z*16))
+            if(blockState.pos.x % 16 == 0 && blockState.pos.y % 16 == 0 && blockState.pos.z % 16 == 0){
+                blockState.block.isInstanceOf[BlockWG]
+            } else false
+        } else false
     }
 
     def addEntity(entityIn: Entity): Unit = {

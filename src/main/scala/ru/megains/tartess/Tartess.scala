@@ -55,7 +55,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         log.info("Start Game")
-        log.info("Tartess v0.1.0")
+        log.info("Tartess v0.0.1.2")
         try {
             log.info("Display creating...")
             window.create()
@@ -262,22 +262,24 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         if (!playerController.isHittingBlock) {
             rightClickDelayTimer = 4
             val itemstack: ItemStack = player.getHeldItem
+            if(objectMouseOver!= null){
+                val blockpos: BlockPos = objectMouseOver.blockPos
+                if (!world.isAirBlock(blockpos)) {
 
-            val blockpos: BlockPos = objectMouseOver.blockPos
-            if (!world.isAirBlock(blockpos)) {
 
+                    val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
+                    if (enumactionresult eq EnumActionResult.SUCCESS) {
+                        if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
+                        return
+                    }
+                }
 
-                val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
-                if (enumactionresult eq EnumActionResult.SUCCESS) {
-                    if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
+                val itemstack1: ItemStack = player.getHeldItem
+                if (itemstack1 != null && (playerController.processRightClick(player, world, itemstack1) eq EnumActionResult.SUCCESS)) {
                     return
                 }
             }
 
-            val itemstack1: ItemStack = player.getHeldItem
-            if (itemstack1 != null && (playerController.processRightClick(player, world, itemstack1) eq EnumActionResult.SUCCESS)) {
-                return
-            }
         }
     }
 

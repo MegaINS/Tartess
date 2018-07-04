@@ -27,8 +27,8 @@ object Bootstrap extends Logger[Tartess] {
     def initBlocks(): Unit = {
 
         GameRegister.registerBlock(0, BlockAir)
-        GameRegister.registerBlock(1, new Block("stone"))
-        GameRegister.registerBlock(2, new Block("dirt"))
+        GameRegister.registerBlock(1, new BlockWG("stone"))
+        GameRegister.registerBlock(2, new BlockWG("dirt"))
 
         GameRegister.registerBlock(3, new BlockTest("test0",0))
         GameRegister.registerBlock(4, new BlockTest("test1",1))

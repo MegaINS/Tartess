@@ -16,7 +16,7 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
     var motionY:Float =0
     var motionZ:Float =0
     var goY:Float =0.5f
-    var speed: Float = 48
+    var speed: Float = 24
     var onGround:Boolean = false
     val body: AABB = new AABB()
     var world: World = _

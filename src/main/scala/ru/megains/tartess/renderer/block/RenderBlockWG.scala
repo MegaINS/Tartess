@@ -2,12 +2,12 @@ package ru.megains.tartess.renderer.block
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.physics.AABB
-import ru.megains.tartess.renderer.api.RenderBlock
+import ru.megains.tartess.renderer.api.TRenderBlock
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.data.ChunkPosition
 
 
-object RenderBlockWG extends RenderBlock {
+object RenderBlockWG extends TRenderBlock {
 
 
     override def render(blockState: BlockState, world: World, chunkPosition:ChunkPosition): Boolean = {
@@ -16,7 +16,7 @@ object RenderBlockWG extends RenderBlock {
 
         val pos = blockState.pos
         val block = blockState.block
-        val aabb:AABB = blockState.getSelectedBoundingBox.div(16).sum(pos.rendX, pos.rendY, pos.rendZ)
+        val aabb:AABB = blockState.getBlockBody.sum(pos.rendX, pos.rendY, pos.rendZ)
         val minX = aabb.minX
         val minY = aabb.minY
         val minZ = aabb.minZ

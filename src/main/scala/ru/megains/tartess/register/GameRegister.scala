@@ -3,15 +3,15 @@ package ru.megains.tartess.register
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.item.{Item, ItemBlock}
-import ru.megains.tartess.renderer.api.{RenderBlock, RenderItem}
+import ru.megains.tartess.renderer.api.{TRenderBlock, RenderItem}
 import ru.megains.tartess.renderer.block.RenderBlockWG
 import ru.megains.tartess.renderer.item.{RenderItemBlock, RenderItemStandart}
 import ru.megains.tartess.tileentity.TileEntity
 
 object GameRegister {
 
-    private val blockData = new RegisterNamespace[Block] with RegisterRender[RenderBlock] {
-        override val default: RenderBlock = RenderBlockWG
+    private val blockData = new RegisterNamespace[Block] with RegisterRender[TRenderBlock] {
+        override val default: TRenderBlock = RenderBlockWG
     }
 
     private val itemData = new RegisterNamespace[Item] with RegisterRender[RenderItem] {
@@ -55,9 +55,9 @@ object GameRegister {
         false
     }
 
-    def getBlockRender(block: Block): RenderBlock = blockData.getRender(getIdByBlock(block))
+    def getBlockRender(block: Block): TRenderBlock = blockData.getRender(getIdByBlock(block))
 
-    def registerBlockRender(block: Block, renderBlock: RenderBlock): Unit = {
+    def registerBlockRender(block: Block, renderBlock: TRenderBlock): Unit = {
         val id: Int = getIdByBlock(block)
         if (id != -1) {
             blockData.registerRender(id, renderBlock)
