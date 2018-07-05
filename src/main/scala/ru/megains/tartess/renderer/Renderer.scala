@@ -78,7 +78,7 @@ class Renderer(val tar: Tartess) {
 
     def render(camera: Camera) {
 
-        val projectionMatrix: Matrix4f = transformation.updateProjectionMatrix(FOV, 800, 600, Z_NEAR, Z_FAR)
+        val projectionMatrix: Matrix4f = transformation.updateProjectionMatrix(FOV,  tar.window.width, tar.window.height, Z_NEAR, Z_FAR)
         val viewMatrix: Matrix4f = transformation.updateViewMatrix(camera)
 
         projectionMatrix.get(_proj.clear().asInstanceOf[FloatBuffer])

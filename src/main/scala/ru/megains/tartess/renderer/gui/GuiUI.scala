@@ -12,8 +12,9 @@ class GuiUI extends GuiInGame{
     }
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
-
-        drawObject(target, 380, 280)
+        val width = (tar.window.width - 40)/2
+        val height = (tar.window.height - 40)/2
+        drawObject(target, width, height)
 
     }
 

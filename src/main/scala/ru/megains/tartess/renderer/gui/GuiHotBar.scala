@@ -15,11 +15,11 @@ class GuiHotBar extends GuiInGame {
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
 
         val inventory = tar.player.inventory
-
-        drawObject(hotBar, 158, 0)
-        drawObject(stackSelect, 156 + inventory.stackSelect * 48, 0)
+      val width = (tar.window.width - 484)/2
+        drawObject(hotBar, width, 0)
+        drawObject(stackSelect, width-2 + inventory.stackSelect * 48, 0)
         for (i <- 0 to 9) {
-            drawItemStack(inventory.getStackInSlot(i), 164 + i * 48, 6)
+            drawItemStack(inventory.getStackInSlot(i), width+6 + i * 48, 6)
         }
 
 

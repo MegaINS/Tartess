@@ -4,6 +4,7 @@ import java.awt.Color
 
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.BlockPos
+import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 
 
@@ -46,8 +47,8 @@ class GuiBlockSelect extends GuiInGame with GuiText {
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
         if (ray ne null) {
-            val weight = 800 / 2 - 100
-            val height = 600
+            val weight = tar.window.width / 2 - 100
+            val height = tar.window.height
             drawObject(weight, height - 20, 1, text("Block.name"))
             drawObject(weight, height - 40, 1, text("Block.x"))
             drawObject(weight, height - 60, 1, text("Block.y"))
@@ -55,7 +56,7 @@ class GuiBlockSelect extends GuiInGame with GuiText {
             drawObject(weight, height - 100, 1, text("Block.side"))
          //   drawObject(weight, height - 120, 1, text("Block.hp"))
           //  drawObject(weight, height - 140, 1, text("Block.meta"))
-           // drawItemStack(new ItemStack(blockSelect), 800 / 2 - 150, height - 50)
+            drawItemStack(new ItemStack(blockSelect), tar.window.width / 2 - 150, height - 50)
         }
 
     }

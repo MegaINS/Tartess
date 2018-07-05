@@ -23,16 +23,16 @@ class GuiDebugInfo extends GuiInGame with GuiText {
     }
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
-        val height = 600
-        val weight = 800
+        val height = tar.window.height
+        val width = tar.window.width
         drawObject(0, height - 20, 1, text("position"))
         drawObject(0, height - 40, 1, text("position.x"))
         drawObject(0, height - 60, 1, text("position.y"))
         drawObject(0, height - 80, 1, text("position.z"))
         drawObject(0, height - 100, 1, text("position.side"))
        // drawObject(0, height - 120, 1, text("gameType"))
-        drawObject(weight - 250, height - 40, 1, text("fps"))
-        drawObject(weight - 250, height - 20, 1, text("memory"))
+        drawObject(width - 250, height - 40, 1, text("fps"))
+        drawObject(width - 250, height - 20, 1, text("memory"))
 
     }
 
