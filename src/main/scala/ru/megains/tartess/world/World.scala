@@ -46,7 +46,7 @@ class World {
 
     def getBlock(blockPos: BlockPos): BlockState = {
         if (!blockPos.isValid(this)) {
-            return Blocks.air.blockState
+            return Blocks.air.airState
         }
         val chunk = getChunk(blockPos)
         chunk.getBlock(blockPos)
@@ -235,7 +235,7 @@ class World {
                     return raytraceresult1
                 }
                 val block1: BlockState = getBlock(blockpos)
-                if (block1 != null && block1 != Blocks.air.blockState) {
+                if (block1 != null && block1 != Blocks.air.airState) {
                     val raytraceresult1: RayTraceResult = block1.collisionRayTrace(this,  vec31, vec32)
                     if (raytraceresult1 != null) {
                         return raytraceresult1

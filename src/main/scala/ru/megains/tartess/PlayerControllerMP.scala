@@ -56,7 +56,7 @@ class PlayerControllerMP(tar:Tartess) {
         val i: Int = stack.stackSize
         val actionresult: ActionResult[ItemStack] = stack.useItemRightClick(worldIn, player)
         val itemstack: ItemStack = actionresult.result
-        if ((itemstack ne stack) || itemstack.stackSize != i) {
+        if ((itemstack != stack) || itemstack.stackSize != i) {
             player.setHeldItem(itemstack)
             if (itemstack.stackSize <= 0) {
                 player.setHeldItem(null)

@@ -25,15 +25,15 @@ class BlockStorage(chunk: Chunk, position: ChunkPosition) {
     val containers = new mutable.HashMap[Short,BlockCell]()
 
     def get(x: Int, y: Int, z: Int): BlockState = {
-        val x1 = x>>4
-        val y1 = y>>4
-        val z1 = z>>4
+        val x1 = (x & 255) >>4
+        val y1 = (y & 255) >>4
+        val z1 = (z & 255) >>4
 
         val index = getIndex(x1,y1,z1)
         blocksId(index) match {
             case -1 => containers(index).getBlock(x, y, z)
-            case 0 => Blocks.air.blockState
-            case id => new BlockState(Blocks.getBlockById(id),new BlockPos(position.minXP +(x1<<4),position.minYP  +(y1<<4),position.minZP +(z1<<4))/*,BlockDirection.EAST*/)
+            case 0 => Blocks.air.airState
+            case id => new BlockState(Blocks.getBlockById(id),new BlockPos(position.minXP +(x1<<4),position.minYP  +(y1<<4),position.minZP +(z1<<4)))
         }
     }
 

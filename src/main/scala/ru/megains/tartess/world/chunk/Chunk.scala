@@ -48,15 +48,15 @@ class Chunk(val position: ChunkPosition,val world: World) {
             y<-minY until maxY;
             z<-minZ until maxZ){
 
-            val blockX = x & 255
-            val blockY = y & 255
-            val blockZ = z & 255
+            val blockX = x
+            val blockY = y
+            val blockZ = z
             if(x <= position.maxXP && y<=position.maxYP &&z<=position.maxZP){
-                if( blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.blockState){
+                if( blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.airState){
                     empty = false
                 }
             }else{
-                if(world.getChunk(x>>8,y>>8,z>>8).blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.blockState) empty = false
+                if(world.getChunk(x>>8,y>>8,z>>8).blockStorage.get(blockX,blockY,blockZ)!= Blocks.air.airState) empty = false
             }
         }
         empty
@@ -72,7 +72,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def getBlock(pos: BlockPos):BlockState = {
-        blockStorage.get(pos.x & 255,pos.y & 255,pos.z & 255)
+        blockStorage.get(pos.x ,pos.y ,pos.z )
     }
 
     def setBlock(blockState: BlockState):Boolean = {
@@ -161,9 +161,9 @@ class Chunk(val position: ChunkPosition,val world: World) {
             y<-pos.minY to pos.maxY;
             z<-pos.minZ to pos.maxZ){
 
-            val blockX = x & 255
-            val blockY = y & 255
-            val blockZ = z & 255
+            val blockX = x
+            val blockY = y
+            val blockZ = z
             if(x <= position.maxXP && y<=position.maxYP &&z<=position.maxZP){
                 if(!blockStorage.get(blockX,blockY,blockZ).block.isOpaqueCube)
                     return false

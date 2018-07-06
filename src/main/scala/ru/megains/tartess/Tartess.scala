@@ -164,7 +164,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
     def update(): Unit = {
         Mouse.update(window)
-        if (rightClickDelayTimer > 0) rightClickDelayTimer -= 1
+
         cameraInc.set(0, 0, 0)
 
         if (glfwGetKey(window.id, GLFW_KEY_W) == GLFW_PRESS) cameraInc.z = -1
@@ -259,28 +259,25 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     }
 
     def rightClickMouse() {
-        if (!playerController.isHittingBlock) {
-            rightClickDelayTimer = 4
-            val itemstack: ItemStack = player.getHeldItem
-            if(objectMouseOver!= null){
-                val blockpos: BlockPos = objectMouseOver.blockPos
-                if (!world.isAirBlock(blockpos)) {
+        val itemstack: ItemStack = player.getHeldItem
+
+        if(objectMouseOver!= null) {
+            val blockpos: BlockPos = objectMouseOver.blockPos
+            if (!world.isAirBlock(blockpos)) {
 
 
-                    val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
-                    if (enumactionresult eq EnumActionResult.SUCCESS) {
-                        if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
-                        return
-                    }
-                }
-
-                val itemstack1: ItemStack = player.getHeldItem
-                if (itemstack1 != null && (playerController.processRightClick(player, world, itemstack1) eq EnumActionResult.SUCCESS)) {
+                val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
+                if (enumactionresult eq EnumActionResult.SUCCESS) {
+                    if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
                     return
                 }
             }
-
         }
+
+        if (itemstack != null && (playerController.processRightClick(player, world, itemstack) eq EnumActionResult.SUCCESS)) {
+            return
+        }
+
     }
 
     def grabMouseCursor(): Unit = {

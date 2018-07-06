@@ -5,7 +5,7 @@ import java.awt.Color
 import org.lwjgl.opengl.GL11.GL_LINES
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.entity.player.EntityPlayer
-import ru.megains.tartess.physics.AABB
+import ru.megains.tartess.physics.BoundingBox
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
@@ -87,14 +87,14 @@ class WorldRenderer(val world: World) {
 
         val mm = MeshMaker.getMeshMaker
 
-        val aabb:AABB= blockState.getBlockBody
+        val aabb:BoundingBox= blockState.getBoundingBox
 
-        val minX = aabb.minX - 0.01f
-        val minY = aabb.minY - 0.01f
-        val minZ = aabb.minZ - 0.01f
-        val maxX = aabb.maxX + 0.01f
-        val maxY = aabb.maxY + 0.01f
-        val maxZ = aabb.maxZ + 0.01f
+        val minX = aabb.minX/16f - 0.01f
+        val minY = aabb.minY/16f - 0.01f
+        val minZ = aabb.minZ/16f - 0.01f
+        val maxX = aabb.maxX/16f + 0.01f
+        val maxY = aabb.maxY/16f + 0.01f
+        val maxZ = aabb.maxZ/16f + 0.01f
 
 
 
@@ -136,14 +136,14 @@ class WorldRenderer(val world: World) {
         }
 
         val mm = MeshMaker.getMeshMaker
-        val aabb:AABB = blockState.getBlockBody
+        val aabb:BoundingBox= blockState.getBoundingBox
 
-        val minX = aabb.minX
-        val minY = aabb.minY
-        val minZ = aabb.minZ
-        val maxX = aabb.maxX
-        val maxY = aabb.maxY
-        val maxZ = aabb.maxZ
+        val minX = aabb.minX/16f
+        val minY = aabb.minY/16f
+        val minZ = aabb.minZ/16f
+        val maxX = aabb.maxX/16f
+        val maxY = aabb.maxY/16f
+        val maxZ = aabb.maxZ/16f
 
 
 

@@ -16,6 +16,13 @@ class AABB( var minX:Float = .0f,
     }
 
 
+    def rotate(side: BlockDirection): AABB = {
+        side match {
+            case BlockDirection.EAST | BlockDirection.WEST=> new AABB(minZ, minY, minX, maxZ, maxY, maxX)
+            case _  => getCopy
+        }
+    }
+
 
     def set(minX: Float, minY: Float, minZ: Float, maxX: Float, maxY: Float, maxZ: Float): Unit = {
         this.minX = minX

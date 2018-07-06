@@ -6,7 +6,7 @@ import ru.megains.tartess.physics.{AABB, BoundingBox}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
-class BlockState(val block: Block,val pos:BlockPos) {
+class BlockState(val block: Block,val pos:BlockPos,val blockDirection:BlockDirection = BlockDirection.NONE) {
 
 
     def getBlockBody:AABB = block.getBlockBody(this)

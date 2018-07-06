@@ -1,6 +1,6 @@
 package ru.megains.tartess.block
 
-import ru.megains.tartess.block.data.BlockSize
+
 import ru.megains.tartess.physics.{AABB, BoundingBox}
 
 class BlockTest(name:String,i:Int) extends Block(name){
@@ -28,29 +28,29 @@ class BlockTest(name:String,i:Int) extends Block(name){
 
     )
     val blockSizes = Array(
-        new BlockSize(15),
-        new BlockSize(14),
-        new BlockSize(13),
-        new BlockSize(12),
-        new BlockSize(11),
-        new BlockSize(10),
-        new BlockSize(9),
-        new BlockSize(8),
-        new BlockSize(7),
-        new BlockSize(6),
-        new BlockSize(5),
-        new BlockSize(4),
-        new BlockSize(3),
-        new BlockSize(2),
-        new BlockSize(1),
+        new BoundingBox(15),
+        new BoundingBox(14),
+        new BoundingBox(13),
+        new BoundingBox(12),
+        new BoundingBox(11),
+        new BoundingBox(10),
+        new BoundingBox(9),
+        new BoundingBox(8),
+        new BoundingBox(7),
+        new BoundingBox(6),
+        new BoundingBox(5),
+        new BoundingBox(4),
+        new BoundingBox(3),
+        new BoundingBox(2),
+        new BoundingBox(1),
 
-        new BlockSize(160,16,160),
-        new BlockSize(16,160,16),
-        new BlockSize(4,32,4)
+        new BoundingBox(160,16,160),
+        new BoundingBox(16,160,16),
+        new BoundingBox(4,32,4)
 
     )
     override val blockBody = blockBodys(i)
-    override val blockSize = blockSizes(i)
-    override val boundingBox: BoundingBox = new BoundingBox(blockSize)
+
+    override val boundingBox: BoundingBox =blockSizes(i)
 
 }
