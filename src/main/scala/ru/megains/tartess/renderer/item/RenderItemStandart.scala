@@ -2,11 +2,11 @@ package ru.megains.tartess.renderer.item
 
 
 import ru.megains.tartess.item.Item
-import ru.megains.tartess.renderer.api.RenderItem
+import ru.megains.tartess.renderer.api.TRenderItem
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.texture.{TextureAtlas, TextureManager}
 
-class RenderItemStandart(val item: Item) extends RenderItem {
+class RenderItemStandart(val item: Item) extends TRenderItem {
 
     override lazy val inventoryMesh: Mesh = createInventoryMesh()
 

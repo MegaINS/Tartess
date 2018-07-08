@@ -2,7 +2,12 @@ package ru.megains.tartess.renderer
 
 import org.joml.{Matrix4f, Vector3f}
 import ru.megains.tartess.block.data.BlockPos
+import ru.megains.tartess.entity.Entity
+import ru.megains.tartess.entity.item.EntityItem
+import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.world.chunk.data.ChunkPosition
+
+import scala.language.postfixOps
 
 class Transformation {
 
@@ -52,6 +57,22 @@ class Transformation {
     def buildObjectMouseOverViewMatrix(blockPos: BlockPos): Matrix4f = {
         modelViewMatrix.identity
         modelViewMatrix.translate(blockPos.x /16f, blockPos.y /16f, blockPos.z /16f)
-
     }
+
+    def buildEntityItemModelViewMatrix(entity: EntityItem): Matrix4f = {
+
+        val position:AABB = entity.body
+        val anim2 = (Math.sin(System.currentTimeMillis() % 2000.0 / 2000 * 2 * Math.PI) * 0.1f) + 0.4f
+        modelMatrix.identity
+        modelMatrix.translate((position.minX + 0.125f) /16 , position.minY / 16 + anim2 toFloat, (position.minZ + 0.125f)/16)
+        modelMatrix.rotateY( Math.toRadians( System.currentTimeMillis() % 10801.0f / 30f) toFloat)
+        modelMatrix.scale(0.25f)
+    }
+
+    def buildEntityModelViewMatrix(entity: Entity): Matrix4f = {
+        val position:AABB = entity.body
+        modelMatrix.identity
+        modelMatrix.translate(position.minX /16 , position.minY / 16  , position.minZ /16)
+    }
+
 }

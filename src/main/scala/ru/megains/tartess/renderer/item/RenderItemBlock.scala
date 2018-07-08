@@ -3,11 +3,11 @@ package ru.megains.tartess.renderer.item
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.item.ItemBlock
-import ru.megains.tartess.renderer.api.RenderItem
+import ru.megains.tartess.renderer.api.TRenderItem
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.texture.{TextureAtlas, TextureManager}
 
-class RenderItemBlock(item: ItemBlock) extends RenderItem {
+class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
     override lazy val inventoryMesh: Mesh = createInventoryMesh()
     override lazy val worldMesh: Mesh = createWorldMesh()

@@ -3,9 +3,13 @@ package ru.megains.tartess.renderer.world
 import java.awt.Color
 
 import org.lwjgl.opengl.GL11.GL_LINES
+import ru.megains.old.graph.Frustum
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
+import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.physics.BoundingBox
+import ru.megains.tartess.register.GameRegister
+import ru.megains.tartess.renderer.{Renderer, Transformation}
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
@@ -27,7 +31,8 @@ class WorldRenderer(val world: World) {
     var lastX = 0
     var lastY = 0
     var lastZ = 0
-
+    var blockStateMouseOver:BlockState = _
+    var blockStateSelect:BlockState = _
 
     def getRenderChunks(entityPlayer: EntityPlayer): ArrayBuffer[RenderChunk] = {
 //        // TODO:  OPTIMIZE
@@ -50,14 +55,6 @@ class WorldRenderer(val world: World) {
             }
         }
 
-
-//        if(playerRenderChunks.isEmpty){
-//            for(x <- -world.length to world.length;
-//                y <- -world.height to world.height;
-//                z <- -world.width to world.width){
-//                playerRenderChunks += getRenderChunk(x, y, z)
-//            }
-//        }
         playerRenderChunks
     }
 
@@ -75,11 +72,12 @@ class WorldRenderer(val world: World) {
         new RenderChunk(world.getChunk(x,y,z))
     }
 
-    def renderBlockMouseOver(): Unit = if (blockMouseOver != null){
-        blockMouseOver.render
-    }
+    def renderBlockMouseOver(): Unit = if (blockMouseOver != null) blockMouseOver.render
+
+    def renderBlockSelect(): Unit = if (blockSelect != null) blockSelect.render
 
     def updateBlockMouseOver(blockState: BlockState): Unit = {
+        if(blockStateMouseOver == blockState) return
         if (blockMouseOver != null) {
             blockMouseOver.cleanUp()
             blockMouseOver = null
@@ -130,6 +128,7 @@ class WorldRenderer(val world: World) {
     }
 
     def updateBlockSelect(blockState: BlockState): Unit = {
+        if(blockStateSelect == blockState) return
         if (blockSelect != null) {
             blockSelect.cleanUp()
             blockSelect = null
@@ -195,7 +194,32 @@ class WorldRenderer(val world: World) {
         renderChunks.values.foreach(_.reRender())
     }
 
-    def renderBlockSelect(): Unit = if (blockSelect != null){
-        blockSelect.render
+
+    def renderEntitiesItem(frustum: Frustum, transformation: Transformation): Unit = {
+
+
+        world.entities.filter(_.isInstanceOf[EntityItem]).foreach(
+            entity => {
+              //  if (frustum.cubeInFrustum(entity.body)) {
+                    val modelViewMatrix = transformation.buildEntityItemModelViewMatrix(entity.asInstanceOf[EntityItem])
+                    Renderer.currentShaderProgram.setUniform("model", modelViewMatrix)
+                    GameRegister.getItemRender(entity.asInstanceOf[EntityItem].itemStack.item).renderInWorld()
+              //  }
+            }
+        )
     }
+    def renderEntities(frustum: Frustum, transformation: Transformation): Unit = {
+
+
+        world.entities.filter(!_.isInstanceOf[EntityItem]).foreach(
+            entity => {
+                if (frustum.cubeInFrustum(entity.body)) {
+                    val modelViewMatrix = transformation.buildEntityModelViewMatrix(entity)
+                    Renderer.currentShaderProgram.setUniform("model", modelViewMatrix)
+                   // GameRegister.getEntityRender(entity).render()
+                }
+            }
+        )
+    }
+
 }

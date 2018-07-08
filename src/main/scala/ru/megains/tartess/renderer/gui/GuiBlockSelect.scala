@@ -26,9 +26,9 @@ class GuiBlockSelect extends GuiInGame with GuiText {
     }
 
     override def tick(): Unit = {
-        if (tar.objectMouseOver ne ray) {
+        if (tar.objectMouseOver != ray) {
             ray = tar.objectMouseOver
-            if (ray ne null) {
+            if (ray  != null) {
                 val posB: BlockPos = ray.blockPos
                 val vec: Vec3f = ray.hitVec
              //   val meta = oc.world.getBlockMeta(posB)

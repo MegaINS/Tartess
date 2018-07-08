@@ -3,6 +3,8 @@ package ru.megains.tartess
 import org.lwjgl.glfw.GLFW._
 import org.lwjgl.opengl.GL11
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
+import ru.megains.tartess.entity.item.EntityItem
+import ru.megains.tartess.entity.mob.EntityCube
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.item.ItemBlock
 import ru.megains.tartess.item.itemstack.ItemStack
@@ -19,6 +21,7 @@ import ru.megains.tartess.utils._
 import ru.megains.tartess.world.World
 
 import scala.reflect.io.Directory
+import scala.util.Random
 
 class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
@@ -174,6 +177,26 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         if (glfwGetKey(window.id, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) cameraInc.y = -1
         if (glfwGetKey(window.id, GLFW_KEY_SPACE) == GLFW_PRESS) cameraInc.y = 1
 
+
+        if (glfwGetKey(window.id, GLFW_KEY_O) == GLFW_PRESS){
+            val stack: ItemStack = player.inventory.getStackSelect
+            if(stack ne null){
+
+                val entityItem = new EntityItem()
+                entityItem.setItem(new ItemStack(stack.item))
+                entityItem.setPosition(player.posX +Random.nextInt(32)-16,player.posY+8+Random.nextInt(16),player.posZ+Random.nextInt(32)-16)
+
+                world.spawnEntityInWorld(entityItem)
+
+            }
+
+
+        }
+        if (glfwGetKey(window.id, GLFW_KEY_U) == GLFW_PRESS){
+            val entityCube = new EntityCube()
+            entityCube.setPosition(player.posX + Random.nextInt(50)-25,player.posY+Random.nextInt(50),player.posZ+Random.nextInt(50)-25)
+            world.spawnEntityInWorld(entityCube)
+        }
 
         guiManager.tick()
 

@@ -2,7 +2,7 @@ package ru.megains.tartess.renderer.api
 
 import ru.megains.tartess.renderer.mesh.Mesh
 
-abstract class RenderItem {
+trait  TRenderItem {
 
     val inventoryMesh: Mesh
 
