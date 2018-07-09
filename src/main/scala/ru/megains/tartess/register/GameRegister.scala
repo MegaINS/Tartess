@@ -10,19 +10,19 @@ import ru.megains.tartess.tileentity.TileEntity
 
 object GameRegister {
 
-    private val blockData = new RegisterNamespace[Block] with RegisterRender[TRenderBlock] {
+    val blockData = new RegisterNamespace[Block] with RegisterRender[TRenderBlock] {
         override val default: TRenderBlock = RenderBlockWG
     }
 
-    private val itemData = new RegisterNamespace[Item] with RegisterRender[TRenderItem] {
+    val itemData = new RegisterNamespace[Item] with RegisterRender[TRenderItem] {
         override val default:TRenderItem = null
     }
 
-    private val tileEntityData = new RegisterNamespace[Class[_<:TileEntity]] with RegisterRender[TRenderTileEntity] {
+    val tileEntityData = new RegisterNamespace[Class[_<:TileEntity]] with RegisterRender[TRenderTileEntity] {
         override val default:TRenderTileEntity = null
     }
 
-    private val entityData = new RegisterNamespace[Class[_<:Entity]] with RegisterRender[TRenderEntity]{
+    val entityData = new RegisterNamespace[Class[_<:Entity]] with RegisterRender[TRenderEntity]{
         override val default:TRenderEntity = null
     }
 
@@ -50,7 +50,6 @@ object GameRegister {
 
 
 
-
     def registerBlockRender(block: Block, renderBlock: TRenderBlock): Unit = {
         val id: Int = getIdByBlock(block)
         if (id != -1) {
@@ -60,8 +59,23 @@ object GameRegister {
         }
     }
 
+    def registerTileEntityRender(tileEntity: Class[_<:TileEntity], aRenderBlock: TRenderTileEntity): Unit = {
+        val id: Int = getIdByTileEntity(tileEntity)
+        if (id != -1) {
+            tileEntityData.registerRender(id, aRenderBlock)
+        } else {
+            println("Block +\"" + tileEntity.toString + "\" not register")
+        }
+    }
 
-
+    def registerEntityRender(tileEntity: Class[_<:Entity], aRenderBlock: TRenderEntity): Unit = {
+        val id: Int = getIdByEntity(tileEntity)
+        if (id != -1) {
+            entityData.registerRender(id, aRenderBlock)
+        } else {
+            println("Block +\"" + tileEntity.toString + "\" not register")
+        }
+    }
 
 
 

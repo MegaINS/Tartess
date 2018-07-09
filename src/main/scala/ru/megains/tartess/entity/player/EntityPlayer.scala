@@ -51,7 +51,7 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
         if (yo > 0) {
         }
 
-        motionY = yo / 2 * 16
+        //motionY = yo / 2 * 16
         moveFlying(xo, zo, if (onGround) 0.04f else 0.02f)
         move(motionX, motionY, motionZ)
         motionX *= 0.8f

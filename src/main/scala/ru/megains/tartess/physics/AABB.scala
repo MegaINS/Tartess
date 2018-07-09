@@ -33,6 +33,42 @@ class AABB( var minX:Float = .0f,
         this.maxZ = maxZ
     }
 
+    def set(aabb: AABB): Unit = {
+        this.minX = aabb.minX
+        this.minY = aabb.minY
+        this.minZ = aabb.minZ
+        this.maxX = aabb.maxX
+        this.maxY = aabb.maxY
+        this.maxZ = aabb.maxZ
+    }
+
+//    def expand(x: Float, y: Float, z: Float): AABB = {
+//        val d0 = this.minX - x
+//        val d1 = this.minY - y
+//        val d2 = this.minZ - z
+//        val d3 = this.maxX + x
+//        val d4 = this.maxY + y
+//        val d5 = this.maxZ + z
+//        new AABB(d0, d1, d2, d3, d4, d5)
+//    }
+
+    def expand(x: Float, y: Float, z: Float): AABB = {
+        var x0 = minX
+        var y0 = minY
+        var z0 = minZ
+        var x1 = maxX
+        var y1 = maxY
+        var z1 = maxZ
+        if (x > 0.0) x1 += x
+        else x0 += x
+        if (y > 0.0) y1 += y
+        else y0 += y
+        if (z > 0.0) z1 += z
+        else z0 += z
+        new AABB(x0, y0, z0, x1, y1, z1)
+    }
+
+
     def sum(x: Float, y: Float, z: Float) = new AABB(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z)
 
     //def div(value: Float) = new AABB(minX / value, minY / value, minZ / value, maxX / value, maxY / value, maxZ / value)
@@ -118,5 +154,68 @@ class AABB( var minX:Float = .0f,
     def intersectsWithXY(vec: Vec3f): Boolean = vec.x >= this.minX && vec.x <= this.maxX && vec.y >= this.minY && vec.y <= this.maxY
 
 
+    def checkXcollision(aabb: AABB, xIn: Float): Float = {
+        var x = xIn
+        if (minY < aabb.maxY && maxY > aabb.minY) if (minZ < aabb.maxZ && maxZ > aabb.minZ) {
+            var max = .0f
+            if (x > 0.0 && minX >= aabb.maxX - x) {
+                max = minX - aabb.maxX
+                if (max < x) x = max
+            }
+            if (x < 0.0 && maxX <= aabb.minX - x) {
+                max = maxX - aabb.minX
+                if (max > x) x = max
+            }
+        }
+        x
+    }
+
+    def checkYcollision(aabb: AABB, yIn: Float): Float = {
+        var y = yIn
+        if (minX < aabb.maxX && maxX > aabb.minX) if (minZ < aabb.maxZ && maxZ > aabb.minZ) {
+            var max = .0f
+            if (y > 0.0 && minY >= aabb.maxY) {
+                max = minY - aabb.maxY
+                if (max < y) y = max
+            }
+            if (y < 0.0 && maxY <= aabb.minY) {
+                max = maxY - aabb.minY
+                if (max > y) y = max
+            }
+        }
+        y
+    }
+
+    def checkZcollision(aabb: AABB, zIn: Float): Float = {
+        var z = zIn
+        if (minY < aabb.maxY && maxY > aabb.minY) if (minX < aabb.maxX && maxX > aabb.minX) {
+            var max = .0f
+            if (z > 0.0 && minZ >= aabb.maxZ - z) {
+                max = minZ - aabb.maxZ
+                if (max < z) z = max
+            }
+            if (z < 0.0 && maxZ <= aabb.minZ - z) {
+                max = maxZ - aabb.minZ
+                if (max > z) z = max
+            }
+        }
+        z
+    }
+
+
+
+    def canEqual(other: Any): Boolean = other.isInstanceOf[AABB]
+
+    override def equals(other: Any): Boolean = other match {
+        case that: AABB =>
+            (that canEqual this) &&
+                    minX == that.minX &&
+                    minY == that.minY &&
+                    minZ == that.minZ &&
+                    maxX == that.maxX &&
+                    maxY == that.maxY &&
+                    maxZ == that.maxZ
+        case _ => false
+    }
 
 }

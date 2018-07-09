@@ -4,6 +4,7 @@ package ru.megains.tartess.world
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.entity.Entity
+import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
 import ru.megains.tartess.tileentity.TileEntity
@@ -11,7 +12,9 @@ import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.chunk.Chunk
 import ru.megains.tartess.world.chunk.data.ChunkProvider
 
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scala.language.postfixOps
 
 
 
@@ -62,6 +65,46 @@ class World {
 
         }
 
+    }
+
+    def addBlocksInList(aabb: AABB): mutable.HashSet[AABB] = {
+        var x0: Int = Math.floor(aabb.minX )  toInt
+        var y0: Int = Math.floor(aabb.minY)  toInt
+        var z0: Int = Math.floor(aabb.minZ) toInt
+        var x1: Int = Math.ceil(aabb.maxX)  toInt
+        var y1: Int = Math.ceil(aabb.maxY)  toInt
+        var z1: Int = Math.ceil(aabb.maxZ)  toInt
+
+
+        if (x0 < -length) {
+            x0 = -length
+        }
+        if (y0 < -height) {
+            y0 = -height
+        }
+        if (z0 < -width) {
+            z0 = -width
+        }
+        if (x1 > length) {
+            x1 = length
+        }
+        if (y1 > height) {
+            y1 = height
+        }
+        if (z1 > width) {
+            z1 = width
+        }
+        var blockPos: BlockPos = null
+        val aabbs = mutable.HashSet[AABB]()
+
+        for (x <- x0 to x1; y <- y0 to y1; z <- z0 to z1) {
+
+            blockPos = new BlockPos(x, y, z)
+            if (!isAirBlock(blockPos)) {
+                aabbs += getBlock(blockPos).getSelectedBlockBody
+            }
+        }
+        aabbs
     }
 
     def setTileEntity(blockPos: BlockPos, tileEntityIn: TileEntity): Unit = {

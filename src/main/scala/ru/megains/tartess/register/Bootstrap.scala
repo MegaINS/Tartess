@@ -6,6 +6,7 @@ import ru.megains.tartess.entity.mob.EntityCube
 import ru.megains.tartess.renderer.block.RenderBlockStandart
 import ru.megains.tartess.tileentity.TileEntityChest
 import ru.megains.tartess.utils.Logger
+import ru.megains.tartess.renderer.entity.RenderEntityCube
 
 object Bootstrap extends Logger[Tartess] {
     var isNotInit = true
@@ -63,7 +64,7 @@ object Bootstrap extends Logger[Tartess] {
 
     def initTileEntity(): Unit = {
         GameRegister.registerTileEntity(0,classOf[TileEntityChest])
-        // GameRegister.registerEntityRender(classOf[TileEntityChest],RenderChest)
+       // GameRegister.registerTileEntityRender(classOf[TileEntityChest],RenderChest)
     }
     def initEntity(): Unit = {
 
@@ -71,6 +72,7 @@ object Bootstrap extends Logger[Tartess] {
 
        // GameRegister.registerEntity(0,classOf[EntityItem])
         GameRegister.registerEntity(0,classOf[EntityCube])
+        GameRegister.registerEntityRender(classOf[EntityCube], RenderEntityCube)
 
     }
 }

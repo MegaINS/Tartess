@@ -35,7 +35,7 @@ abstract class Block(val name:String) {
 
     def getBlockBody(state: BlockState): AABB = blockBody.rotate(state.blockDirection)
 
-    def getSelectedBlockBody(blockState: BlockState): AABB = getBlockBody(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
+    def getSelectedBlockBody(blockState: BlockState): AABB = getBlockBody(blockState).mul(16).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
 
     def collisionRayTrace(world: World, blockState: BlockState, start: Vec3f, end: Vec3f): RayTraceResult = {
         val pos = blockState.pos

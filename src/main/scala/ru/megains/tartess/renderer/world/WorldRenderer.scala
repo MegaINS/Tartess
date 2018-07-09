@@ -211,14 +211,17 @@ class WorldRenderer(val world: World) {
     def renderEntities(frustum: Frustum, transformation: Transformation): Unit = {
 
 
-        world.entities.filter(!_.isInstanceOf[EntityItem]).foreach(
+        world.entities.filter(_ match {
+            case _:EntityItem | _:EntityPlayer => false
+            case _ => true
+        }).foreach(
             entity => {
-                if (frustum.cubeInFrustum(entity.body)) {
+               // if (frustum.cubeInFrustum(entity.body)) {
                     val modelViewMatrix = transformation.buildEntityModelViewMatrix(entity)
                     Renderer.currentShaderProgram.setUniform("model", modelViewMatrix)
-                   // GameRegister.getEntityRender(entity).render()
+                    GameRegister.getEntityRender(entity).render(entity,world)
                 }
-            }
+           // }
         )
     }
 

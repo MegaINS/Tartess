@@ -9,7 +9,7 @@ import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.item.ItemBlock
 import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
-import ru.megains.tartess.register.Bootstrap
+import ru.megains.tartess.register.{Bootstrap, GameRegister}
 import ru.megains.tartess.renderer.font.FontRender
 import ru.megains.tartess.renderer.gui.{GuiInGameMenu, GuiManager}
 import ru.megains.tartess.renderer.item.ItemRender
@@ -92,10 +92,12 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         renderer.init()
         log.info("TextureManager loadTexture...")
         TextureManager.tm.loadTexture(TextureManager.locationBlockTexture, TextureManager.tm.textureMapBlock)
-        // GameRegister.tileEntityData.idRender.values.foreach(_.init())
+        GameRegister.tileEntityData.idRender.values.foreach(_.init())
+        GameRegister.entityData.idRender.values.foreach(_.init())
+
 
         log.info("RenderItem creating...")
-         itemRender = new ItemRender(this)
+        itemRender = new ItemRender(this)
 
 
         log.info("GuiManager init...")

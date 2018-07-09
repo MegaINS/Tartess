@@ -123,6 +123,7 @@ class Renderer(val tar: Tartess) {
         })
 
         worldRenderer.renderEntitiesItem(frustum, transformation)
+        worldRenderer.renderEntities(frustum, transformation)
         glDisable(GL_CULL_FACE)
 
 

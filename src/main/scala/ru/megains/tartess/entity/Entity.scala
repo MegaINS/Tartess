@@ -5,6 +5,8 @@ import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
+import scala.collection.mutable
+
 abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
     var posX:Float =0
@@ -15,7 +17,7 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
     var motionX:Float =0
     var motionY:Float =0
     var motionZ:Float =0
-    var goY:Float =0.5f
+    var goY:Int =8
     var speed: Float = 24
     var onGround:Boolean = false
     val body: AABB = new AABB()
@@ -24,7 +26,7 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
     var chunkCoordY = 0
     var chunkCoordZ = 0
     var side:BlockDirection = BlockDirection.DOWN
-
+    setPosition(0, 16, 0)
     def update(): Unit
 
     def setPosition(x: Float, y: Float, z: Float) {
@@ -45,35 +47,44 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         var y1: Float = y
 
         val bodyCopy: AABB = body.getCopy
-        // var aabbs:mutable.ArrayBuffer[AxisAlignedBB] =  world.addBlocksInList(body.expand(x0, y0, z0))
+        var aabbs:mutable.HashSet[AABB] =  world.addBlocksInList(body.expand(x0, y0, z0))
 
-        // aabbs.foreach( (aabb:AxisAlignedBB)=> { y0 = aabb.checkYcollision(body, y0)} )
+        aabbs.foreach( (aabb:AABB)=> { y0 = aabb.checkYcollision(body, y0)  } )
         body.move(0, y0, 0)
 
-        // aabbs.foreach( (aabb:AxisAlignedBB)=> { x0 = aabb.checkXcollision(body, x0)} )
+         aabbs.foreach( (aabb:AABB)=> { x0 = aabb.checkXcollision(body, x0)} )
         body.move(x0, 0, 0)
 
-        //  aabbs.foreach( (aabb:AxisAlignedBB)=> { z0 = aabb.checkZcollision(body, z0)} )
+          aabbs.foreach( (aabb:AABB)=> { z0 = aabb.checkZcollision(body, z0)} )
         body.move(0, 0, z0)
 
         onGround = y != y0 && y < 0.0F
-        //        if (onGround && (Math.abs(x) > Math.abs(x0) || Math.abs(z) > Math.abs(z0))) {
-        //
-        //            aabbs =  world.addBlocksInList(bodyCopy.expand(x1, goY, z1))
-        //
-        //            aabbs.foreach( (aabb:AxisAlignedBB)=> { y1 = aabb.checkYcollision(body, goY)} )
-        //            body.move(0, y1, 0)
-        //
-        //            aabbs.foreach( (aabb:AxisAlignedBB)=> { x1 = aabb.checkXcollision(body, x1)} )
-        //            body.move(x1, 0, 0)
-        //
-        //            aabbs.foreach( (aabb:AxisAlignedBB)=> { z1 = aabb.checkZcollision(body, z1)} )
-        //            body.move(0, 0, z1)
-        //
-        //            if (Math.abs(x1) > Math.abs(x0) || Math.abs(z1) > Math.abs(z0)) {
-        //                body.set(bodyCopy)
-        //            }
-        //        }
+        var a = true
+                if (onGround && (Math.abs(x) > Math.abs(x0) || Math.abs(z) > Math.abs(z0))) {
+
+                    for(i<-0 to goY
+                        if a){
+                        val bodyCopy1: AABB = bodyCopy.getCopy
+                        x1 = x
+                        z1 = z
+                        y1 = y
+                        aabbs =  world.addBlocksInList(bodyCopy1.expand(x1, i, z1))
+
+                        aabbs.foreach( (aabb:AABB)=> { y1 = aabb.checkYcollision(bodyCopy1, i)} )
+                        bodyCopy1.move(0, y1, 0)
+
+                        aabbs.foreach( (aabb:AABB)=> { x1 = aabb.checkXcollision(bodyCopy1, x1)} )
+                        bodyCopy1.move(x1, 0, 0)
+
+                        aabbs.foreach( (aabb:AABB)=> { z1 = aabb.checkZcollision(bodyCopy1, z1)} )
+                        bodyCopy1.move(0, 0, z1)
+
+                        if (Math.abs(x1) > Math.abs(x0) || Math.abs(z1) > Math.abs(z0)) {
+                            body.set(bodyCopy1)
+                            a = false
+                        }
+                    }
+                }
         if (x0 != x & x1 != x) {
             motionX = 0.0F
         }
