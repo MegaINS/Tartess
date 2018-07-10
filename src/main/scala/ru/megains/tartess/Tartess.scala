@@ -132,7 +132,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
                 runGameLoop()
                 while (System.currentTimeMillis >= lastTime + 1000L) {
-                     log.info(s"$frames fps, $tick tick, ${RenderChunk.chunkRender / (if (frames == 0) 1 else frames)} chunkRender, ${RenderChunk.chunkUpdate} chunkUpdate")
+                    log.info(s"$frames fps, $tick tick, ${RenderChunk.chunkRender / (if (frames == 0) 1 else frames)} chunkRender, ${RenderChunk.chunkUpdate} chunkUpdate")
 
                     RenderChunk.chunkRender = 0
                     RenderChunk.chunkUpdate = 0
@@ -278,6 +278,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
                 case GLFW_KEY_N => grabMouseCursor()
                 case GLFW_KEY_M => ungrabMouseCursor()
                 case GLFW_KEY_L => renderer.isLight = !renderer.isLight
+                case GLFW_KEY_C => player.gameType = if(player.gameType.isCreative) GameType.SURVIVAL else GameType.CREATIVE
                 case _ =>
             }
         }

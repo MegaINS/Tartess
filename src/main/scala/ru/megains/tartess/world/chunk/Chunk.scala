@@ -32,6 +32,10 @@ class Chunk(val position: ChunkPosition,val world: World) {
         getBlock(pos).block == Blocks.air
     }
 
+    def isAirBlock(x:Int,y:Int,z:Int): Boolean={
+        getBlock(x,y,z).block == Blocks.air
+    }
+
     def isAirBlock(blockState: BlockState): Boolean = {
         var empty = true
 
@@ -74,7 +78,9 @@ class Chunk(val position: ChunkPosition,val world: World) {
     def getBlock(pos: BlockPos):BlockState = {
         blockStorage.get(pos.x ,pos.y ,pos.z )
     }
-
+    def getBlock(x:Int,y:Int,z:Int):BlockState = {
+        blockStorage.get(x ,y ,z )
+    }
     def setBlock(blockState: BlockState):Boolean = {
         val pos = blockState.pos
         val block = blockState.block
@@ -100,7 +106,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
             if(x <= position.maxXP && y <= position.maxYP && z <= position.maxZP){
                 blockCell += blockStorage.getBlockCell(x & 255,y & 255,z & 255)
             }else{
-                blockCell +=   world.getChunk(x>>8,y>>8,z>>8).blockStorage.getBlockCell(x & 255,y & 255,z & 255)
+                blockCell += world.getChunk(x>>8,y>>8,z>>8).blockStorage.getBlockCell(x & 255,y & 255,z & 255)
             }
         }
         blockCell.foreach(_.setBlock(blockState))

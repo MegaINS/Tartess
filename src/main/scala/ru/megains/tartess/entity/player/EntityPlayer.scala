@@ -1,6 +1,6 @@
 package ru.megains.tartess.entity.player
 
-import ru.megains.tartess.Tartess
+import ru.megains.tartess.{GameType, Tartess}
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.entity.EntityLivingBase
@@ -15,7 +15,7 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
     var openContainer: Container = _
     val inventory = new InventoryPlayer(this)
     val inventoryContainer: Container = new ContainerPlayerInventory(inventory)
-
+    var gameType:GameType = GameType.SURVIVAL
 
     def turn(xo: Float, yo: Float) {
         yRot += yo * 0.15f
@@ -48,10 +48,17 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
 
     def update(xo: Float, yo: Float, zo: Float) {
 
-        if (yo > 0) {
+
+        if(gameType.isCreative) {
+            motionY = yo / 2 * 16
+        }else{
+            if (yo > 0 && onGround) {
+                motionY = 0.42f*16
+            }
         }
 
-        //motionY = yo / 2 * 16
+
+
         moveFlying(xo, zo, if (onGround) 0.04f else 0.02f)
         move(motionX, motionY, motionZ)
         motionX *= 0.8f
@@ -62,7 +69,7 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
             motionY *= 0.98f
         }
         motionZ *= 0.8f
-        motionY -= 0.04f
+        motionY -= 0.04f*16
         if (onGround) {
             motionX *= 0.9f
             motionZ *= 0.9f

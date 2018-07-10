@@ -30,7 +30,7 @@ class Window {
         })
         glfwMakeContextCurrent(id)
         GL.createCapabilities
-        glfwSwapInterval(1)
+        glfwSwapInterval(0)
     }
 
     def isClose: Boolean = glfwWindowShouldClose(id)

@@ -64,6 +64,7 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
                     for(i<-0 to goY
                         if a){
+
                         val bodyCopy1: AABB = bodyCopy.getCopy
                         x1 = x
                         z1 = z

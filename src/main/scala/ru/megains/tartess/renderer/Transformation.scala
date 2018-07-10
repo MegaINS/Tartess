@@ -65,7 +65,7 @@ class Transformation {
         val anim2 = (Math.sin(System.currentTimeMillis() % 2000.0 / 2000 * 2 * Math.PI) * 0.1f) + 0.4f
         modelMatrix.identity
         modelMatrix.translate((position.minX + 0.125f) /16 , position.minY / 16 + anim2 toFloat, (position.minZ + 0.125f)/16)
-        modelMatrix.rotateY( Math.toRadians( System.currentTimeMillis() % 10801.0f / 30f) toFloat)
+        modelMatrix.rotateY( ((entity.posX  toInt) << 2 & 360) +  Math.toRadians( System.currentTimeMillis() % 10801.0f / 30f) toFloat)
         modelMatrix.scale(0.25f)
     }
 

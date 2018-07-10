@@ -198,7 +198,7 @@ class WorldRenderer(val world: World) {
     def renderEntitiesItem(frustum: Frustum, transformation: Transformation): Unit = {
 
 
-        world.entities.filter(_.isInstanceOf[EntityItem]).foreach(
+        world.entities.filter(_.isInstanceOf[EntityItem]).splitter.foreach(
             entity => {
               //  if (frustum.cubeInFrustum(entity.body)) {
                     val modelViewMatrix = transformation.buildEntityItemModelViewMatrix(entity.asInstanceOf[EntityItem])
@@ -211,10 +211,10 @@ class WorldRenderer(val world: World) {
     def renderEntities(frustum: Frustum, transformation: Transformation): Unit = {
 
 
-        world.entities.filter(_ match {
-            case _:EntityItem | _:EntityPlayer => false
+        world.entities.filter {
+            case _: EntityItem | _: EntityPlayer => false
             case _ => true
-        }).foreach(
+        }.splitter.foreach(
             entity => {
                // if (frustum.cubeInFrustum(entity.body)) {
                     val modelViewMatrix = transformation.buildEntityModelViewMatrix(entity)

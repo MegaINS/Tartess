@@ -14,6 +14,7 @@ import ru.megains.tartess.world.chunk.data.ChunkProvider
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scala.collection.parallel.mutable.ParHashSet
 import scala.language.postfixOps
 
 
@@ -26,7 +27,7 @@ class World {
 
     var worldRenderer:WorldRenderer = _
     val chunkProvider:ChunkProvider = new ChunkProvider(this)
-    val entities: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
+    val entities: ParHashSet[Entity] = new ParHashSet[Entity]()
     val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
 
     def getChunk(x: Int, y: Int, z: Int): Chunk = {
@@ -39,20 +40,30 @@ class World {
     }
 
     def getChunk(blockPos: BlockPos): Chunk = {
-        if((blockPos.x <= length && blockPos.x >= -length) && (blockPos.z <= width  && blockPos.z >= -width) && (blockPos.y <= height && blockPos.y >= -height)){
-            chunkProvider.provideChunk(blockPos.x>>8,blockPos.y>>8,blockPos.z>>8)
+        getChunkBlockPos(blockPos.x,blockPos.y,blockPos.z)
+    }
+    def getChunkBlockPos(x:Int,y:Int,z:Int): Chunk = {
+        if((x <= length && x >= -length) && (z <= width  && z >= -width) && (y <= height && y >= -height)){
+            chunkProvider.provideChunk(x>>8,y>>8,z>>8)
         } else{
             ChunkProvider.voidChunk
         }
 
     }
-
     def getBlock(blockPos: BlockPos): BlockState = {
         if (!blockPos.isValid(this)) {
             return Blocks.air.airState
         }
         val chunk = getChunk(blockPos)
         chunk.getBlock(blockPos)
+    }
+
+    def getBlock(x:Int,y:Int,z:Int): BlockState = {
+//        if (!blockPos.isValid(this)) {
+//            return Blocks.air.airState
+//        }
+        val chunk = getChunkBlockPos(x,y,z)
+        chunk.getBlock(x,y,z)
     }
 
     def removeTileEntity(blockPos: BlockPos): Unit = {
@@ -94,14 +105,14 @@ class World {
         if (z1 > width) {
             z1 = width
         }
-        var blockPos: BlockPos = null
+       // var blockPos: BlockPos = null
         val aabbs = mutable.HashSet[AABB]()
 
         for (x <- x0 to x1; y <- y0 to y1; z <- z0 to z1) {
 
-            blockPos = new BlockPos(x, y, z)
-            if (!isAirBlock(blockPos)) {
-                aabbs += getBlock(blockPos).getSelectedBlockBody
+           // blockPos = new BlockPos(x, y, z)
+            if (!isAirBlock(x, y, z)) {
+                aabbs += getBlock(x, y, z).getSelectedBlockBody
             }
         }
         aabbs
@@ -116,6 +127,8 @@ class World {
     }
 
     def isAirBlock(blockPos: BlockPos): Boolean = if (blockPos.isValid(this)) getChunk(blockPos).isAirBlock(blockPos) else true
+
+    def isAirBlock(x:Int,y:Int,z:Int): Boolean = getChunkBlockPos(x,y,z).isAirBlock(x,y,z)
 
     def isAirBlock(blockState: BlockState): Boolean = {
         if (blockState.pos.isValid(this)) getChunk(blockState.pos).isAirBlock(blockState) else true
