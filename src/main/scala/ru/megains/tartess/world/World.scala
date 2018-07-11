@@ -105,12 +105,12 @@ class World {
         if (z1 > width) {
             z1 = width
         }
-       // var blockPos: BlockPos = null
+
         val aabbs = mutable.HashSet[AABB]()
 
         for (x <- x0 to x1; y <- y0 to y1; z <- z0 to z1) {
 
-           // blockPos = new BlockPos(x, y, z)
+
             if (!isAirBlock(x, y, z)) {
                 aabbs += getBlock(x, y, z).getSelectedBlockBody
             }

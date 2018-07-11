@@ -7,11 +7,12 @@ import org.lwjgl.system.MemoryUtil.NULL
 class Window {
 
 
-    var width: Int =800
-    var height: Int = 600
+    var width: Int =1000
+    var height: Int = 800
     var id: Long = NULL
 
     def create(): Unit = {
+
 
         if (!glfwInit) {
             throw new RuntimeException("Failed to init GLFW.")
@@ -30,7 +31,7 @@ class Window {
         })
         glfwMakeContextCurrent(id)
         GL.createCapabilities
-        glfwSwapInterval(0)
+        glfwSwapInterval(1)
     }
 
     def isClose: Boolean = glfwWindowShouldClose(id)
