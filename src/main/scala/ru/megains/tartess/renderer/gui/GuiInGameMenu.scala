@@ -6,9 +6,9 @@ class GuiInGameMenu extends GuiScreen {
 
 
     override def initGui(): Unit = {
-        buttonList += new GuiButton(0, tar, "Main menu", 250, 310, 300, 50)
-        buttonList += new GuiButton(1, tar, "Option", 250, 380, 300, 50)
-        buttonList += new GuiButton(2, tar, "Return to game", 250, 450, 300, 50)
+        buttonList += new GuiButton(0, tar, "Main menu", (tar.window.width -300)/2,310, 300, 50)
+        buttonList += new GuiButton(1, tar, "Option",  (tar.window.width -300)/2, 380, 300, 50)
+        buttonList += new GuiButton(2, tar, "Return to game",  (tar.window.width -300)/2, 450, 300, 50)
 
     }
 

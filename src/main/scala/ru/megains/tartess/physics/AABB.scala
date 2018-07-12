@@ -71,7 +71,7 @@ class AABB( var minX:Float = .0f,
 
     def sum(x: Float, y: Float, z: Float) = new AABB(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z)
 
-    //def div(value: Float) = new AABB(minX / value, minY / value, minZ / value, maxX / value, maxY / value, maxZ / value)
+    def div(value: Float) = new AABB(minX / value, minY / value, minZ / value, maxX / value, maxY / value, maxZ / value)
 
     def getCenterX: Float = (maxX + minX) / 2
 

@@ -15,7 +15,7 @@ class GuiChest(inventoryPlayer: InventoryPlayer, inventoryTest: TileEntityChest)
     }
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
-        drawObject(chestInventory, 150, 0)
+        drawObject(chestInventory, (tar.window.width -500)/2, 0)
         super.drawScreen(mouseX, mouseY)
     }
 

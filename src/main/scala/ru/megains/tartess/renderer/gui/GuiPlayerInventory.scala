@@ -16,7 +16,7 @@ class GuiPlayerInventory(entityPlayer: EntityPlayer) extends GuiContainer(entity
 
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
-        drawObject(playerInventory, 150, 0)
+        drawObject(playerInventory,  (tar.window.width -500)/2, 0)
         super.drawScreen(mouseX, mouseY)
     }
 

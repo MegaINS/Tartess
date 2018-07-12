@@ -27,6 +27,8 @@ abstract class Block(val name:String) {
         texture = textureRegister.registerTexture(name)
     }
 
+    def getATexture(blockState: BlockState,blockDirection: BlockDirection,world: World ): TextureAtlas = texture
+
     def getATexture(pos: BlockPos = null,blockDirection: BlockDirection = BlockDirection.UP,world: World = null): TextureAtlas = texture
 
     def getSelectedBoundingBox(blockState: BlockState): BoundingBox = getBoundingBox(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
@@ -35,13 +37,13 @@ abstract class Block(val name:String) {
 
     def getBlockBody(state: BlockState): AABB = blockBody.rotate(state.blockDirection)
 
-    def getSelectedBlockBody(blockState: BlockState): AABB = getBlockBody(blockState).mul(16).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
+    def getSelectedBlockBody(blockState: BlockState): AABB = getBlockBody(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
 
     def collisionRayTrace(world: World, blockState: BlockState, start: Vec3f, end: Vec3f): RayTraceResult = {
         val pos = blockState.pos
         val vec3d: Vec3f = new Vec3f(start.x , start.y , start.z ).sub(pos.x, pos.y, pos.z)
         val vec3d1: Vec3f = new Vec3f(end.x , end.y , end.z ).sub(pos.x, pos.y, pos.z)
-        val rayTraceResult =   getBlockBody(blockState).mul(16).calculateIntercept( vec3d, vec3d1 )
+        val rayTraceResult =   getBlockBody(blockState).calculateIntercept( vec3d, vec3d1 )
 
         if (rayTraceResult == null) {
             null

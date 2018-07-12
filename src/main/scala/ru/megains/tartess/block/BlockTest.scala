@@ -6,25 +6,25 @@ import ru.megains.tartess.physics.{AABB, BoundingBox}
 class BlockTest(name:String,i:Int) extends Block(name){
 
     val blockBodys = Array(
-        new AABB(0,0,0,15/16f,15/16f,15/16f),
-        new AABB(0,0,0,14/16f,14/16f,14/16f),
-        new AABB(0,0,0,13/16f,13/16f,13/16f),
-        new AABB(0,0,0,12/16f,12/16f,12/16f),
-        new AABB(0,0,0,11/16f,11/16f,11/16f),
-        new AABB(0,0,0,10/16f,10/16f,10/16f),
-        new AABB(0,0,0,9/16f,9/16f,9/16f),
-        new AABB(0,0,0,8/16f,8/16f,8/16f),
-        new AABB(0,0,0,7/16f,7/16f,7/16f),
-        new AABB(0,0,0,6/16f,6/16f,6/16f),
-        new AABB(0,0,0,5/16f,5/16f,5/16f),
-        new AABB(0,0,0,4/16f,4/16f,4/16f),
-        new AABB(0,0,0,3/16f,3/16f,3/16f),
-        new AABB(0,0,0,2/16f,2/16f,2/16f),
-        new AABB(0,0,0,1/16f,1/16f,1/16f),
+        new AABB(0,0,0,15,15,15),
+        new AABB(0,0,0,14,14,14),
+        new AABB(0,0,0,13,13,13),
+        new AABB(0,0,0,12,12,12),
+        new AABB(0,0,0,11,11,11),
+        new AABB(0,0,0,10,10,10),
+        new AABB(0,0,0,9,9,9),
+        new AABB(0,0,0,8,8,8),
+        new AABB(0,0,0,7,7,7),
+        new AABB(0,0,0,6,6,6),
+        new AABB(0,0,0,5,5,5),
+        new AABB(0,0,0,4,4,4),
+        new AABB(0,0,0,3,3,3),
+        new AABB(0,0,0,2,2,2),
+        new AABB(0,0,0,1,1,1),
 
-        new AABB(0,0,0,160/16f,16/16f,160/16f),
-        new AABB(0,0,0,16/16f,160/16f,16/16f),
-        new AABB(0,0,0,4/16f,32/16f,4/16f)
+        new AABB(0,0,0,160,16,160),
+        new AABB(0,0,0,16,160,16),
+        new AABB(0,0,0,4,32,4)
 
     )
     val blockSizes = Array(

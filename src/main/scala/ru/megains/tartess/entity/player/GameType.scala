@@ -1,4 +1,4 @@
-package ru.megains.tartess
+package ru.megains.tartess.entity.player
 
 sealed abstract class GameType private(val id: Int, val name: String, val shortName: String) {
 

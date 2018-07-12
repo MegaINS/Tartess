@@ -9,6 +9,6 @@ class BlockChest(name:String) extends BlockContainer(name){
 
     override def createNewTileEntity(worldIn: World, blockState: BlockState): TileEntity = new TileEntityChest(blockState.pos,worldIn)
 
-    override val blockBody: AABB = new AABB(0.3f,0,0,1.7f,1,1)
+    override val blockBody: AABB = new AABB(0.3f*16,0,0,1.7f*16,16,16)
     override val boundingBox: BoundingBox = new BoundingBox(32,16,16)
 }

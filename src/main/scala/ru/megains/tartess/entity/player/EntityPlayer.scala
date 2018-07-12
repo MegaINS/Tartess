@@ -1,6 +1,6 @@
 package ru.megains.tartess.entity.player
 
-import ru.megains.tartess.{GameType, Tartess}
+import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.entity.EntityLivingBase

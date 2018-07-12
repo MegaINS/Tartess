@@ -2,11 +2,11 @@ package ru.megains.tartess.register
 
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.block._
+import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.mob.EntityCube
-import ru.megains.tartess.renderer.block.RenderBlockStandart
+import ru.megains.tartess.renderer.entity.RenderEntityCube
 import ru.megains.tartess.tileentity.TileEntityChest
 import ru.megains.tartess.utils.Logger
-import ru.megains.tartess.renderer.entity.RenderEntityCube
 
 object Bootstrap extends Logger[Tartess] {
     var isNotInit = true
@@ -51,15 +51,10 @@ object Bootstrap extends Logger[Tartess] {
 
         GameRegister.registerBlock(18,new BlockGlass("glass"))
         GameRegister.registerBlock(19, new BlockChest("tileEntityTest"))
-
+        GameRegister.registerBlock(20, new BlockRotateTexture())
        // GameRegister.registerBlock(20, new BlockTest("test15",15))
        // GameRegister.registerBlock(21, new BlockTest("test16",16))
        // GameRegister.registerBlock(22, new BlockTest("test17",17))
-        GameRegister.registerBlockRender(Blocks.glass,RenderBlockStandart)
-        GameRegister.registerBlockRender(Blocks.test0,RenderBlockStandart)
-        GameRegister.registerBlockRender(Blocks.test1,RenderBlockStandart)
-        GameRegister.registerBlockRender(Blocks.test2,RenderBlockStandart)
-
     }
 
     def initTileEntity(): Unit = {
@@ -67,12 +62,7 @@ object Bootstrap extends Logger[Tartess] {
        // GameRegister.registerTileEntityRender(classOf[TileEntityChest],RenderChest)
     }
     def initEntity(): Unit = {
-
-
-
-       // GameRegister.registerEntity(0,classOf[EntityItem])
-        GameRegister.registerEntity(0,classOf[EntityCube])
-        GameRegister.registerEntityRender(classOf[EntityCube], RenderEntityCube)
-
+        GameRegister.registerEntity(0,classOf[EntityItem])
+        GameRegister.registerEntity(1,classOf[EntityCube],RenderEntityCube)
     }
 }

@@ -16,7 +16,7 @@ object RenderBlockWG extends TRenderBlock {
 
         val pos = blockState.pos
         val block = blockState.block
-        val aabb:AABB = blockState.getBlockBody.sum(pos.rendX, pos.rendY, pos.rendZ)
+        val aabb:AABB = blockState.getBlockBody.div(16).sum(pos.rendX, pos.rendY, pos.rendZ)
         val minX = aabb.minX
         val minY = aabb.minY
         val minZ = aabb.minZ

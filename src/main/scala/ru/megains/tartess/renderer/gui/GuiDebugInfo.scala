@@ -2,10 +2,10 @@ package ru.megains.tartess.renderer.gui
 
 import java.awt.Color
 
-import ru.megains.tartess.GameType
-import ru.megains.tartess.GameType.NOT_SET
+import ru.megains.tartess.entity.player.GameType.NOT_SET
 import ru.megains.tartess.block.data.BlockDirection
 import ru.megains.tartess.entity.item.EntityItem
+import ru.megains.tartess.entity.player.GameType
 
 class GuiDebugInfo extends GuiInGame with GuiText {
 

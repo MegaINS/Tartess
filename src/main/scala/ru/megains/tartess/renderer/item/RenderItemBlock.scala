@@ -25,7 +25,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
     def createInventoryMesh(): Mesh = {
 
 
-        val aabb = new BlockState(block,new BlockPos(0,0,0)/*,BlockDirection.EAST*/).getBlockBody
+        val aabb = new BlockState(block,new BlockPos(0,0,0)/*,BlockDirection.EAST*/).getBlockBody.div(16)
 
 
         val maxX: Double = aabb.maxX / 2f

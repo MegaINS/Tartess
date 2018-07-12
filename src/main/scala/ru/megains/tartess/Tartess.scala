@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.mob.EntityCube
-import ru.megains.tartess.entity.player.EntityPlayer
+import ru.megains.tartess.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.item.ItemBlock
 import ru.megains.tartess.item.itemstack.ItemStack
 import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
@@ -58,7 +58,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         log.info("Start Game")
-        log.info("Tartess v0.0.1.2")
+        log.info("Tartess v0.0.4.0")
         try {
             log.info("Display creating...")
             window.create()

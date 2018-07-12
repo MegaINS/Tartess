@@ -71,6 +71,6 @@ abstract class GuiScreen extends GuiElement {
 
 object GuiScreen extends Gui {
 
-    val background: Mesh = createGradientRect(800, 600, new Color(128, 128, 128, 128), new Color(0, 0, 0, 128))
+    val background: Mesh = createGradientRect(2000, 2000, new Color(128, 128, 128, 128), new Color(0, 0, 0, 128))
 }
 

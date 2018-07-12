@@ -12,7 +12,7 @@ object Mouse {
     var DWheel: Double = 0
     var windowId: Long = 0
 
-    def getY: Int = 600 - y toInt
+    def getY: Int = Tartess.tartess.window.height - y toInt
 
     def getX: Int = x toInt
 

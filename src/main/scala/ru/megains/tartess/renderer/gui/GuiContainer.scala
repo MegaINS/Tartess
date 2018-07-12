@@ -16,7 +16,7 @@ abstract class GuiContainer(val inventorySlots: Container) extends GuiScreen {
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
 
         inventorySlots.inventorySlots.foreach(
-            (slot) => {
+            slot => {
                 drawSlot(slot)
                 if (isMouseOverSlot(slot, mouseX, mouseY)) {
                     drawObject(rect, slot.xPos, slot.yPos)

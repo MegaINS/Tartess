@@ -1,53 +1,69 @@
 package ru.megains.tartess.register
 
-import ru.megains.tartess.block.Block
+import ru.megains.tartess.block.{Block, BlockWG}
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.item.{Item, ItemBlock}
 import ru.megains.tartess.renderer.api.{TRenderBlock, TRenderEntity, TRenderItem, TRenderTileEntity}
-import ru.megains.tartess.renderer.block.RenderBlockWG
+import ru.megains.tartess.renderer.block.{RenderBlockStandart, RenderBlockWG}
 import ru.megains.tartess.renderer.item.{RenderItemBlock, RenderItemStandart}
 import ru.megains.tartess.tileentity.TileEntity
 
 object GameRegister {
 
-    val blockData = new RegisterNamespace[Block] with RegisterRender[TRenderBlock] {
-        override val default: TRenderBlock = RenderBlockWG
-    }
+    val blockData = new RegisterNamespace[Block] with RegisterRender[TRenderBlock]
 
-    val itemData = new RegisterNamespace[Item] with RegisterRender[TRenderItem] {
-        override val default:TRenderItem = null
-    }
+    val itemData = new RegisterNamespace[Item] with RegisterRender[TRenderItem]
 
-    val tileEntityData = new RegisterNamespace[Class[_<:TileEntity]] with RegisterRender[TRenderTileEntity] {
-        override val default:TRenderTileEntity = null
-    }
+    val tileEntityData = new RegisterNamespace[Class[_<:TileEntity]] with RegisterRender[TRenderTileEntity]
 
-    val entityData = new RegisterNamespace[Class[_<:Entity]] with RegisterRender[TRenderEntity]{
-        override val default:TRenderEntity = null
-    }
+    val entityData = new RegisterNamespace[Class[_<:Entity]] with RegisterRender[TRenderEntity]
 
     def registerBlock(id: Int, block: Block): Unit = {
         if (privateRegisterBlock(id, block)) {
+            block match {
+                case _:BlockWG =>  registerBlockRender(block,RenderBlockWG)
+                case _ =>   registerBlockRender(block,RenderBlockStandart)
+            }
             if(block.name != "air"){
                 val item = new ItemBlock(block)
-                if (privateRegisterItem(id, item)) {
-                    itemData.registerRender(id, new RenderItemBlock(item))
-                }
+                registerItem(id, item,new RenderItemBlock(item))
             }
+        }
+    }
+    def registerBlock(id: Int, block: Block,tRenderBlock: TRenderBlock): Unit = {
+        if (privateRegisterBlock(id, block)) {
+            registerBlockRender(block,tRenderBlock)
+            val item = new ItemBlock(block)
+            registerItem(id, item, new RenderItemBlock(item))
         }
     }
     def registerItem(id: Int, item: Item): Unit = {
         if (privateRegisterItem(id, item)) {
-            itemData.registerRender(id, new RenderItemStandart(item))
+            registerItemRender(item, new RenderItemStandart(item))
+        }
+    }
+    def registerItem(id: Int, item: Item,tRenderItem: TRenderItem): Unit = {
+        if (privateRegisterItem(id, item)) {
+            registerItemRender(item,tRenderItem)
         }
     }
     def registerTileEntity(id: Int, tileEntity: Class[_<:TileEntity]): Unit = {
         privateRegisterTileEntity(id, tileEntity)
     }
+    def registerTileEntity(id: Int, tileEntity: Class[_<:TileEntity],tRenderTileEntity: TRenderTileEntity): Unit = {
+        if(privateRegisterTileEntity(id, tileEntity)){
+            registerTileEntityRender(tileEntity,tRenderTileEntity)
+        }
+
+    }
     def registerEntity(id: Int, tileEntity: Class[_<:Entity]): Unit = {
         privateRegisterEntity(id, tileEntity)
     }
-
+    def registerEntity(id: Int, tileEntity: Class[_<:Entity],tRenderEntity: TRenderEntity): Unit = {
+        if(privateRegisterEntity(id, tileEntity)){
+            registerEntityRender(tileEntity,tRenderEntity)
+        }
+    }
 
 
     def registerBlockRender(block: Block, renderBlock: TRenderBlock): Unit = {
@@ -58,7 +74,14 @@ object GameRegister {
             println("Block +\"" + block.name + "\" not register")
         }
     }
-
+    def registerItemRender(item: Item , tRenderItem: TRenderItem): Unit = {
+        val id: Int = getIdByItem(item)
+        if (id != -1) {
+            itemData.registerRender(id, tRenderItem)
+        } else {
+            println("Block +\"" + item.name + "\" not register")
+        }
+    }
     def registerTileEntityRender(tileEntity: Class[_<:TileEntity], aRenderBlock: TRenderTileEntity): Unit = {
         val id: Int = getIdByTileEntity(tileEntity)
         if (id != -1) {
