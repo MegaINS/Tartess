@@ -1,11 +1,14 @@
 package ru.megains.tartess.entity
 
+import ru.megains.nbt.NBTType._
+import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.block.data.BlockDirection
 import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
 import scala.collection.mutable
+import scala.language.postfixOps
 
 abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
@@ -143,5 +146,66 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         val f2 : Float = MathHelper.cos(-pitch * 0.017453292F)
         val f3 : Float = MathHelper.sin(-pitch * 0.017453292F)
         new Vec3f(f1 * f2, f3, f * f2)
+    }
+
+
+    def readEntityFromNBT(compound: NBTCompound): Unit = {}
+
+    def readFromNBT(compound: NBTCompound) {
+
+        val listPos = compound.getList("Pos")
+        val listMotion = compound.getList("Motion")
+        val listRotation = compound.getList("Rotation")
+        motionX = listMotion.getFloat(0)
+
+        motionY = listMotion.getFloat(1)
+
+        motionZ = listMotion.getFloat(2)
+
+        if (Math.abs(motionX) > 10.0D) motionX = 0.0f
+        if (Math.abs(motionY) > 10.0D) motionY = 0.0f
+        if (Math.abs(motionZ) > 10.0D) motionZ = 0.0f
+        posX = listPos.getFloat(0)
+
+        posY = listPos.getFloat(1)
+
+        posZ = listPos.getFloat(2)
+
+       // prevPosX = posX
+       // prevPosY = posY
+        //prevPosZ = posZ
+       // rotationYaw = listRotation.getFloat(0)
+      //  rotationPitch = listRotation.getFloat(1)
+      //  prevRotationYaw = rotationYaw
+       // prevRotationPitch = rotationPitch
+
+        onGround = compound.getBoolean("OnGround")
+        readEntityFromNBT(compound)
+        setPosition(posX, posY, posZ)
+        //setRotation(rotationYaw, rotationPitch)
+
+    }
+
+    def writeEntityToNBT(compound: NBTCompound): Unit = {}
+
+    def writeToNBT(compound: NBTCompound): Unit = {
+
+        val listPos = compound.createList("Pos", EnumNBTFloat)
+        listPos.setValue(posX)
+        listPos.setValue(posY)
+        listPos.setValue(posZ)
+
+        val listMotion = compound.createList("Motion",EnumNBTFloat)
+        listMotion.setValue(motionX)
+        listMotion.setValue(motionY)
+        listMotion.setValue(motionZ)
+
+      //  val listRotation = compound.createList("Rotation", EnumNBTFloat)
+       // listRotation.setValue(rotationYaw)
+        //listRotation.setValue(rotationPitch)
+
+        compound.setValue("OnGround", onGround)
+        writeEntityToNBT(compound)
+
     }
 }

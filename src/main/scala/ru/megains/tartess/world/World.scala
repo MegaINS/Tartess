@@ -8,9 +8,10 @@ import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
 import ru.megains.tartess.tileentity.TileEntity
-import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
+import ru.megains.tartess.utils.{Logger, MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.chunk.Chunk
-import ru.megains.tartess.world.chunk.data.ChunkProvider
+import ru.megains.tartess.world.chunk.data.{ChunkLoader, ChunkProvider}
+import ru.megains.tartess.world.data.AnvilSaveHandler
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -19,14 +20,15 @@ import scala.language.postfixOps
 
 
 
-class World {
+class World(saveHandler: AnvilSaveHandler) extends Logger[World]{
 
     val length: Int = 100000
     val width: Int = 100000
     val height: Int = 1000
 
     var worldRenderer:WorldRenderer = _
-    val chunkProvider:ChunkProvider = new ChunkProvider(this)
+    val chunkLoader: ChunkLoader = saveHandler.getChunkLoader
+    val chunkProvider:ChunkProvider = new ChunkProvider(this,chunkLoader)
     val entities: ParHashSet[Entity] = new ParHashSet[Entity]()
     val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
 
@@ -156,7 +158,7 @@ class World {
     }
 
     def spawnEntityInWorld(entity: Entity): Unit = {
-        val chunk = getChunk( entity.posX toInt,entity.posY toInt,entity.posZ toInt)
+        val chunk = getChunkBlockPos( entity.posX toInt,entity.posY toInt,entity.posZ toInt)
         if (chunk != null){
             chunk.addEntity(entity)
         }
@@ -304,6 +306,19 @@ class World {
 
         }
         null
+    }
+
+
+    def save(): Unit = {
+        log.info("World saved...")
+        log.info("Saving chunks for level \'{}\'/{}")
+        saveAllChunks(true)
+
+        log.info("World saved completed")
+    }
+    def saveAllChunks(p_73044_1: Boolean /*, progressCallback: IProgressUpdate*/) {
+
+        chunkProvider.saveChunks(p_73044_1)
     }
 
 }

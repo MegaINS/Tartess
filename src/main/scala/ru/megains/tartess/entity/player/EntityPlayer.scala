@@ -10,7 +10,8 @@ import ru.megains.tartess.renderer.gui.GuiPlayerInventory
 import ru.megains.tartess.tileentity.ATileEntityInventory
 import ru.megains.tartess.world.World
 
-class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
+class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
+
 
     var openContainer: Container = _
     val inventory = new InventoryPlayer(this)

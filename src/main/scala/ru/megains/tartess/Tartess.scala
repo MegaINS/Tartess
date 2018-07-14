@@ -19,6 +19,7 @@ import ru.megains.tartess.renderer.{Camera, Renderer}
 import ru.megains.tartess.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.utils._
 import ru.megains.tartess.world.World
+import ru.megains.tartess.world.data.AnvilSaveFormat
 
 import scala.reflect.io.Directory
 import scala.util.Random
@@ -34,6 +35,8 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     var running = true
     var rightClickDelayTimer:Int = 0
     val timer: Timer = new Timer(20)
+
+    val saveLoader = new AnvilSaveFormat(clientDir)
 
     val window: Window = new Window()
 
@@ -58,7 +61,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         log.info("Start Game")
-        log.info("Tartess v0.0.6.0")
+        log.info("Tartess v0.0.7.0")
         try {
             log.info("Display creating...")
             window.create()
@@ -102,11 +105,10 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
         log.info("GuiManager init...")
         guiManager.init()
-        world = new World()
-        //world = new World(saveLoader.getSaveLoader("world"))
+        world = new World(saveLoader.getSaveLoader("world"))
         worldRenderer = new WorldRenderer(world)
         renderer.worldRenderer = worldRenderer
-        player = new EntityPlayer
+        player = new EntityPlayer("test")
         playerController = new PlayerControllerMP(this)
         world.spawnEntityInWorld(player)
         // guiManager.setGuiScreen(new GuiPlayerSelect())
@@ -253,6 +255,11 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     def cleanup(): Unit = {
         log.info("Game stopped...")
         running = false
+        window.destroy()
+        if (world != null) world.save()
+        //if (renderer != null) renderer.cleanup()
+        if (guiManager ne null) guiManager.cleanup()
+       // if (worldRenderer != null) worldRenderer.cleanUp()
     }
 
     def runTickMouse(button: Int, buttonState: Boolean): Unit = {

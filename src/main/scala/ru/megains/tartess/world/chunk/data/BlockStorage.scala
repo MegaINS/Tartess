@@ -16,12 +16,12 @@ class BlockStorage(chunk: Chunk, position: ChunkPosition) {
         val index = getIndex(x>>4,y>>4,z>>4)
         containers.getOrElseUpdate(index,defaultValue ={
             blocksId(index) = -1
-            new BlockCell(chunk,x>>4,y>>4,z>>4)
+            new BlockCell(chunk/*,x>>4,y>>4,z>>4*/)
         })
     }
 
 
-    val blocksId: Array[Short] = new Array[Short](4096)
+    var blocksId: Array[Short] = new Array[Short](4096)
     val containers = new mutable.HashMap[Short,BlockCell]()
 
     def get(x: Int, y: Int, z: Int): BlockState = {
@@ -74,7 +74,7 @@ class BlockStorage(chunk: Chunk, position: ChunkPosition) {
         getBlockCell(x,y,z).setBlock(blockState)
 
         val index = getIndex(x>>4,y>>4,z>>4)
-        if(containers(index).blocksVal==0){
+        if(containers(index).isEmpty){
             containers -= index
             blocksId(index) = 0
         }

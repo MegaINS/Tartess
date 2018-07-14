@@ -8,10 +8,10 @@ import ru.megains.tartess.world.chunk.Chunk
 
 import scala.collection.mutable
 
-class BlockCell(val chunk: Chunk,val x:Int,val y:Int,val z:Int) {
+class BlockCell(val chunk: Chunk/*,val x:Int,val y:Int,val z:Int*/) {
 
     val blocks = new mutable.HashSet[BlockState]()
-    var blocksVal = 0
+    def isEmpty: Boolean = blocks.isEmpty
 
     def collisionRayTrace(world: World, vec31: Vec3f, vec32: Vec3f):RayTraceResult = {
         var rayTraceResult: RayTraceResult = null
@@ -34,10 +34,8 @@ class BlockCell(val chunk: Chunk,val x:Int,val y:Int,val z:Int) {
     def setBlock(blockState: BlockState):Unit = {
 
         if(blockState.block == Blocks.air){
-            blocksVal-=1
             blocks -= getBlock(blockState.pos.x,blockState.pos.y,blockState.pos.z)
         }else{
-            blocksVal+=1
             blocks.+=(blockState)
         }
 
