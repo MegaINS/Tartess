@@ -4,37 +4,50 @@ import ru.megains.nbt.NBTType.EnumNBTCompound
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.block.data.BlockPos
 import ru.megains.tartess.inventory.Inventory
-import ru.megains.tartess.item.Item
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.{Item, ItemType}
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.world.World
 
 abstract class TileEntityInventory(pos:BlockPos, world: World,slotSize:Int) extends TileEntity(pos, world) with Inventory with ATileEntityInventory{
 
-    var slots:Array[ItemStack] = new Array[ItemStack](slotSize)
+    var slots:Array[ItemPack] = new Array[ItemPack](slotSize)
 
-    override def getStackInSlot(index: Int): ItemStack = {
+    override def getStackInSlot(index: Int): ItemPack = {
         slots(index)
     }
 
-    override def setInventorySlotContents(index: Int, itemStack: ItemStack): Unit = {
+    override def setInventorySlotContents(index: Int, itemStack: ItemPack): Unit = {
         slots(index) = itemStack
     }
 
-    override def decrStackSize(index: Int, size: Int): ItemStack = {
+    override def decrStackSize(index: Int, size: Int): ItemPack = {
 
         val stack = slots(index)
-        var newStack: ItemStack = null
+        var newStack: ItemPack = null
         if (stack ne null) {
-
-            if (stack.stackSize <= size) {
-                newStack = stack
-                slots(index) = null
-            } else {
-                newStack = stack.splitStack(size)
-                if (stack.stackSize < 1) {
-                    slots(index) = null
-                }
+            stack.item.itemType match {
+                case ItemType.STACK | ItemType.SINGLE  =>
+                    if (stack.stackSize <= size) {
+                        newStack = stack
+                        slots(index) = null
+                    } else {
+                        newStack = stack.splitStack(size)
+                        if (stack.stackSize < 1) {
+                            slots(index) = null
+                        }
+                    }
+                case ItemType.MASS =>
+                    if (stack.stackMass <= size) {
+                        newStack = stack
+                        slots(index) = null
+                    } else {
+                        newStack = stack.splitStack(size)
+                        if (stack.stackMass < 1) {
+                            slots(index) = null
+                        }
+                    }
             }
+
         }
         newStack
     }
@@ -62,7 +75,7 @@ abstract class TileEntityInventory(pos:BlockPos, world: World,slotSize:Int) exte
             val compound = inventory.getCompound(i)
             val id: Int = compound.getInt("id")
             if (id != -1) {
-                val itemStack = new ItemStack(Item.getItemById(id), compound.getInt("stackSize"))
+                val itemStack = new ItemPack(Item.getItemById(id), compound.getInt("stackSize"))
                 slots(i) = itemStack
             }
         }

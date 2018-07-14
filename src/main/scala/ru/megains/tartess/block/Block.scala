@@ -4,7 +4,7 @@ package ru.megains.tartess.block
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.entity.player.EntityPlayer
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.physics.{AABB, BoundingBox}
 import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
@@ -15,7 +15,7 @@ import scala.language.postfixOps
 abstract class Block(val name:String) {
 
 
-
+    val mass = 1
     var texture: TextureAtlas = _
     val blockBody:AABB
     val boundingBox:BoundingBox
@@ -52,7 +52,7 @@ abstract class Block(val name:String) {
         }
     }
 
-    def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemStack, blockDirection:BlockDirection, float1: Float, float2: Float): Boolean = {
+    def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemPack, blockDirection:BlockDirection, float1: Float, float2: Float): Boolean = {
         false
     }
 
@@ -69,10 +69,10 @@ abstract class Block(val name:String) {
         posSet =  posSet.sum(hitVec.x  - posTarget.x toInt,hitVec.y - posTarget.y toInt,hitVec.z - posTarget.z toInt)
 
         posSet = side match {
-            case BlockDirection.EAST  => posSet.sum(0,0,Math.floor(-boundingBox.maxZ/2f) +1 toInt)
-            case BlockDirection.WEST => posSet.sum(-boundingBox.maxX+1,0,-boundingBox.maxZ/2f toInt)
-            case BlockDirection.SOUTH => posSet.sum(-boundingBox.maxX/2,0,0)
-            case BlockDirection.NORTH => posSet.sum(Math.floor(-boundingBox.maxX/2f) +1  toInt,0,-boundingBox.maxZ+1)
+            case BlockDirection.EAST  => posSet.sum(0,0,Math.floor(-boundingBox.rotate(BlockDirection.EAST).maxZ/2f) +1  toInt)
+            case BlockDirection.WEST => posSet.sum(-boundingBox.rotate(BlockDirection.WEST).maxX+1,0,-boundingBox.rotate(BlockDirection.WEST).maxZ/2f toInt)
+            case BlockDirection.SOUTH => posSet.sum(-boundingBox.rotate(BlockDirection.SOUTH).maxX /2,0,0)
+            case BlockDirection.NORTH => posSet.sum(Math.floor(-boundingBox.rotate(BlockDirection.NORTH).maxX/2f) +1  toInt,0,-boundingBox.rotate(BlockDirection.NORTH).maxZ+1)
             case _ => posSet
         }
 

@@ -4,7 +4,7 @@ import java.awt.Color
 
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.item.{Item, ItemBlock}
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.register.GameRegister
 import ru.megains.tartess.renderer.Renderer
 import ru.megains.tartess.renderer.font.{FontRender, Fonts}
@@ -33,7 +33,7 @@ class ItemRender(tar: Tartess) extends Gui {
     val floatMeshMap = new mutable.HashMap[Float, Mesh]()
 
 
-    def renderItemStackToGui(xPos: Int, yPos: Int, itemStack: ItemStack): Unit = {
+    def renderItemStackToGui(xPos: Int, yPos: Int, itemStack: ItemPack): Unit = {
         if (itemStack != null) {
             itemStack.item match {
                 case block: ItemBlock =>
@@ -46,13 +46,13 @@ class ItemRender(tar: Tartess) extends Gui {
         }
     }
 
-    def renderItemStackOverlay(xPos: Int, yPos: Int, itemStack: ItemStack): Unit = {
+    def renderItemStackOverlay(xPos: Int, yPos: Int, itemStack: ItemPack): Unit = {
         if (itemStack.stackSize > 1) {
            drawObject(xPos + 2, yPos + 2, cub, renderer)
             drawObject(xPos + 3, yPos + 3,0.5f, getNumberMesh(itemStack.stackSize), renderer)
         }
-       // drawObject(xPos + 13, yPos + 25, cub, renderer)
-       // drawObject(xPos  + 14, yPos + 26,0.5f,getNumberMesh(itemStack.stackMass) , renderer)
+        drawObject(xPos + 23, yPos + 2, cub, renderer)
+        drawObject(xPos  + 24, yPos + 3,0.5f,getNumberMesh(itemStack.stackMass) , renderer)
     }
 
     def renderItemBlockToGui(xPos: Int, yPos: Int, itemBlock: ItemBlock): Unit = {

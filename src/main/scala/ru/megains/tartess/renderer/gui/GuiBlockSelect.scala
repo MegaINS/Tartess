@@ -4,7 +4,7 @@ import java.awt.Color
 
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.BlockPos
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 
 
@@ -56,7 +56,7 @@ class GuiBlockSelect extends GuiInGame with GuiText {
             drawObject(weight, height - 100, 1, text("Block.side"))
          //   drawObject(weight, height - 120, 1, text("Block.hp"))
           //  drawObject(weight, height - 140, 1, text("Block.meta"))
-            drawItemStack(new ItemStack(blockSelect), tar.window.width / 2 - 150, height - 50)
+            drawItemStack(new ItemPack(blockSelect), tar.window.width / 2 - 150, height - 50)
         }
 
     }

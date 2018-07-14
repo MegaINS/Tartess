@@ -2,7 +2,8 @@ package ru.megains.tartess.container
 
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.inventory.Slot
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.ItemType
+import ru.megains.tartess.item.itemstack.ItemPack
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -40,8 +41,19 @@ abstract class Container {
                         slot.putStack(inventoryPlayer.itemStack)
                         inventoryPlayer.itemStack = null
                     } else if (slot.getStack.item == inventoryPlayer.itemStack.item) {
-                        slot.getStack.stackSize += inventoryPlayer.itemStack.stackSize
-                        inventoryPlayer.itemStack = null
+                        slot.getStack.item.itemType match {
+                            case ItemType.SINGLE =>
+                                val temp = slot.getStack
+                                slot.putStack(inventoryPlayer.itemStack)
+                                inventoryPlayer.itemStack = temp
+                            case ItemType.MASS =>
+                                slot.getStack.stackMass += inventoryPlayer.itemStack.stackMass
+                                inventoryPlayer.itemStack = null
+                            case ItemType.STACK =>
+                                slot.getStack.stackSize += inventoryPlayer.itemStack.stackSize
+                                slot.getStack.stackMass += inventoryPlayer.itemStack.stackMass
+                                inventoryPlayer.itemStack = null
+                        }
                     }else{
                         val temp = slot.getStack
                         slot.putStack(inventoryPlayer.itemStack)
@@ -53,15 +65,29 @@ abstract class Container {
                     if (slot.isEmpty) {
                         slot.putStack(inventoryPlayer.itemStack.splitStack(1))
                     } else if (slot.getStack.item == inventoryPlayer.itemStack.item) {
-                        slot.getStack.stackSize += 1
-                        inventoryPlayer.itemStack.stackSize -= 1
+                        slot.getStack.item.itemType match {
+                            case ItemType.SINGLE =>
+
+                            case ItemType.MASS =>
+
+                            case ItemType.STACK =>
+                                slot.getStack.stackSize += 1
+                                slot.getStack.stackMass += inventoryPlayer.itemStack.item.mass
+                                inventoryPlayer.itemStack.stackSize -= 1
+                                inventoryPlayer.itemStack.stackMass -= inventoryPlayer.itemStack.item.mass
+                        }
                     }
                     if (inventoryPlayer.itemStack.stackSize < 1) {
                         inventoryPlayer.itemStack = null
                     }
                 } else {
                     if (!slot.isEmpty) {
-                        val size: Int = slot.getStack.stackSize
+                        val size: Int =  slot.getStack.item.itemType match {
+                            case ItemType.MASS =>
+                                slot.getStack.stackMass
+                            case ItemType.STACK | ItemType.SINGLE =>
+                                slot.getStack.stackSize
+                        }
                         inventoryPlayer.itemStack = slot.decrStackSize(Math.ceil( size/ 2.0).toInt)
                     }
                 }
@@ -70,13 +96,13 @@ abstract class Container {
 
     }
 
-    def getInventory: Array[ItemStack] = {
-        val array = ArrayBuffer[ItemStack]()
+    def getInventory: Array[ItemPack] = {
+        val array = ArrayBuffer[ItemPack]()
         inventorySlots.foreach(array += _.getStack)
         array.toArray
     }
 
-    def putStackInSlot(slot: Int, item: ItemStack): Unit = {
+    def putStackInSlot(slot: Int, item: ItemPack): Unit = {
         if (slot < inventorySlots.length) {
             inventorySlots(slot).putStack(item)
         }

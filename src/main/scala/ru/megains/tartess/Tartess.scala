@@ -7,7 +7,7 @@ import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.mob.EntityCube
 import ru.megains.tartess.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.item.ItemBlock
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.register.{Bootstrap, GameRegister}
 import ru.megains.tartess.renderer.font.FontRender
@@ -58,7 +58,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         log.info("Start Game")
-        log.info("Tartess v0.0.4.0")
+        log.info("Tartess v0.0.6.0")
         try {
             log.info("Display creating...")
             window.create()
@@ -181,11 +181,11 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         if (glfwGetKey(window.id, GLFW_KEY_O) == GLFW_PRESS){
-            val stack: ItemStack = player.inventory.getStackSelect
+            val stack: ItemPack = player.inventory.getStackSelect
             if(stack ne null){
 
                 val entityItem = new EntityItem()
-                entityItem.setItem(new ItemStack(stack.item))
+                entityItem.setItem(new ItemPack(stack.item))
                 entityItem.setPosition(player.posX +Random.nextInt(32)-16,player.posY+8+Random.nextInt(16),player.posZ+Random.nextInt(32)-16)
 
                 world.spawnEntityInWorld(entityItem)
@@ -223,7 +223,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
             if (objectMouseOver != null) {
                 worldRenderer.updateBlockMouseOver( world.getBlock(objectMouseOver.blockPos))
 
-                val stack: ItemStack = player.inventory.getStackSelect
+                val stack: ItemPack = player.inventory.getStackSelect
                 if(stack ne null){
                     blockSelectPosition = stack.item match {
                         case itemBlock:ItemBlock =>itemBlock.block.getSelectPosition(world, player, objectMouseOver)
@@ -285,7 +285,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     }
 
     def rightClickMouse() {
-        val itemstack: ItemStack = player.getHeldItem
+        val itemstack: ItemPack = player.getHeldItem
 
         if(objectMouseOver!= null) {
             val blockpos: BlockPos = objectMouseOver.blockPos

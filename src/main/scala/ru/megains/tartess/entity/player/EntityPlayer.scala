@@ -5,7 +5,7 @@ import ru.megains.tartess.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.entity.EntityLivingBase
 import ru.megains.tartess.inventory.InventoryPlayer
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.renderer.gui.GuiPlayerInventory
 import ru.megains.tartess.tileentity.ATileEntityInventory
 import ru.megains.tartess.world.World
@@ -87,18 +87,18 @@ class EntityPlayer extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
 
     }
 
-    def setHeldItem(stack: ItemStack): Unit = setItemStackToSlot(stack)
+    def setHeldItem(stack: ItemPack): Unit = setItemStackToSlot(stack)
 
     def openInventory(): Unit = {
         openContainer = inventoryContainer
         Tartess.tartess.guiManager.setGuiScreen(new GuiPlayerInventory(this))
     }
 
-    def getHeldItem: ItemStack = getItemStackFromSlot
+    def getHeldItem: ItemPack = getItemStackFromSlot
 
-    def getItemStackFromSlot: ItemStack = inventory.getStackSelect
+    def getItemStackFromSlot: ItemPack = inventory.getStackSelect
 
-    def setItemStackToSlot(stack: ItemStack) {
+    def setItemStackToSlot(stack: ItemPack) {
 
         inventory.mainInventory(inventory.stackSelect) = stack
     }

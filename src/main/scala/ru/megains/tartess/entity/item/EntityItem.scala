@@ -1,16 +1,16 @@
 package ru.megains.tartess.entity.item
 
 import ru.megains.tartess.entity.Entity
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 
 class EntityItem() extends Entity(0.25f*16, 0.25f*16, 0.25f*16) {
 
    // setSize(0.25f, 0.25f, 0.25f)
 
 
-    var itemStack: ItemStack = _
+    var itemStack: ItemPack = _
 
-    def setItem(itemStackIn: ItemStack): Unit ={
+    def setItem(itemStackIn: ItemPack): Unit ={
         itemStack = itemStackIn
     }
     override def update(): Unit = {

@@ -4,7 +4,7 @@ import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.item.Item
-import ru.megains.tartess.item.itemstack.ItemStack
+import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.utils.{ActionResult, EnumActionResult, Vec3f}
 import ru.megains.tartess.world.World
@@ -15,7 +15,7 @@ class PlayerControllerMP(tar:Tartess) {
     var blockHitDelay: Int = 0
     var currentPlayerItem: Int = 0
 
-    def processRightClickBlock(player: EntityPlayer, worldIn: World, stack: ItemStack, pos: BlockPos, facing: BlockDirection, vec: Vec3f): EnumActionResult = {
+    def processRightClickBlock(player: EntityPlayer, worldIn: World, stack: ItemPack, pos: BlockPos, facing: BlockDirection, vec: Vec3f): EnumActionResult = {
 
         syncCurrentPlayItem()
         val f: Float = (vec.x - pos.x.toDouble).toFloat
@@ -50,12 +50,12 @@ class PlayerControllerMP(tar:Tartess) {
 
     }
 
-    def processRightClick(player: EntityPlayer, worldIn: World, stack: ItemStack): EnumActionResult = {
+    def processRightClick(player: EntityPlayer, worldIn: World, stack: ItemPack): EnumActionResult = {
         syncCurrentPlayItem()
 
         val i: Int = stack.stackSize
-        val actionresult: ActionResult[ItemStack] = stack.useItemRightClick(worldIn, player)
-        val itemstack: ItemStack = actionresult.result
+        val actionresult: ActionResult[ItemPack] = stack.useItemRightClick(worldIn, player)
+        val itemstack: ItemPack = actionresult.result
         if ((itemstack != stack) || itemstack.stackSize != i) {
             player.setHeldItem(itemstack)
             if (itemstack.stackSize <= 0) {
