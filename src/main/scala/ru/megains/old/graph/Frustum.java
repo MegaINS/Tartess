@@ -1,7 +1,6 @@
 package ru.megains.old.graph;
 
 import org.lwjgl.BufferUtils;
-import ru.megains.tartess.physics.AABB;
 import ru.megains.tartess.world.chunk.data.ChunkPosition;
 
 import java.nio.FloatBuffer;
@@ -171,11 +170,11 @@ public class Frustum {
 
 
 
-    public boolean cubeInFrustum(AABB aabb) {
-        return this.cubeInFrustum(aabb.minX(), aabb.minY(), aabb.minZ(), aabb.maxX(), aabb.maxY(), aabb.maxZ());
-    }
+//    public boolean cubeInFrustum(AABB aabb) {
+//        return this.cubeInFrustum(aabb.minX(), aabb.minY(), aabb.minZ(), aabb.maxX(), aabb.maxY(), aabb.maxZ());
+//    }
     public boolean chunkInFrustum(ChunkPosition aabb) {
-        return this.cubeInFrustum(aabb.minXP()/16, aabb.minYP()/16, aabb.minZP()/16, aabb.maxXP()/16, aabb.maxYP()/16, aabb.maxZP()/16);
+        return this.cubeInFrustum(aabb.minXP()/16f, aabb.minYP()/16f, aabb.minZP()/16f, aabb.maxXP()/16f, aabb.maxYP()/16f, aabb.maxZP()/16f);
     }
 }
 

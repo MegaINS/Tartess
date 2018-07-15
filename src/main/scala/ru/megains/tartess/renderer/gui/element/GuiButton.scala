@@ -22,7 +22,7 @@ class GuiButton(val id: Int, tar: Tartess, val buttonText: String, positionX: In
 
         drawObject(positionX, positionY, 1, background)
 
-        drawObject(positionX + weight / 2, positionY + height / 2, 1, textMesh)
+        drawObject(positionX + 10 , positionY + 18, 1, textMesh)
 
     }
 

@@ -204,11 +204,9 @@ class AABB( var minX:Float = .0f,
 
 
 
-    def canEqual(other: Any): Boolean = other.isInstanceOf[AABB]
 
     override def equals(other: Any): Boolean = other match {
         case that: AABB =>
-            (that canEqual this) &&
                     minX == that.minX &&
                     minY == that.minY &&
                     minZ == that.minZ &&
@@ -218,4 +216,8 @@ class AABB( var minX:Float = .0f,
         case _ => false
     }
 
+    override def hashCode(): Int = {
+        val state = Seq(minX, minY, minZ, maxX, maxY, maxZ)
+        state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+    }
 }

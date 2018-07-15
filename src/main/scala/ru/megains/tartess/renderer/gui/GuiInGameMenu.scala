@@ -15,8 +15,8 @@ class GuiInGameMenu extends GuiScreen {
     override def actionPerformed(button: GuiButton): Unit = {
         button.id match {
 
-         //   case 0 => oc.loadWorld(null)
-           //     oc.guiManager.setGuiScreen(new GuiMainMenu())
+            case 0 => tar.loadWorld(null)
+                tar.guiManager.setGuiScreen(new GuiMainMenu())
 
             case 1 => tar.guiManager.setGuiScreen(null)
             case 2 => tar.guiManager.setGuiScreen(null)
