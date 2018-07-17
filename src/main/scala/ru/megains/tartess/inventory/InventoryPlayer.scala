@@ -3,21 +3,20 @@ package ru.megains.tartess.inventory
 import ru.megains.nbt.NBTType._
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.entity.player.EntityPlayer
-import ru.megains.tartess.item.{Item, ItemType}
 import ru.megains.tartess.item.itemstack.ItemPack
-import ru.megains.tartess.register.GameRegister
+import ru.megains.tartess.item.{Item, ItemType}
 
 class InventoryPlayer(val entityPlayer: EntityPlayer) extends Inventory {
 
     val mainInventory: Array[ItemPack] = new Array[ItemPack](40)
     var stackSelect: Int = 0
     var itemStack: ItemPack = _
-    GameRegister.getItems.foreach(item=>{
-        addItemStackToInventory(new ItemPack(item,10))
-        addItemStackToInventory(new ItemPack(item,10))
-    }
+//    GameRegister.getItems.foreach(item=>{
+//        addItemStackToInventory(new ItemPack(item,10))
+//        addItemStackToInventory(new ItemPack(item,10))
+//    }
 
-    )
+   // )
 
     def changeStackSelect(value: Int): Unit = {
         var offset: Int = 0

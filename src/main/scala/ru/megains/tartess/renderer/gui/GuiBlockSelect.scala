@@ -5,6 +5,7 @@ import java.awt.Color
 import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.BlockPos
 import ru.megains.tartess.item.itemstack.ItemPack
+import ru.megains.tartess.renderer.gui.base.GuiInGame
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
 
 

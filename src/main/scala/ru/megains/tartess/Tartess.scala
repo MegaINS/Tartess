@@ -11,7 +11,8 @@ import ru.megains.tartess.item.itemstack.ItemPack
 import ru.megains.tartess.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.register.{Bootstrap, GameRegister}
 import ru.megains.tartess.renderer.font.FontRender
-import ru.megains.tartess.renderer.gui.{GuiInGameMenu, GuiManager, GuiPlayerSelect}
+import ru.megains.tartess.renderer.gui.base.GuiManager
+import ru.megains.tartess.renderer.gui.{GuiInGameMenu,  GuiPlayerSelect}
 import ru.megains.tartess.renderer.item.ItemRender
 import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
@@ -63,7 +64,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         log.info("Start Game")
-        log.info("Tartess v0.0.7.0")
+        log.info("Tartess v0.0.8.0")
         try {
             log.info("Display creating...")
             window.create()
@@ -107,16 +108,15 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
         log.info("GuiManager init...")
         guiManager.init()
-        //world = new World(saveLoader.getSaveLoader("world"))
-       // worldRenderer = new WorldRenderer(world)
-     //   renderer.worldRenderer = worldRenderer
-       // player = new EntityPlayer("test")
+
+
         playerController = new PlayerControllerMP(this)
-       // world.spawnEntityInWorld(player)
+
+
+
         guiManager.setGuiScreen(new GuiPlayerSelect())
 
-       //camera.setPosition(player.posX/16f, (player.posY + player.levelView)/16f, player.posZ/16f)
-       // camera.setRotation(player.xRot, player.yRot, 0)
+
     }
 
     def run(): Unit = {
@@ -193,6 +193,10 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
             if (player == null) {
                 player = new EntityPlayer(playerName)
+
+
+                newWorld.saveHandler.readPlayerData(player)
+
                 newWorld.spawnEntityInWorld(player)
                // player = playerController.createClientPlayer(newWorld)
                 // playerController.flipPlayer(player)

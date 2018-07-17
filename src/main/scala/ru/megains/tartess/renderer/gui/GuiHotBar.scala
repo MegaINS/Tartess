@@ -1,5 +1,6 @@
 package ru.megains.tartess.renderer.gui
 
+import ru.megains.tartess.renderer.gui.base.GuiInGame
 import ru.megains.tartess.renderer.mesh.Mesh
 
 class GuiHotBar extends GuiInGame {

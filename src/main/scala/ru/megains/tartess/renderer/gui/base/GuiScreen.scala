@@ -1,16 +1,17 @@
-package ru.megains.tartess.renderer.gui
+package ru.megains.tartess.renderer.gui.base
 
 import java.awt.Color
 
 import org.lwjgl.glfw.GLFW._
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.entity.player.EntityPlayer
+import ru.megains.tartess.renderer.gui.Gui
 import ru.megains.tartess.renderer.gui.element.{GuiButton, GuiElement}
 import ru.megains.tartess.renderer.mesh.Mesh
 
 import scala.collection.mutable.ArrayBuffer
 
-abstract class GuiScreen extends GuiElement {
+abstract private[base] class  GuiScreen extends GuiElement {
 
 
 
@@ -45,11 +46,8 @@ abstract class GuiScreen extends GuiElement {
 
     def actionPerformed(button: GuiButton) {}
 
-    def keyTyped(typedChar: Char, keyCode: Int) {
-        keyCode match {
-            case GLFW_KEY_ESCAPE => tar.guiManager.setGuiScreen(null)
-            case _ =>
-        }
+    def keyTyped(typedChar: Char, keyCode: Int): Unit = {
+
     }
 
 

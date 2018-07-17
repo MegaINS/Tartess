@@ -1,8 +1,9 @@
-package ru.megains.tartess.renderer.gui
+package ru.megains.tartess.renderer.gui.base
 
 import org.lwjgl.glfw.GLFW.GLFW_PRESS
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.periphery.Mouse
+import ru.megains.tartess.renderer.gui._
 
 import scala.collection.mutable
 
@@ -22,14 +23,14 @@ class GuiManager(val tar: Tartess) {
     }
 
     def tick(): Unit = {
-        if (guiScreen ne null) guiScreen.tick()
-        if (tar.world ne null) guiInGame.values.filter(_ ne null).foreach(_.tick())
+        if (guiScreen != null) guiScreen.tick()
+        if (tar.world != null) guiInGame.values.filter(_ != null).foreach(_.tick())
 
 
     }
 
     def addGuiInGame(name: String, gui: GuiInGame): Unit = {
-        if (gui ne null) {
+        if (gui != null) {
             gui.setData(tar)
         }
         guiInGame += name -> gui
@@ -38,21 +39,21 @@ class GuiManager(val tar: Tartess) {
     def isGuiScreen: Boolean = guiScreen ne null
 
     def setGuiScreen(screen: GuiScreen) {
-        if (guiScreen ne null) guiScreen.cleanup()
+        if (guiScreen != null) guiScreen.cleanup()
 
-        if (screen ne null) {
+        if (screen != null) {
             screen.setData(tar)
-            if (guiScreen eq null) tar.ungrabMouseCursor()
+            if (guiScreen == null) tar.ungrabMouseCursor()
         } else tar.grabMouseCursor()
 
         guiScreen = screen
     }
 
     def draw(mouseX: Int, mouseY: Int): Unit = {
-        if (guiScreen ne null) {
+        if (guiScreen != null) {
             guiScreen.drawScreen(mouseX, mouseY)
-        } else {
-            guiInGame.values.filter(_ ne null).foreach(_.drawScreen(mouseX, mouseY))
+        } else if( tar.world != null) {
+            guiInGame.values.filter(_ != null).foreach(_.drawScreen(mouseX, mouseY))
         }
     }
 

@@ -1,17 +1,18 @@
 package ru.megains.tartess.renderer.gui
 
 import ru.megains.tartess.Tartess
+import ru.megains.tartess.renderer.gui.base.GuiMenu
 import ru.megains.tartess.renderer.gui.element.GuiButton
 import ru.megains.tartess.utils.Logger
 
 
-class GuiConnecting(parent: GuiScreen, oc: Tartess/*, serverDataIn: ServerData*/) extends GuiScreen with Logger[GuiConnecting] {
+class GuiConnecting(parent: GuiMenu, oc: Tartess/*, serverDataIn: ServerData*/) extends GuiMenu with Logger[GuiConnecting] {
 
 
    // val serveraddress: ServerAddress = new ServerAddress(serverDataIn.serverIP, 20000)
    // var networkManager: NetworkManager = _
     var cancel = false
-    var error: GuiScreen = _
+    var error: GuiMenu = _
    // oc.loadWorld(null)
     //  mcIn.setServerData(serverDataIn)
    // connect(serveraddress.getIP, serveraddress.getPort)
@@ -70,7 +71,7 @@ class GuiConnecting(parent: GuiScreen, oc: Tartess/*, serverDataIn: ServerData*/
     }
 
     override def tick(): Unit = {
-        if (error ne null) {
+        if (error != null) {
             oc.guiManager.setGuiScreen(error)
         }
     }

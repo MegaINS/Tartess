@@ -4,6 +4,7 @@ package ru.megains.tartess.world
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.entity.Entity
+import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
@@ -20,7 +21,7 @@ import scala.language.postfixOps
 
 
 
-class World(saveHandler: AnvilSaveHandler) extends Logger[World]{
+class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
 
     val length: Int = 100000
     val width: Int = 100000
@@ -313,7 +314,12 @@ class World(saveHandler: AnvilSaveHandler) extends Logger[World]{
         log.info("World saved...")
         log.info("Saving chunks for level \'{}\'/{}")
         saveAllChunks(true)
-
+        log.info("Saving players for level \'{}\'/{}")
+        entities.splitter. foreach {
+            case entityPlayer:EntityPlayer =>
+                saveHandler.writePlayerData(entityPlayer)
+            case _ =>
+        }
         log.info("World saved completed")
     }
     def saveAllChunks(p_73044_1: Boolean /*, progressCallback: IProgressUpdate*/) {

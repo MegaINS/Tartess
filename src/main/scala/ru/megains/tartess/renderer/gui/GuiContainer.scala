@@ -6,10 +6,11 @@ import org.lwjgl.glfw.GLFW.{GLFW_KEY_E, GLFW_KEY_ESCAPE}
 import ru.megains.tartess.container.Container
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.inventory.Slot
+import ru.megains.tartess.renderer.gui.base.GuiGame
 import ru.megains.tartess.renderer.mesh.Mesh
 
 
-abstract class GuiContainer(val inventorySlots: Container) extends GuiScreen {
+abstract class GuiContainer(val inventorySlots: Container) extends GuiGame {
 
     val rect: Mesh = createRect(40, 40, new Color(200, 255, 100, 100))
 
@@ -29,13 +30,6 @@ abstract class GuiContainer(val inventorySlots: Container) extends GuiScreen {
 
     }
 
-    override def keyTyped(typedChar: Char, keyCode: Int): Unit = {
-        keyCode match {
-            case GLFW_KEY_E | GLFW_KEY_ESCAPE => tar.guiManager.setGuiScreen(null)
-            case _ =>
-        }
-
-    }
 
     def isMouseOverSlot(slot: Slot, mouseX: Int, mouseY: Int): Boolean = {
         mouseX >= slot.xPos && mouseX <= slot.xPos + 40 && mouseY >= slot.yPos && mouseY <= slot.yPos + 40

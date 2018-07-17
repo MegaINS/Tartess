@@ -1,5 +1,6 @@
 package ru.megains.tartess.entity.player
 
+import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.Tartess
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.container.{Container, ContainerPlayerInventory}
@@ -102,5 +103,13 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
     def setItemStackToSlot(stack: ItemPack) {
 
         inventory.mainInventory(inventory.stackSelect) = stack
+    }
+
+    override def readEntityFromNBT(compound: NBTCompound): Unit = {
+        inventory.readFromNBT(compound)
+    }
+
+    override def writeEntityToNBT(compound: NBTCompound): Unit = {
+        inventory.writeToNBT(compound)
     }
 }

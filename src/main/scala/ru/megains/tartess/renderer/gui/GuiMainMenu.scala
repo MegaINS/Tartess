@@ -1,8 +1,9 @@
 package ru.megains.tartess.renderer.gui
 
+import ru.megains.tartess.renderer.gui.base.GuiMenu
 import ru.megains.tartess.renderer.gui.element.GuiButton
 
-class GuiMainMenu extends GuiScreen {
+class GuiMainMenu extends GuiMenu {
 
 
 
@@ -17,7 +18,7 @@ class GuiMainMenu extends GuiScreen {
     override def actionPerformed(button: GuiButton): Unit = {
         button.id match {
             case 0 => tar.guiManager.setGuiScreen(new GuiSelectWorld(this))
-            case 1 => tar.guiManager.setGuiScreen(new GuiMultiplayer(this))
+            case 1 => tar.guiManager.setGuiScreen(new GuiMultiPlayer(this))
             case 3 => tar.running = false
             case _ =>
         }

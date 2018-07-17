@@ -6,6 +6,7 @@ import ru.megains.tartess.entity.player.GameType.NOT_SET
 import ru.megains.tartess.block.data.BlockDirection
 import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.player.GameType
+import ru.megains.tartess.renderer.gui.base.GuiInGame
 
 class GuiDebugInfo extends GuiInGame with GuiText {
 

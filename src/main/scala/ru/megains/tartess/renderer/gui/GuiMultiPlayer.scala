@@ -1,9 +1,10 @@
 package ru.megains.tartess.renderer.gui
 
+import ru.megains.tartess.renderer.gui.base.GuiMenu
 import ru.megains.tartess.renderer.gui.element.GuiButton
 import ru.megains.tartess.renderer.mesh.Mesh
 
-class GuiMultiplayer(guiMainMenu: GuiScreen) extends GuiScreen {
+class GuiMultiPlayer(guiMainMenu: GuiMenu) extends GuiMenu {
 
     var worldsSlot: GuiSlotWorld = _
 

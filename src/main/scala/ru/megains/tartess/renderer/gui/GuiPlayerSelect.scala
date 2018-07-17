@@ -1,8 +1,9 @@
 package ru.megains.tartess.renderer.gui
 
+import ru.megains.tartess.renderer.gui.base.GuiMenu
 import ru.megains.tartess.renderer.gui.element.GuiButton
 
-class GuiPlayerSelect extends GuiScreen {
+class GuiPlayerSelect extends GuiMenu {
 
 
     override def initGui(): Unit = {

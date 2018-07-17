@@ -5,6 +5,7 @@ import ru.megains.nbt.tag.NBTCompound
 import ru.megains.nbt.NBTType._
 import ru.megains.tartess.block.data.{BlockCell, BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.entity.Entity
+import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.register.{Blocks, GameRegister}
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.{Chunk, ChunkVoid}
@@ -131,7 +132,7 @@ class ChunkLoader(worldDirectory: Directory) {
         val blockStorage: BlockStorage = chunk.blockStorage
         val containers = chunk.blockStorage.containers
         val tileEntity = chunk.chunkTileEntityMap.values
-        val entity = chunk.chunkEntityMap
+        val entityMap = chunk.chunkEntityMap
         compound.setValue("blocksId", blockStorage.blocksId)
         val containersNBT = compound.createCompound("containers")
 
@@ -166,10 +167,12 @@ class ChunkLoader(worldDirectory: Directory) {
         }
 
         val entitiesNBT = containersNBT.createList("entities", EnumNBTCompound)
-        entity.foreach{ entity =>
-            val entityNBT: NBTCompound = entitiesNBT.createCompound()
-            entityNBT.setValue("id", GameRegister.getIdByEntity(entity.getClass))
-            entity.writeToNBT(entityNBT)
+        entityMap.foreach{
+            case _:EntityPlayer =>
+            case entity =>
+                val entityNBT: NBTCompound = entitiesNBT.createCompound()
+                entityNBT.setValue("id", GameRegister.getIdByEntity(entity.getClass))
+                entity.writeToNBT(entityNBT)
         }
 
 
