@@ -39,7 +39,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
     def isAirBlock(blockState: BlockState): Boolean = {
         var empty = true
 
-        val aabb:BoundingBox = blockState.getSelectedBoundingBox
+        val aabb:BoundingBox = blockState.getSelectedBoundingBox(0)
 
         val minX = aabb.minX
         val minY = aabb.minY
@@ -87,9 +87,9 @@ class Chunk(val position: ChunkPosition,val world: World) {
         val blockStatePrevious =  getBlock(pos)
 
         val aabb:BoundingBox = if(block == Blocks.air){
-            blockStatePrevious.getSelectedBoundingBox
+            blockStatePrevious.getSelectedBoundingBox(0)
         }else{
-            blockState.getSelectedBoundingBox
+            blockState.getSelectedBoundingBox(0)
         }
 
         val minX = aabb.minX

@@ -2,7 +2,7 @@ package ru.megains.tartess.physics
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockSidePos}
 
-class BoundingBox private(var minX:Int = 0,
+class BoundingBox(var minX:Int = 0,
                   var minY:Int = 0,
                   var minZ:Int = 0,
                   var maxX:Int = 0,
@@ -12,12 +12,15 @@ class BoundingBox private(var minX:Int = 0,
     def this(maxX:Int, maxY:Int, maxZ:Int){
         this(0,0,0,maxX,maxY,maxZ)
     }
+
     def this(size:Int){
         this(0,0,0,size,size,size)
     }
     def rotate(side: BlockDirection): BoundingBox = {
         side match {
-            case BlockDirection.EAST | BlockDirection.WEST=> new BoundingBox(minZ, minY, minX, maxZ, maxY, maxX)
+            case BlockDirection.EAST => new BoundingBox(minZ, minY, minX, maxZ, maxY, maxX)
+            case BlockDirection.WEST=> new BoundingBox(16- maxZ, minY, minX,16-minZ, maxY, maxX)
+            case BlockDirection.NORTH=> new BoundingBox(minX, minY,16-maxZ ,maxX, maxY, 16-minZ  )
             case _  => getCopy
         }
     }

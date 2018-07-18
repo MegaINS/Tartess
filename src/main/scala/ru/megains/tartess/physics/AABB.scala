@@ -18,7 +18,10 @@ class AABB( var minX:Float = .0f,
 
     def rotate(side: BlockDirection): AABB = {
         side match {
-            case BlockDirection.EAST | BlockDirection.WEST=> new AABB(minZ, minY, minX, maxZ, maxY, maxX)
+            case BlockDirection.EAST => new AABB(minZ, minY, minX, maxZ, maxY, maxX)
+            case BlockDirection.WEST=> new AABB(16- maxZ, minY, minX,16-minZ, maxY, maxX)
+            case BlockDirection.NORTH=> new AABB(minX, minY,16-maxZ ,maxX, maxY, 16-minZ  )
+            case _  => getCopy
             case _  => getCopy
         }
     }

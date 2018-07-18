@@ -11,13 +11,13 @@ class BlockState(val block: Block,val pos:BlockPos,val blockDirection:BlockDirec
 
     def getTTexture(blockDirection: BlockDirection,world: World ): TextureAtlas = block.getATexture(this,blockDirection: BlockDirection ,world)
 
-    def getBlockBody:AABB = block.getBlockBody(this)
+    def getBlockBody:Array[AABB]  = block.getBlockBody(this)
 
-    def getSelectedBlockBody:AABB = block.getSelectedBlockBody(this)
+    def getSelectedBlockBody:Array[AABB] = block.getSelectedBlockBody(this)
 
-    def getBoundingBox: BoundingBox = block.getBoundingBox(this)
+    def getBoundingBox:Array[BoundingBox]  = block.getBoundingBox(this)
 
-    def getSelectedBoundingBox: BoundingBox = block.getSelectedBoundingBox(this)
+    def getSelectedBoundingBox:Array[BoundingBox]  = block.getSelectedBoundingBox(this)
 
     def collisionRayTrace(world: World, start: Vec3f, end: Vec3f): RayTraceResult = block.collisionRayTrace(world,this, start, end)
 }

@@ -31,25 +31,40 @@ abstract class Block(val name:String) {
 
     def getATexture(pos: BlockPos = null,blockDirection: BlockDirection = BlockDirection.UP,world: World = null): TextureAtlas = texture
 
-    def getSelectedBoundingBox(blockState: BlockState): BoundingBox = getBoundingBox(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
+    def getSelectedBoundingBox(blockState: BlockState): Array[BoundingBox]  = getBoundingBox(blockState).map(_.sum(blockState.pos.x, blockState.pos.y, blockState.pos.z))
 
-    def getBoundingBox(blockState: BlockState): BoundingBox =  boundingBox.rotate(blockState.blockDirection)
+    def getBoundingBox(blockState: BlockState): Array[BoundingBox] =  Array(boundingBox.rotate(blockState.blockDirection))
 
-    def getBlockBody(state: BlockState): AABB = blockBody.rotate(state.blockDirection)
+    def getBlockBody(state: BlockState):  Array[AABB] = Array(blockBody.rotate(state.blockDirection))
 
-    def getSelectedBlockBody(blockState: BlockState): AABB = getBlockBody(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
+    def getSelectedBlockBody(blockState: BlockState):  Array[AABB]= getBlockBody(blockState).map(_.sum(blockState.pos.x, blockState.pos.y, blockState.pos.z))
 
     def collisionRayTrace(world: World, blockState: BlockState, start: Vec3f, end: Vec3f): RayTraceResult = {
         val pos = blockState.pos
         val vec3d: Vec3f = new Vec3f(start.x , start.y , start.z ).sub(pos.x, pos.y, pos.z)
         val vec3d1: Vec3f = new Vec3f(end.x , end.y , end.z ).sub(pos.x, pos.y, pos.z)
-        val rayTraceResult =   getBlockBody(blockState).calculateIntercept( vec3d, vec3d1 )
+        var res:RayTraceResult = null
+        val blockBodys = getBlockBody(blockState)
+        for(blockBody<-blockBodys){
+            val rayTraceResult = blockBody.calculateIntercept( vec3d, vec3d1 )
 
-        if (rayTraceResult == null) {
-            null
-        } else {
-            new RayTraceResult(rayTraceResult.hitVec.add(pos.x, pos.y, pos.z), rayTraceResult.sideHit, pos, this)
+            if (rayTraceResult == null) {
+                null
+            } else {
+                res =  new RayTraceResult(rayTraceResult.hitVec.add(pos.x, pos.y, pos.z), rayTraceResult.sideHit, pos, this)
+            }
         }
+
+        res
+
+
+//        val rayTraceResult = getBlockBody(blockState).calculateIntercept( vec3d, vec3d1 )
+//
+//        if (rayTraceResult == null) {
+//            null
+//        } else {
+//            new RayTraceResult(rayTraceResult.hitVec.add(pos.x, pos.y, pos.z), rayTraceResult.sideHit, pos, this)
+//        }
     }
 
     def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemPack, blockDirection:BlockDirection, float1: Float, float2: Float): Boolean = {

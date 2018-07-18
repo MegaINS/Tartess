@@ -85,7 +85,7 @@ class WorldRenderer(val world: World) {
 
         val mm = MeshMaker.getMeshMaker
 
-        val aabb:BoundingBox= blockState.getBoundingBox
+        val aabb:BoundingBox= blockState.getBoundingBox(0)
 
         val minX = aabb.minX/16f - 0.01f
         val minY = aabb.minY/16f - 0.01f
@@ -135,7 +135,7 @@ class WorldRenderer(val world: World) {
         }
 
         val mm = MeshMaker.getMeshMaker
-        val aabb:BoundingBox= blockState.getBoundingBox
+        val aabb:BoundingBox= blockState.getBoundingBox(0)
 
         val minX = aabb.minX/16f
         val minY = aabb.minY/16f

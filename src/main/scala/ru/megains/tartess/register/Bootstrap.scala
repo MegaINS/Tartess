@@ -36,6 +36,7 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(3, new BlockTest("test0",0))
         GameRegister.registerBlock(4, new BlockTest("test1",1))
         GameRegister.registerBlock(5, new BlockTest("test2",2))
+        GameRegister.registerBlock(6, new BlockStare("stare"))
       //  GameRegister.registerBlock(6, new BlockTest("test3",3))
       //  GameRegister.registerBlock(7, new BlockTest("test4",4))
        // GameRegister.registerBlock(8, new BlockTest("test5",5))

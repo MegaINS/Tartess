@@ -115,7 +115,7 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
 
 
             if (!isAirBlock(x, y, z)) {
-                aabbs += getBlock(x, y, z).getSelectedBlockBody
+                aabbs ++= getBlock(x, y, z).getSelectedBlockBody
             }
         }
         aabbs

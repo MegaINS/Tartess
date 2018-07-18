@@ -24,10 +24,7 @@ class BlockCell(val chunk: Chunk/*,val x:Int,val y:Int,val z:Int*/) {
     }
 
     def getBlock(x: Int, y: Int, z: Int):BlockState = {
-        blocks.find(bs =>
-                    bs
-                    .getSelectedBoundingBox
-                    .pointIsCube(x, y, z))
+        blocks.find(bs => bs.getSelectedBoundingBox.exists(_.pointIsCube(x, y, z)))
               .getOrElse(Blocks.air.airState)
     }
 
