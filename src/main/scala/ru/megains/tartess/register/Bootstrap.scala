@@ -36,7 +36,8 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(3, new BlockTest("test0",0))
         GameRegister.registerBlock(4, new BlockTest("test1",1))
         GameRegister.registerBlock(5, new BlockTest("test2",2))
-        GameRegister.registerBlock(6, new BlockStare("stare"))
+        GameRegister.registerBlock(6, new BlockStare("stare",0))
+        GameRegister.registerBlock(7, new BlockStare("stare1",1))
       //  GameRegister.registerBlock(6, new BlockTest("test3",3))
       //  GameRegister.registerBlock(7, new BlockTest("test4",4))
        // GameRegister.registerBlock(8, new BlockTest("test5",5))
@@ -46,17 +47,17 @@ object Bootstrap extends Logger[Tartess] {
       //  GameRegister.registerBlock(12, new BlockTest("test9",9))
        // GameRegister.registerBlock(13, new BlockTest("test10",10))
        // GameRegister.registerBlock(14, new BlockTest("test11",11))
-       // GameRegister.registerBlock(15, new BlockTest("test12",12))
-       // GameRegister.registerBlock(16, new BlockTest("test13",13))
-       // GameRegister.registerBlock(17, new BlockTest("test14",14))
+        GameRegister.registerBlock(15, new BlockTest("test12",12))
+        GameRegister.registerBlock(16, new BlockTest("test13",13))
+        GameRegister.registerBlock(17, new BlockTest("test14",14))
 
 
         GameRegister.registerBlock(18,new BlockGlass("glass"))
-        GameRegister.registerBlock(19, new BlockChest("tileEntityTest"))
+        GameRegister.registerBlock(19, new BlockChest("chest"))
         GameRegister.registerBlock(20, new BlockRotateTexture())
-       // GameRegister.registerBlock(20, new BlockTest("test15",15))
-       // GameRegister.registerBlock(21, new BlockTest("test16",16))
-       // GameRegister.registerBlock(22, new BlockTest("test17",17))
+      //  GameRegister.registerBlock(21, new BlockTest("test15",15))
+      //  GameRegister.registerBlock(22, new BlockTest("test16",16))
+       // GameRegister.registerBlock(23, new BlockTest("test17",17))
     }
 
     def initItems(): Unit = {

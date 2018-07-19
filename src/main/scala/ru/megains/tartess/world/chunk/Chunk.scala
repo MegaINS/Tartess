@@ -38,16 +38,27 @@ class Chunk(val position: ChunkPosition,val world: World) {
 
     def isAirBlock(blockState: BlockState): Boolean = {
         var empty = true
+        //TODO
 
-        val aabb:BoundingBox = blockState.getSelectedBoundingBox(0)
+        val aabb:Array[BoundingBox] = blockState.getSelectedBoundingBox
 
-        val minX = aabb.minX
-        val minY = aabb.minY
-        val minZ = aabb.minZ
-        val maxX = aabb.maxX
-        val maxY = aabb.maxY
-        val maxZ = aabb.maxZ
+        var minX:Int = Int.MaxValue
+        var minY:Int = Int.MaxValue
+        var minZ:Int = Int.MaxValue
+        var maxX:Int = Int.MinValue
+        var maxY:Int = Int.MinValue
+        var maxZ:Int = Int.MinValue
 
+        aabb.foreach{
+            a =>
+                minX = minX.min(a.minX)
+                minY = minY.min(a.minY)
+                minZ = minZ.min(a.minZ)
+
+                maxX = maxX.max(a.maxX)
+                maxY = maxY.max(a.maxY)
+                maxZ = maxZ.max(a.maxZ)
+        }
         for(x<-minX until maxX;
             y<-minY until maxY;
             z<-minZ until maxZ){
@@ -82,22 +93,39 @@ class Chunk(val position: ChunkPosition,val world: World) {
         blockStorage.get(x ,y ,z )
     }
     def setBlock(blockState: BlockState):Boolean = {
+        //TODO
         val pos = blockState.pos
         val block = blockState.block
         val blockStatePrevious =  getBlock(pos)
 
-        val aabb:BoundingBox = if(block == Blocks.air){
-            blockStatePrevious.getSelectedBoundingBox(0)
-        }else{
-            blockState.getSelectedBoundingBox(0)
+
+        val aabb:Array[BoundingBox] = block match {
+            case Blocks.air =>   blockStatePrevious.getSelectedBoundingBox
+            case  _=>  blockState.getSelectedBoundingBox
         }
 
-        val minX = aabb.minX
-        val minY = aabb.minY
-        val minZ = aabb.minZ
-        val maxX = aabb.maxX
-        val maxY = aabb.maxY
-        val maxZ = aabb.maxZ
+        var minX:Int = Int.MaxValue
+        var minY:Int = Int.MaxValue
+        var minZ:Int = Int.MaxValue
+        var maxX:Int = Int.MinValue
+        var maxY:Int = Int.MinValue
+        var maxZ:Int = Int.MinValue
+
+        aabb.foreach{
+            a =>
+                minX = minX.min(a.minX)
+                minY = minY.min(a.minY)
+                minZ = minZ.min(a.minZ)
+
+                maxX = maxX.max(a.maxX)
+                maxY = maxY.max(a.maxY)
+                maxZ = maxZ.max(a.maxZ)
+        }
+
+
+
+
+
         val blockCell = new mutable.HashSet[BlockCell]()
 
         for(x <- minX until maxX;
@@ -144,6 +172,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def isOpaqueCube(pos: BlockPos,blockDirection: BlockDirection): Boolean = {
+        //TODO
         if(pos.x % 16 == 0 && pos.y % 16 == 0 && pos.z % 16==0){
             val blockState = world.getBlock(new BlockPos(pos.x+blockDirection.x*16,pos.y+blockDirection.y*16,pos.z+blockDirection.z*16))
             if(blockState.pos.x % 16 == 0 && blockState.pos.y % 16 == 0 && blockState.pos.z % 16 == 0){
@@ -162,7 +191,7 @@ class Chunk(val position: ChunkPosition,val world: World) {
     }
 
     def isOpaqueCube(pos: BlockSidePos): Boolean = {
-
+        //TODO
         for(x<-pos.minX to pos.maxX;
             y<-pos.minY to pos.maxY;
             z<-pos.minZ to pos.maxZ){

@@ -16,7 +16,7 @@ class BlockStorage(chunk: Chunk, position: ChunkPosition) {
         val index = getIndex(x>>4,y>>4,z>>4)
         containers.getOrElseUpdate(index,defaultValue ={
             blocksId(index) = -1
-            new BlockCell(chunk/*,x>>4,y>>4,z>>4*/)
+            new BlockCell(chunk)
         })
     }
 

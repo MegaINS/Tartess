@@ -77,6 +77,7 @@ class WorldRenderer(val world: World) {
     def renderBlockSelect(): Unit = if (blockSelect != null) blockSelect.render
 
     def updateBlockMouseOver(blockState: BlockState): Unit = {
+        //TODO
         if(blockStateMouseOver == blockState) return
         if (blockMouseOver != null) {
             blockMouseOver.cleanUp()
@@ -128,6 +129,7 @@ class WorldRenderer(val world: World) {
     }
 
     def updateBlockSelect(blockState: BlockState): Unit = {
+        //TODO
         if(blockStateSelect == blockState) return
         if (blockSelect != null) {
             blockSelect.cleanUp()
@@ -178,6 +180,7 @@ class WorldRenderer(val world: World) {
     }
 
     def reRender(pos: BlockPos) {
+        //TODO
         val x: Int = pos.x >> 8
         val y: Int = pos.y >> 8
         val z: Int = pos.z >> 8

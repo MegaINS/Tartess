@@ -16,11 +16,17 @@ class BoundingBox(var minX:Int = 0,
     def this(size:Int){
         this(0,0,0,size,size,size)
     }
+
+    var x = maxX
+    var y = maxY
+    var z = maxZ
+
+
     def rotate(side: BlockDirection): BoundingBox = {
         side match {
             case BlockDirection.EAST => new BoundingBox(minZ, minY, minX, maxZ, maxY, maxX)
-            case BlockDirection.WEST=> new BoundingBox(16- maxZ, minY, minX,16-minZ, maxY, maxX)
-            case BlockDirection.NORTH=> new BoundingBox(minX, minY,16-maxZ ,maxX, maxY, 16-minZ  )
+            case BlockDirection.WEST=> new BoundingBox(x- maxZ, minY, minX,x-minZ, maxY, maxX)
+            case BlockDirection.NORTH=> new BoundingBox(minX, minY,z-maxZ ,maxX, maxY, z-minZ  )
             case _  => getCopy
         }
     }
