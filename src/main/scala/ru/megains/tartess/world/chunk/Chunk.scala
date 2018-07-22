@@ -4,7 +4,7 @@ package ru.megains.tartess.world.chunk
 import ru.megains.tartess.block.data._
 import ru.megains.tartess.block.{BlockContainer, BlockWG}
 import ru.megains.tartess.entity.Entity
-import ru.megains.tartess.physics.BoundingBox
+import ru.megains.tartess.physics.BoundingBoxes
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.tileentity.{TileEntity, TileEntityContainer}
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
@@ -40,25 +40,15 @@ class Chunk(val position: ChunkPosition,val world: World) {
         var empty = true
         //TODO
 
-        val aabb:Array[BoundingBox] = blockState.getSelectedBoundingBox
+        val aabb:BoundingBoxes = blockState.getSelectedBoundingBox
 
-        var minX:Int = Int.MaxValue
-        var minY:Int = Int.MaxValue
-        var minZ:Int = Int.MaxValue
-        var maxX:Int = Int.MinValue
-        var maxY:Int = Int.MinValue
-        var maxZ:Int = Int.MinValue
+        val minX:Int = aabb.minX
+        val minY:Int = aabb.minY
+        val minZ:Int = aabb.minZ
+        val maxX:Int = aabb.maxX
+        val maxY:Int = aabb.maxY
+        val maxZ:Int = aabb.maxZ
 
-        aabb.foreach{
-            a =>
-                minX = minX.min(a.minX)
-                minY = minY.min(a.minY)
-                minZ = minZ.min(a.minZ)
-
-                maxX = maxX.max(a.maxX)
-                maxY = maxY.max(a.maxY)
-                maxZ = maxZ.max(a.maxZ)
-        }
         for(x<-minX until maxX;
             y<-minY until maxY;
             z<-minZ until maxZ){
@@ -99,28 +89,18 @@ class Chunk(val position: ChunkPosition,val world: World) {
         val blockStatePrevious =  getBlock(pos)
 
 
-        val aabb:Array[BoundingBox] = block match {
+        val aabb:BoundingBoxes = block match {
             case Blocks.air =>   blockStatePrevious.getSelectedBoundingBox
             case  _=>  blockState.getSelectedBoundingBox
         }
 
-        var minX:Int = Int.MaxValue
-        var minY:Int = Int.MaxValue
-        var minZ:Int = Int.MaxValue
-        var maxX:Int = Int.MinValue
-        var maxY:Int = Int.MinValue
-        var maxZ:Int = Int.MinValue
 
-        aabb.foreach{
-            a =>
-                minX = minX.min(a.minX)
-                minY = minY.min(a.minY)
-                minZ = minZ.min(a.minZ)
-
-                maxX = maxX.max(a.maxX)
-                maxY = maxY.max(a.maxY)
-                maxZ = maxZ.max(a.maxZ)
-        }
+        val minX:Int = aabb.minX
+        val minY:Int = aabb.minY
+        val minZ:Int = aabb.minZ
+        val maxX:Int = aabb.maxX
+        val maxY:Int = aabb.maxY
+        val maxZ:Int = aabb.maxZ
 
 
 

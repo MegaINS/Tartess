@@ -1,5 +1,6 @@
 package ru.megains.tartess.world.chunk.data
 
+import ru.megains.tartess.block.Block
 import ru.megains.tartess.block.data.{BlockCell, BlockPos, BlockState}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.utils.{RayTraceResult, Vec3f}
@@ -23,6 +24,12 @@ class BlockStorage(chunk: Chunk, position: ChunkPosition) {
 
     var blocksId: Array[Short] = new Array[Short](4096)
     val containers = new mutable.HashMap[Short,BlockCell]()
+
+    def setWorldGen(x: Int, y: Int, z: Int, block: Block): Unit = {
+        val index = getIndex(x,y,z)
+        blocksId(index) = Blocks.getIdByBlock(block) toShort
+    }
+
 
     def get(x: Int, y: Int, z: Int): BlockState = {
         val x1 = (x & 255) >>4

@@ -23,7 +23,7 @@ class PlayerControllerMP(tar:Tartess) {
         val f2: Float = (vec.z - pos.z.toDouble).toFloat
         var flag: Boolean = false
 
-        var result: EnumActionResult = EnumActionResult.PASS
+       // var result: EnumActionResult = EnumActionResult.PASS
 
         val item: Item = if (stack == null) null
         else stack.item
@@ -32,7 +32,7 @@ class PlayerControllerMP(tar:Tartess) {
         if (ret ne EnumActionResult.PASS) return ret
         val block: Block = worldIn.getBlock(pos).block
         flag = block.onBlockActivated(worldIn, pos, player, stack, facing, f, f1)
-        if (flag) result = EnumActionResult.SUCCESS
+       // if (flag) result = EnumActionResult.SUCCESS
 
 
         if (!flag) {

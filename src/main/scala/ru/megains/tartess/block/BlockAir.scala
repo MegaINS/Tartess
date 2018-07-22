@@ -1,14 +1,16 @@
 package ru.megains.tartess.block
 
 
-import ru.megains.tartess.physics.{AABB, BoundingBox}
+import ru.megains.tartess.physics.{AABBs, BoundingBox, BoundingBoxes}
 import ru.megains.tartess.renderer.texture.TTextureRegister
+
+import scala.collection.mutable
 
 object BlockAir extends Block("air") {
 
-    override val blockBody: AABB  = new AABB()
+    override val blockBodies: AABBs  = new AABBs(mutable.HashSet())
 
-    override val boundingBox: BoundingBox = new BoundingBox(0)
+    override val boundingBoxes: BoundingBoxes = new BoundingBoxes(mutable.HashSet())
 
     override def isOpaqueCube: Boolean = false
 

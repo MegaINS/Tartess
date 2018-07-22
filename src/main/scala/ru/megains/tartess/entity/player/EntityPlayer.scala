@@ -61,7 +61,7 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
 
 
 
-        moveFlying(xo, zo, if (onGround) 0.04f else 0.02f)
+        moveFlying(xo, zo, if (onGround || gameType.isCreative) 0.04f else 0.02f)
         move(motionX, motionY, motionZ)
         motionX *= 0.8f
         if (motionY > 0.0f) {
@@ -72,7 +72,7 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
         }
         motionZ *= 0.8f
         motionY -= 0.04f*16
-        if (onGround) {
+        if (onGround && gameType.isSurvival) {
             motionX *= 0.9f
             motionZ *= 0.9f
         }

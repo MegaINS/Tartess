@@ -3,7 +3,7 @@ package ru.megains.tartess.entity
 import ru.megains.nbt.NBTType._
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.block.data.BlockDirection
-import ru.megains.tartess.physics.AABB
+import ru.megains.tartess.physics.{AABB, AABBs}
 import ru.megains.tartess.utils.{MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.world.World
 
@@ -50,15 +50,15 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         var y1: Float = y
 
         val bodyCopy: AABB = body.getCopy
-        var aabbs:mutable.HashSet[AABB] =  world.addBlocksInList(body.expand(x0, y0, z0))
+        var aabbs:mutable.HashSet[AABBs] =  world.addBlocksInList(body.expand(x0, y0, z0))
 
-        aabbs.foreach( (aabb:AABB)=> { y0 = aabb.checkYcollision(body, y0)  } )
+        aabbs.foreach( aabb=> { y0 = aabb.checkYcollision(body, y0)  } )
         body.move(0, y0, 0)
 
-         aabbs.foreach( (aabb:AABB)=> { x0 = aabb.checkXcollision(body, x0)} )
+         aabbs.foreach( aabb=> { x0 = aabb.checkXcollision(body, x0)} )
         body.move(x0, 0, 0)
 
-          aabbs.foreach( (aabb:AABB)=> { z0 = aabb.checkZcollision(body, z0)} )
+          aabbs.foreach( aabb=> { z0 = aabb.checkZcollision(body, z0)} )
         body.move(0, 0, z0)
 
         onGround = y != y0 && y < 0.0F
@@ -74,13 +74,13 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
                         y1 = y
                         aabbs =  world.addBlocksInList(bodyCopy1.expand(x1, i, z1))
 
-                        aabbs.foreach( (aabb:AABB)=> { y1 = aabb.checkYcollision(bodyCopy1, i)} )
+                        aabbs.foreach( aabb=> { y1 = aabb.checkYcollision(bodyCopy1, i)} )
                         bodyCopy1.move(0, y1, 0)
 
-                        aabbs.foreach( (aabb:AABB)=> { x1 = aabb.checkXcollision(bodyCopy1, x1)} )
+                        aabbs.foreach( aabb=> { x1 = aabb.checkXcollision(bodyCopy1, x1)} )
                         bodyCopy1.move(x1, 0, 0)
 
-                        aabbs.foreach( (aabb:AABB)=> { z1 = aabb.checkZcollision(bodyCopy1, z1)} )
+                        aabbs.foreach( aabb=> { z1 = aabb.checkZcollision(bodyCopy1, z1)} )
                         bodyCopy1.move(0, 0, z1)
 
                         if (Math.abs(x1) > Math.abs(x0) || Math.abs(z1) > Math.abs(z0)) {

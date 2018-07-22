@@ -15,9 +15,18 @@ class ChunkGenerator(world: World) {
 
         if (chunkY < 0) {
             for (i <- 0 until 4096) {
-                blockData(i) = Blocks.getIdByBlock(Blocks.dirt).toShort
+                blockData(i) = Blocks.getIdByBlock(Blocks.stone).toShort
             }
-       }
+        } else {
+            val array = world.heightMap.generateHeightMap(chunkX, chunkZ)
+            for (x1 <- 0 to 15; y1 <- 0 to 15; z1 <- 0 to 15) {
+                if (array(x1)(z1) > y1 + (chunkY * 16)) {
+                    blockStorage.setWorldGen(x1, y1, z1, Blocks.stone)
+                } else if (array(x1)(z1) == y1 + (chunkY * 16)) {
+                    blockStorage.setWorldGen(x1, y1, z1, Blocks.grass)
+                }
+            }
+        }
 
         chunk
     }

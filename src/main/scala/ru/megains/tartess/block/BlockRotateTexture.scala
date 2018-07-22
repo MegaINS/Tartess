@@ -1,14 +1,16 @@
 package ru.megains.tartess.block
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockState}
-import ru.megains.tartess.physics.{AABB, BoundingBox}
+import ru.megains.tartess.physics.{AABB, AABBs, BoundingBox, BoundingBoxes}
 import ru.megains.tartess.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.world.World
+
+import scala.collection.mutable
 
 class BlockRotateTexture extends Block("blockRotateTexture") {
 
 
-    override val blockBody: AABB = new AABB(16)
-    override val boundingBox: BoundingBox = new BoundingBox(16,16,16)
+    override val blockBodies: AABBs  = new AABBs(mutable.HashSet(new AABB(16)))
+    override val boundingBoxes: BoundingBoxes = new BoundingBoxes(mutable.HashSet(  new BoundingBox(16)))
 
     var aTexture0: TextureAtlas = _
     var aTexture1: TextureAtlas = _

@@ -5,7 +5,7 @@ package ru.megains.tartess.world
 import ru.megains.tartess.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.entity.Entity
 import ru.megains.tartess.entity.player.EntityPlayer
-import ru.megains.tartess.physics.AABB
+import ru.megains.tartess.physics.{AABB, AABBs}
 import ru.megains.tartess.register.Blocks
 import ru.megains.tartess.renderer.world.WorldRenderer
 import ru.megains.tartess.tileentity.TileEntity
@@ -26,7 +26,7 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
     val length: Int = 100000
     val width: Int = 100000
     val height: Int = 1000
-
+    val heightMap: WorldHeightMap = new WorldHeightMap(0)
     var worldRenderer:WorldRenderer = _
     val chunkLoader: ChunkLoader = saveHandler.getChunkLoader
     val chunkProvider:ChunkProvider = new ChunkProvider(this,chunkLoader)
@@ -81,7 +81,7 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
 
     }
 
-    def addBlocksInList(aabb: AABB): mutable.HashSet[AABB] = {
+    def addBlocksInList(aabb: AABB): mutable.HashSet[AABBs] = {
         var x0: Int = Math.floor(aabb.minX )  toInt
         var y0: Int = Math.floor(aabb.minY)  toInt
         var z0: Int = Math.floor(aabb.minZ) toInt
@@ -109,13 +109,13 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
             z1 = width
         }
 
-        val aabbs = mutable.HashSet[AABB]()
+        val aabbs = mutable.HashSet[AABBs]()
 
         for (x <- x0 to x1; y <- y0 to y1; z <- z0 to z1) {
 
 
             if (!isAirBlock(x, y, z)) {
-                aabbs ++= getBlock(x, y, z).getSelectedBlockBody
+                aabbs += getBlock(x, y, z).getSelectedBlockBody
             }
         }
         aabbs

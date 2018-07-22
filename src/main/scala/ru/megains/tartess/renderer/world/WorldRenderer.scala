@@ -7,10 +7,10 @@ import ru.megains.old.graph.Frustum
 import ru.megains.tartess.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.player.EntityPlayer
-import ru.megains.tartess.physics.BoundingBox
+import ru.megains.tartess.physics.BoundingBoxes
 import ru.megains.tartess.register.GameRegister
-import ru.megains.tartess.renderer.{Renderer, Transformation}
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
+import ru.megains.tartess.renderer.{Renderer, Transformation}
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
 
@@ -85,44 +85,53 @@ class WorldRenderer(val world: World) {
         }
 
         val mm = MeshMaker.getMeshMaker
-
-        val aabb:BoundingBox= blockState.getBoundingBox(0)
-
-        val minX = aabb.minX/16f - 0.01f
-        val minY = aabb.minY/16f - 0.01f
-        val minZ = aabb.minZ/16f - 0.01f
-        val maxX = aabb.maxX/16f + 0.01f
-        val maxY = aabb.maxY/16f + 0.01f
-        val maxZ = aabb.maxZ/16f + 0.01f
-
-
-
         mm.startMake(GL_LINES)
-        mm.addColor(Color.BLACK)
-        mm.addVertex(minX, minY, minZ)
-        mm.addVertex(minX, minY, maxZ)
-        mm.addVertex(minX, maxY, minZ)
-        mm.addVertex(minX, maxY, maxZ)
-        mm.addVertex(maxX, minY, minZ)
-        mm.addVertex(maxX, minY, maxZ)
-        mm.addVertex(maxX, maxY, minZ)
-        mm.addVertex(maxX, maxY, maxZ)
 
-        mm.addIndex(0, 1)
-        mm.addIndex(0, 2)
-        mm.addIndex(0, 4)
 
-        mm.addIndex(6, 2)
-        mm.addIndex(6, 4)
-        mm.addIndex(6, 7)
 
-        mm.addIndex(3, 1)
-        mm.addIndex(3, 2)
-        mm.addIndex(3, 7)
 
-        mm.addIndex(5, 1)
-        mm.addIndex(5, 4)
-        mm.addIndex(5, 7)
+        val aabbs:BoundingBoxes= blockState.getBoundingBox
+
+        for(aabb<-aabbs.hashSet){
+            val minX = aabb.minX/16f - 0.01f
+            val minY = aabb.minY/16f - 0.01f
+            val minZ = aabb.minZ/16f - 0.01f
+            val maxX = aabb.maxX/16f + 0.01f
+            val maxY = aabb.maxY/16f + 0.01f
+            val maxZ = aabb.maxZ/16f + 0.01f
+
+
+
+            mm.setCurrentIndex()
+            mm.addColor(Color.BLACK)
+            mm.addVertex(minX, minY, minZ)
+            mm.addVertex(minX, minY, maxZ)
+            mm.addVertex(minX, maxY, minZ)
+            mm.addVertex(minX, maxY, maxZ)
+            mm.addVertex(maxX, minY, minZ)
+            mm.addVertex(maxX, minY, maxZ)
+            mm.addVertex(maxX, maxY, minZ)
+            mm.addVertex(maxX, maxY, maxZ)
+
+            mm.addIndex(0, 1)
+            mm.addIndex(0, 2)
+            mm.addIndex(0, 4)
+
+            mm.addIndex(6, 2)
+            mm.addIndex(6, 4)
+            mm.addIndex(6, 7)
+
+            mm.addIndex(3, 1)
+            mm.addIndex(3, 2)
+            mm.addIndex(3, 7)
+
+            mm.addIndex(5, 1)
+            mm.addIndex(5, 4)
+            mm.addIndex(5, 7)
+        }
+
+
+
 
 
         blockMouseOver = mm.makeMesh()
@@ -137,45 +146,48 @@ class WorldRenderer(val world: World) {
         }
 
         val mm = MeshMaker.getMeshMaker
-        val aabb:BoundingBox= blockState.getBoundingBox(0)
-
-        val minX = aabb.minX/16f
-        val minY = aabb.minY/16f
-        val minZ = aabb.minZ/16f
-        val maxX = aabb.maxX/16f
-        val maxY = aabb.maxY/16f
-        val maxZ = aabb.maxZ/16f
-
-
-
         mm.startMake(GL_LINES)
-        mm.addColor(Color.BLACK)
-        mm.addVertex(minX, minY, minZ)
-        mm.addVertex(minX, minY, maxZ)
-        mm.addVertex(minX, maxY, minZ)
-        mm.addVertex(minX, maxY, maxZ)
-        mm.addVertex(maxX, minY, minZ)
-        mm.addVertex(maxX, minY, maxZ)
-        mm.addVertex(maxX, maxY, minZ)
-        mm.addVertex(maxX, maxY, maxZ)
-
-        mm.addIndex(0, 1)
-        mm.addIndex(0, 2)
-        mm.addIndex(0, 4)
-
-        mm.addIndex(6, 2)
-        mm.addIndex(6, 4)
-        mm.addIndex(6, 7)
-
-        mm.addIndex(3, 1)
-        mm.addIndex(3, 2)
-        mm.addIndex(3, 7)
-
-        mm.addIndex(5, 1)
-        mm.addIndex(5, 4)
-        mm.addIndex(5, 7)
 
 
+        val aabbs:BoundingBoxes= blockState.getBoundingBox
+
+        for(aabb<-aabbs.hashSet) {
+            val minX = aabb.minX / 16f
+            val minY = aabb.minY / 16f
+            val minZ = aabb.minZ / 16f
+            val maxX = aabb.maxX / 16f
+            val maxY = aabb.maxY / 16f
+            val maxZ = aabb.maxZ / 16f
+
+
+            mm.setCurrentIndex()
+            mm.addColor(Color.BLACK)
+            mm.addVertex(minX, minY, minZ)
+            mm.addVertex(minX, minY, maxZ)
+            mm.addVertex(minX, maxY, minZ)
+            mm.addVertex(minX, maxY, maxZ)
+            mm.addVertex(maxX, minY, minZ)
+            mm.addVertex(maxX, minY, maxZ)
+            mm.addVertex(maxX, maxY, minZ)
+            mm.addVertex(maxX, maxY, maxZ)
+
+            mm.addIndex(0, 1)
+            mm.addIndex(0, 2)
+            mm.addIndex(0, 4)
+
+            mm.addIndex(6, 2)
+            mm.addIndex(6, 4)
+            mm.addIndex(6, 7)
+
+            mm.addIndex(3, 1)
+            mm.addIndex(3, 2)
+            mm.addIndex(3, 7)
+
+            mm.addIndex(5, 1)
+            mm.addIndex(5, 4)
+            mm.addIndex(5, 7)
+
+        }
         blockSelect = mm.makeMesh()
     }
 

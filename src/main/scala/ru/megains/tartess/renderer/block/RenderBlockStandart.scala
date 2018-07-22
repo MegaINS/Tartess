@@ -1,7 +1,6 @@
 package ru.megains.tartess.renderer.block
 
 import ru.megains.tartess.block.data.{BlockDirection, BlockState}
-import ru.megains.tartess.physics.AABB
 import ru.megains.tartess.renderer.api.TRenderBlock
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.data.ChunkPosition
@@ -15,10 +14,10 @@ object RenderBlockStandart extends TRenderBlock {
         var isRender = false
 
         val pos = blockState.pos
-        val blockBodys  = blockState.getBlockBody
+        val blockBodies  = blockState.getBlockBody.div(16).sum(pos.rendX, pos.rendY, pos.rendZ)
 
-        for(blockBody<-blockBodys){
-            val aabb:AABB = blockBody.div(16).sum(pos.rendX, pos.rendY, pos.rendZ)
+        for(aabb<-blockBodies.hashSet){
+
             val minX = aabb.minX
             val minY = aabb.minY
             val minZ = aabb.minZ

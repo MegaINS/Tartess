@@ -18,8 +18,8 @@ object RenderBlock {
         val maxV = texture.maxV
         val averageX = (minX + maxX) / 2
         val averageZ = (minZ + maxZ) / 2
-        val averageU = (minU + maxU) / 2
-        val averageV = (minV + maxV) / 2
+        val averageU = texture.averageU
+        val averageV = texture.averageV
 
         mm.addNormals(0,1,0)
 
@@ -43,8 +43,8 @@ object RenderBlock {
         val maxV = texture.maxV
         val averageX = (minX + maxX) / 2
         val averageZ = (minZ + maxZ) / 2
-        val averageU = (minU + maxU) / 2
-        val averageV = (minV + maxV) / 2
+        val averageU = texture.averageU
+        val averageV = texture.averageV
 
 
         mm.addNormals(0,-1,0)
@@ -70,8 +70,8 @@ object RenderBlock {
         val maxV = texture.maxV
         val averageY = (minY + maxY) / 2
         val averageZ = (minZ + maxZ) / 2
-        val averageU = (minU + maxU) / 2
-        val averageV = (minV + maxV) / 2
+        val averageU = texture.averageU
+        val averageV = texture.averageV
 
         mm.addNormals(-1,0,0)
         mm.setCurrentIndex()
@@ -94,8 +94,8 @@ object RenderBlock {
         val maxV = texture.maxV
         val averageY = (minY + maxY) / 2
         val averageZ = (minZ + maxZ) / 2
-        val averageU = (minU + maxU) / 2
-        val averageV = (minV + maxV) / 2
+        val averageU = texture.averageU
+        val averageV = texture.averageV
 
 
         mm.addNormals(1,0,0)
@@ -121,8 +121,8 @@ object RenderBlock {
         val maxV = texture.maxV
         val averageX = (minX + maxX) / 2
         val averageY = (minY + maxY) / 2
-        val averageU = (minU + maxU) / 2
-        val averageV = (minV + maxV) / 2
+        val averageU = texture.averageU
+        val averageV = texture.averageV
         mm.addNormals(0,0,1)
         mm.setCurrentIndex()
         mm.addVertexWithUV(minX, minY, maxZ, minU, maxV)
@@ -144,8 +144,8 @@ object RenderBlock {
         val maxV = texture.maxV
         val averageX = (minX + maxX) / 2
         val averageY = (minY + maxY) / 2
-        val averageU = (minU + maxU) / 2
-        val averageV = (minV + maxV) / 2
+        val averageU = texture.averageU
+        val averageV = texture.averageV
         mm.addNormals(0,0,-1)
         mm.setCurrentIndex()
         mm.addVertexWithUV(minX, minY, minZ, maxU, maxV)
