@@ -19,6 +19,11 @@ class TextureManager {
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, aTexture.getGlTextureId)
         }
     }
+    def unbindTexture() {
+        currentTexture = ""
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0)
+    }
+
 
     def loadTexture(name: String, aTexture: ATexture): Boolean = {
 

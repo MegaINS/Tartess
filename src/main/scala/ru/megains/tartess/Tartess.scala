@@ -64,7 +64,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         log.info("Start Game")
-        log.info("Tartess v0.0.8.0")
+        log.info("Tartess v0.0.9.0")
         try {
             log.info("Display creating...")
             window.create()

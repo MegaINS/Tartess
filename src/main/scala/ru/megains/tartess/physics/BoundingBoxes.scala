@@ -6,7 +6,7 @@ import scala.collection.mutable
 
 class BoundingBoxes(val hashSet: mutable.HashSet[BoundingBox]){
 
-    def rotate(side: BlockDirection): BoundingBoxes =  new BoundingBoxes(hashSet.map(_.rotate(side)))
+    def rotate(side: BlockDirection): BoundingBoxes =  new BoundingBoxes(hashSet.map(_.rotate(side,this)))
 
     def sum(x: Int, y: Int, z: Int) =new BoundingBoxes(hashSet.map(_.sum(x, y, z)))
 

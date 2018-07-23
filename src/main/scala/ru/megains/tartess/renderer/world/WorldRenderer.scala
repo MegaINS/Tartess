@@ -9,8 +9,10 @@ import ru.megains.tartess.entity.item.EntityItem
 import ru.megains.tartess.entity.player.EntityPlayer
 import ru.megains.tartess.physics.BoundingBoxes
 import ru.megains.tartess.register.GameRegister
+import ru.megains.tartess.renderer.block.RenderBlock
 import ru.megains.tartess.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.renderer.{Renderer, Transformation}
+import ru.megains.tartess.utils.RayTraceResult
 import ru.megains.tartess.world.World
 import ru.megains.tartess.world.chunk.Chunk
 
@@ -18,6 +20,8 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 class WorldRenderer(val world: World) {
+
+
 
     world.worldRenderer = this
 
@@ -33,6 +37,51 @@ class WorldRenderer(val world: World) {
     var lastZ = 0
     var blockStateMouseOver:BlockState = _
     var blockStateSelect:BlockState = _
+    var selectPos: Array[Mesh] = new Array[Mesh](6)
+
+    setTest()
+
+    def setTest(): Unit ={
+        val zero = 0f
+        val neZero = 0.001f
+        val one = 1/16f
+
+        MeshMaker.startMakeTriangles()
+        RenderBlock.renderSideDown(zero,one,-neZero,zero,one)
+        selectPos(0) = MeshMaker.makeMesh()
+
+        MeshMaker.startMakeTriangles()
+        RenderBlock.renderSideUp(zero,one,neZero,zero,one)
+        selectPos(1) = MeshMaker.makeMesh()
+
+
+        MeshMaker.startMakeTriangles()
+        RenderBlock.renderSideNorth(zero,one,zero,one,-neZero)
+        selectPos(2) = MeshMaker.makeMesh()
+
+        MeshMaker.startMakeTriangles()
+        RenderBlock.renderSideSouth(zero,one,zero,one,neZero)
+        selectPos(3) = MeshMaker.makeMesh()
+
+        MeshMaker.startMakeTriangles()
+        RenderBlock.renderSideWest(-neZero,zero,one,zero,one)
+        selectPos(4) = MeshMaker.makeMesh()
+
+        MeshMaker.startMakeTriangles()
+        RenderBlock.renderSideEast(neZero,zero,one,zero,one)
+        selectPos(5) = MeshMaker.makeMesh()
+
+
+    }
+
+    def renderSelectPos(objectMouseOver: RayTraceResult): Unit = {
+        selectPos(objectMouseOver.sideHit.id).render
+    }
+
+
+
+
+
 
     def getRenderChunks(entityPlayer: EntityPlayer): ArrayBuffer[RenderChunk] = {
 //        // TODO:  OPTIMIZE
@@ -87,9 +136,6 @@ class WorldRenderer(val world: World) {
         val mm = MeshMaker.getMeshMaker
         mm.startMake(GL_LINES)
 
-
-
-
         val aabbs:BoundingBoxes= blockState.getBoundingBox
 
         for(aabb<-aabbs.hashSet){
@@ -136,6 +182,9 @@ class WorldRenderer(val world: World) {
 
         blockMouseOver = mm.makeMesh()
     }
+
+
+
 
     def updateBlockSelect(blockState: BlockState): Unit = {
         //TODO

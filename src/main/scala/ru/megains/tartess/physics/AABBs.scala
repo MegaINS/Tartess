@@ -9,12 +9,41 @@ class AABBs(val hashSet: mutable.HashSet[AABB]) {
 
 
 
-    def rotate(side: BlockDirection): AABBs = new AABBs(hashSet.map(_.rotate(side)))
+    def rotate(side: BlockDirection): AABBs = new AABBs(hashSet.map(_.rotate(side,this)))
 
     def sum(x: Float, y: Float, z: Float) =new AABBs(hashSet.map(_.sum(x, y, z)))
 
     def div(value: Float) = new AABBs(hashSet.map(_.div(value)))
-
+    def maxX: Float = {
+        var maxX:Float = Float.MinValue
+        hashSet.foreach{a =>maxX = maxX.max(a.maxX)}
+        maxX
+    }
+    def maxY: Float = {
+        var maxY:Float = Float.MinValue
+        hashSet.foreach{ a =>maxY = maxY.max(a.maxY)}
+        maxY
+    }
+    def maxZ: Float = {
+        var maxZ:Float = Float.MinValue
+        hashSet.foreach{ a =>maxZ = maxZ.max(a.maxZ)}
+        maxZ
+    }
+    def minX: Float = {
+        var minX:Float = Float.MaxValue
+        hashSet.foreach{ a =>minX = minX.min(a.minX)}
+        minX
+    }
+    def minY: Float = {
+        var minY:Float = Float.MaxValue
+        hashSet.foreach{ a =>minY = minY.min(a.minY)}
+        minY
+    }
+    def minZ: Float = {
+        var minZ:Float = Float.MaxValue
+        hashSet.foreach{ a =>minZ = minZ.min(a.minZ)}
+        minZ
+    }
 
     def calculateIntercept(vecA: Vec3f, vecB: Vec3f): RayTraceResult = {
         var res:RayTraceResult = null

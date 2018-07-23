@@ -58,7 +58,10 @@ class Transformation {
         modelViewMatrix.identity
         modelViewMatrix.translate(blockPos.x /16f, blockPos.y /16f, blockPos.z /16f)
     }
-
+    def buildViewMatrix(x: Int, y: Int, z: Int): Matrix4f = {
+        modelViewMatrix.identity
+        modelViewMatrix.translate(x/16f, y/16f, z /16f)
+    }
     def buildEntityItemModelViewMatrix(entity: EntityItem): Matrix4f = {
 
         val position:AABB = entity.body

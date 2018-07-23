@@ -9,6 +9,8 @@ class BoundingBox(var minX:Int = 0,
                   var maxY:Int = 0,
                   var maxZ:Int = 0){
 
+
+
     def this(maxX:Int, maxY:Int, maxZ:Int){
         this(0,0,0,maxX,maxY,maxZ)
     }
@@ -17,20 +19,17 @@ class BoundingBox(var minX:Int = 0,
         this(0,0,0,size,size,size)
     }
 
-    var x = maxX
-    var y = maxY
-    var z = maxZ
-
-
-    def rotate(side: BlockDirection): BoundingBox = {
+    def rotate(side: BlockDirection, boxes: BoundingBoxes): BoundingBox  = {
         side match {
-            case BlockDirection.EAST => new BoundingBox(minZ, minY, minX, maxZ, maxY, maxX)
-            case BlockDirection.WEST=> new BoundingBox(x- maxZ, minY, minX,x-minZ, maxY, maxX)
-            case BlockDirection.NORTH=> new BoundingBox(minX, minY,z-maxZ ,maxX, maxY, z-minZ  )
+            case BlockDirection.SOUTH=> new BoundingBox( boxes.maxZ - maxZ , minY,minX , boxes.maxZ - minZ, maxY, maxX  )
+            case BlockDirection.WEST=> new BoundingBox(boxes.maxX - maxX, minY, boxes.maxZ - maxZ,boxes.maxX - minX, maxY,boxes.maxZ - minZ)
+            case BlockDirection.NORTH=> new BoundingBox(minZ, minY,boxes.maxX - maxX, maxZ , maxY, boxes.maxX - minX  )
             case _  => getCopy
         }
     }
+
     def getCopy = new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ)
+
     def sum(x: Int, y: Int, z: Int) = new BoundingBox(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z)
 
     def getSidePos(side: BlockDirection): BlockSidePos = {

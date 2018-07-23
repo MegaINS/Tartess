@@ -58,30 +58,62 @@ abstract class Block(val name:String) {
     }
 
     def getSelectPosition(worldIn: World,entity: Entity, objectMouseOver: RayTraceResult): BlockState = {
-        //TODO
+
         val side = entity.side
         val posTarget: BlockPos = objectMouseOver.blockPos
         val hitVec: Vec3f = objectMouseOver.hitVec
         var posSet: BlockPos = objectMouseOver.sideHit match {
             case BlockDirection.DOWN => posTarget.sum(0,-boundingBoxes.maxY ,0)
-            case BlockDirection.WEST => posTarget.sum(-boundingBoxes.maxX,0,0)
-            case BlockDirection.NORTH => posTarget.sum(0,0,-boundingBoxes.maxZ)
+            case BlockDirection.WEST => posTarget.sum(-boundingBoxes.rotate(side).maxX,0,0)
+            case BlockDirection.NORTH => posTarget.sum(0,0,-boundingBoxes.rotate(side).maxZ)
             case _ => posTarget
         }
-        posSet =  posSet.sum(hitVec.x  - posTarget.x toInt,hitVec.y - posTarget.y toInt,hitVec.z - posTarget.z toInt)
+       posSet =  posSet.sum(hitVec.x  - posTarget.x toInt,hitVec.y - posTarget.y toInt,hitVec.z - posTarget.z toInt)
 
-        posSet = side match {
-            case BlockDirection.EAST  => posSet.sum(0,0,Math.floor(-boundingBoxes.rotate(BlockDirection.EAST).maxZ/2f) +1  toInt)
-            case BlockDirection.WEST => posSet.sum(-boundingBoxes.rotate(BlockDirection.WEST).maxX+1,0,-boundingBoxes.rotate(BlockDirection.WEST).maxZ/2f toInt)
-            case BlockDirection.SOUTH => posSet.sum(-boundingBoxes.rotate(BlockDirection.SOUTH).maxX /2,0,0)
-            case BlockDirection.NORTH => posSet.sum(Math.floor(-boundingBoxes.rotate(BlockDirection.NORTH).maxX/2f) +1  toInt,0,-boundingBoxes.rotate(BlockDirection.NORTH).maxZ+1)
+
+
+        posSet = objectMouseOver.sideHit match {
+            case BlockDirection.EAST =>
+                side match {
+                    case BlockDirection.WEST => posSet.sum(0,0,-boundingBoxes.maxZ/2f toInt)
+                    case BlockDirection.NORTH => posSet.sum(0,0,-boundingBoxes.rotate(BlockDirection.NORTH).maxZ+1)
+                    case _ => posSet
+                }
+             case BlockDirection.WEST =>
+                 side match {
+                     case BlockDirection.EAST => posSet.sum(0,0,-boundingBoxes.maxZ/2f+1 toInt)
+                     case BlockDirection.NORTH => posSet.sum(0,0,-boundingBoxes.rotate(BlockDirection.NORTH).maxZ+1)
+                     case _ => posSet
+                 }
+            case BlockDirection.SOUTH =>
+                side match {
+                    case BlockDirection.WEST => posSet.sum(-boundingBoxes.rotate(BlockDirection.WEST).maxX+1,0,0)
+                    case BlockDirection.NORTH => posSet.sum(-boundingBoxes.rotate(BlockDirection.NORTH).maxX/2,0,0)
+                    case _ => posSet
+                }
+
+            case BlockDirection.NORTH =>
+                side match {
+                    case BlockDirection.WEST => posSet.sum(-boundingBoxes.rotate(BlockDirection.WEST).maxX+1,0,0)
+                    case BlockDirection.SOUTH => posSet.sum(-boundingBoxes.rotate(BlockDirection.SOUTH).maxX/2,0,0)
+                    case _ => posSet
+                }
+            case BlockDirection.UP | BlockDirection.DOWN  =>
+                side match {
+                    case BlockDirection.EAST  => posSet.sum(0,0,Math.floor(-boundingBoxes.rotate(BlockDirection.EAST).maxZ/2f) +1  toInt)
+                    case BlockDirection.WEST => posSet.sum(-boundingBoxes.rotate(BlockDirection.WEST).maxX+1,0,-boundingBoxes.rotate(BlockDirection.WEST).maxZ/2f toInt)
+                    case BlockDirection.SOUTH => posSet.sum(-boundingBoxes.rotate(BlockDirection.SOUTH).maxX /2,0,0)
+                    case BlockDirection.NORTH => posSet.sum(Math.floor(-boundingBoxes.rotate(BlockDirection.NORTH).maxX/2f) +1  toInt,0,-boundingBoxes.rotate(BlockDirection.NORTH).maxZ+1)
+                    case _ => posSet
+                }
             case _ => posSet
         }
 
 
+
+
         val blockState = new BlockState(this,posSet,side)
-        if (worldIn.isAirBlock(blockState)) blockState
-        else null
+        if (worldIn.isAirBlock(blockState)) blockState else null
     }
 }
 

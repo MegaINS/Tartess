@@ -14,15 +14,12 @@ class AABB( var minX:Float = .0f,
     def this(size:Float){
         this(0,0,0,size,size,size)
     }
-    var x = maxX
-    var y = maxY
-    var z = maxZ
 
-    def rotate(side: BlockDirection): AABB = {
+    def rotate(side: BlockDirection,aABBs: AABBs): AABB = {
         side match {
-            case BlockDirection.EAST => new AABB(minZ, minY, minX, maxZ, maxY, maxX)
-            case BlockDirection.WEST=> new AABB(x- maxZ, minY, minX,x-minZ, maxY, maxX)
-            case BlockDirection.NORTH=> new AABB(minX, minY,z-maxZ ,maxX, maxY, z-minZ  )
+            case BlockDirection.SOUTH=> new AABB( aABBs.maxZ - maxZ , minY,minX , aABBs.maxZ - minZ, maxY, maxX  )
+            case BlockDirection.WEST=> new AABB(aABBs.maxX - maxX, minY, aABBs.maxZ - maxZ,aABBs.maxX - minX, maxY,aABBs.maxZ - minZ)
+            case BlockDirection.NORTH=> new AABB(minZ, minY,aABBs.maxX - maxX, maxZ , maxY, aABBs.maxX - minX  )
             case _  => getCopy
         }
     }

@@ -10,7 +10,9 @@ import ru.megains.tartess.Tartess
 import ru.megains.tartess.periphery.Mouse
 import ru.megains.tartess.renderer.light.DirLight
 import ru.megains.tartess.renderer.shader.{GuiShaderProgram, LightShaderProgram, SceneShaderProgram, ShaderProgram}
+import ru.megains.tartess.renderer.texture.TextureManager
 import ru.megains.tartess.renderer.world.{RenderChunk, WorldRenderer}
+import ru.megains.tartess.utils.MathHelper
 
 class Renderer(val tar: Tartess) {
 
@@ -127,7 +129,7 @@ class Renderer(val tar: Tartess) {
         glDisable(GL_CULL_FACE)
 
 
-
+        TextureManager.tm.unbindTexture()
         val blockSelectPosition = tar.blockSelectPosition
         if (blockSelectPosition != null) {
             Renderer.currentShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(blockSelectPosition.pos))
@@ -139,7 +141,16 @@ class Renderer(val tar: Tartess) {
                 worldRenderer.renderBlockMouseOver()
             }
         }
-
+        val objectMouseOver = tar.objectMouseOver
+        if(objectMouseOver != null){
+            val ve3f =objectMouseOver.hitVec
+            Renderer.currentShaderProgram.setUniform("model", transformation.buildViewMatrix(
+                MathHelper.floor_double( objectMouseOver.blockPos.x + (ve3f.x-objectMouseOver.blockPos.x)),
+                MathHelper.floor_double( objectMouseOver.blockPos.y + (ve3f.y-objectMouseOver.blockPos.y)),
+                MathHelper.floor_double( objectMouseOver.blockPos.z + (ve3f.z-objectMouseOver.blockPos.z)))
+            )
+            worldRenderer.renderSelectPos(tar.objectMouseOver)
+        }
 
         Renderer.unbindShaderProgram()
     }
