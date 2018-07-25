@@ -1,13 +1,13 @@
 package ru.megains.old.graph;
 
 import org.lwjgl.BufferUtils;
-import ru.megains.tartess.world.chunk.data.ChunkPosition;
+import ru.megains.tartess.common.world.chunk.data.ChunkPosition;
 
 import java.nio.FloatBuffer;
 
 
 public class Frustum {
-    public float[][] m_Frustum = new float[6][4];
+    private float[][] m_Frustum = new float[6][4];
     public static final int RIGHT = 0;
     public static final int LEFT = 1;
     public static final int BOTTOM = 2;
@@ -22,9 +22,9 @@ public class Frustum {
     private FloatBuffer _proj = BufferUtils.createFloatBuffer(16);
     private FloatBuffer _modl = BufferUtils.createFloatBuffer(16);
     private FloatBuffer _clip = BufferUtils.createFloatBuffer(16);
-    float[] proj = new float[16];
-    float[] modl = new float[16];
-    float[] clip = new float[16];
+    private float[] proj = new float[16];
+    private float[] modl = new float[16];
+    private float[] clip = new float[16];
 
     private Frustum() {
     }
@@ -158,7 +158,7 @@ public class Frustum {
         return true;
     }
 
-    public boolean cubeInFrustum(float x1, float y1, float z1, float x2, float y2, float z2) {
+    private boolean cubeInFrustum(float x1, float y1, float z1, float x2, float y2, float z2) {
         for(int i = 0; i < 6; ++i) {
             if(this.m_Frustum[i][0] * x1 + this.m_Frustum[i][1] * y1 + this.m_Frustum[i][2] * z1 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x2 + this.m_Frustum[i][1] * y1 + this.m_Frustum[i][2] * z1 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x1 + this.m_Frustum[i][1] * y2 + this.m_Frustum[i][2] * z1 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x2 + this.m_Frustum[i][1] * y2 + this.m_Frustum[i][2] * z1 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x1 + this.m_Frustum[i][1] * y1 + this.m_Frustum[i][2] * z2 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x2 + this.m_Frustum[i][1] * y1 + this.m_Frustum[i][2] * z2 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x1 + this.m_Frustum[i][1] * y2 + this.m_Frustum[i][2] * z2 + this.m_Frustum[i][3] <= 0.0F && this.m_Frustum[i][0] * x2 + this.m_Frustum[i][1] * y2 + this.m_Frustum[i][2] * z2 + this.m_Frustum[i][3] <= 0.0F) {
                 return false;
