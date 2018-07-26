@@ -1,5 +1,8 @@
 package ru.megains.tartess.client.renderer.gui
 
+import java.awt.Color
+
+import ru.megains.tartess.client.network.{ServerData, ServerPinger}
 import ru.megains.tartess.client.renderer.gui.base.GuiMenu
 import ru.megains.tartess.client.renderer.gui.element.GuiButton
 import ru.megains.tartess.client.renderer.mesh.Mesh
@@ -8,8 +11,8 @@ class GuiMultiPlayer(guiMainMenu: GuiMenu) extends GuiMenu {
 
     var worldsSlot: GuiSlotWorld = _
 
-   // val server: ServerData = new ServerData("localhost", "localhost", true)
-   // val pinger = new ServerPinger
+    val server: ServerData = new ServerData("localhost", "localhost", true)
+    val pinger = new ServerPinger
     var pin: Long = -1
     var pingMesh: Mesh = _
 
@@ -28,34 +31,34 @@ class GuiMultiPlayer(guiMainMenu: GuiMenu) extends GuiMenu {
 
     override def actionPerformed(button: GuiButton): Unit = {
         button.id match {
-           // case 0 => ping()
+            case 0 => ping()
             case 1 => tar.guiManager.setGuiScreen(guiMainMenu)
            // case 2 => connectToServer(server)
             case _ =>
         }
     }
 
-//    override def tick(): Unit = {
-//        if (pin != server.pingToServer) {
-//            pin = server.pingToServer
-//            if (pingMesh ne null) pingMesh.cleanUp()
-//            pingMesh = createString(pin toString, Color.BLACK)
-//        }
-//    }
+    override def tick(): Unit = {
+        if (pin != server.pingToServer) {
+            pin = server.pingToServer
+            if (pingMesh != null) pingMesh.cleanUp()
+            pingMesh = createString(pin toString, Color.BLACK)
+        }
+    }
 
 //    def connectToServer(server: ServerData) {
 //        tar.guiManager.setGuiScreen(new GuiConnecting(this, tar, server))
 //    }
 
-//    def ping() = {
-//        try {
-//            pinger.ping(server)
-//        } catch {
-//            case e: Throwable =>
-//                e.printStackTrace()
-//
-//        }
-//    }
+    def ping(): Unit = {
+        try {
+            pinger.ping(server)
+        } catch {
+            case e: Throwable =>
+                e.printStackTrace()
+
+        }
+    }
 
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {

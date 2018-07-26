@@ -1,8 +1,7 @@
 package ru.megains.tartess.common.block
 
 
-import ru.megains.tartess.common.physics.{AABBs, BoundingBox, BoundingBoxes}
-import ru.megains.tartess.client.renderer.texture.TTextureRegister
+import ru.megains.tartess.common.physics.{AABBs, BoundingBoxes}
 
 import scala.collection.mutable
 
@@ -14,7 +13,7 @@ object BlockAir extends Block("air") {
 
     override def isOpaqueCube: Boolean = false
 
-    override def registerTexture(textureRegister: TTextureRegister): Unit = {}
+   // override def registerTexture(textureRegister: TTextureRegister): Unit = {}
 
 
 }

@@ -6,6 +6,7 @@ import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.client.renderer.api.TRenderItem
 import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.client.renderer.texture.{TextureAtlas, TextureManager}
+import ru.megains.tartess.common.register.GameRegister
 
 class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
@@ -56,8 +57,9 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
             var averageV: Float = 0
             var texture: TextureAtlas = null
 
+            val blockRender = GameRegister.getBlockRender(block)
 
-            texture = block.getATexture(blockDirection = BlockDirection.UP)
+            texture = blockRender.getATexture(blockDirection = BlockDirection.UP)
             minU = texture.minU
             maxU = texture.maxU
             minV = texture.minV
@@ -81,7 +83,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
             //V2
 
 
-            texture = block.getATexture(blockDirection =BlockDirection.DOWN)
+            texture = blockRender.getATexture(blockDirection =BlockDirection.DOWN)
             minU = texture.minU
             maxU = texture.maxU
             minV = texture.minV
@@ -107,7 +109,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
 
 
-            texture = block.getATexture(blockDirection =BlockDirection.NORTH)
+            texture = blockRender.getATexture(blockDirection =BlockDirection.NORTH)
             minU = texture.minU
             maxU = texture.maxU
             minV = texture.minV
@@ -132,7 +134,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
 
 
-            texture = block.getATexture(blockDirection =BlockDirection.SOUTH)
+            texture = blockRender.getATexture(blockDirection =BlockDirection.SOUTH)
             minU = texture.minU
             maxU = texture.maxU
             minV = texture.minV
@@ -160,7 +162,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
 
 
-            texture = block.getATexture(blockDirection =BlockDirection.WEST)
+            texture = blockRender.getATexture(blockDirection =BlockDirection.WEST)
             minU = texture.minU
             maxU = texture.maxU
             minV = texture.minV
@@ -188,7 +190,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
 
 
-            texture = block.getATexture(blockDirection =BlockDirection.EAST)
+            texture = blockRender.getATexture(blockDirection =BlockDirection.EAST)
             minU = texture.minU
             maxU = texture.maxU
             minV = texture.minV

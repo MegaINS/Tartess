@@ -2,6 +2,7 @@ package ru.megains.tartess.client
 
 import org.lwjgl.glfw.GLFW._
 import org.lwjgl.opengl.GL11
+import ru.megains.tartess.client.network.PlayerControllerMP
 import ru.megains.tartess.client.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.client.renderer.font.FontRender
 import ru.megains.tartess.client.renderer.gui.base.GuiManager
@@ -10,7 +11,6 @@ import ru.megains.tartess.client.renderer.item.ItemRender
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.client.renderer.{Camera, Renderer}
-import ru.megains.tartess.common.PlayerControllerMP
 import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
@@ -23,6 +23,7 @@ import ru.megains.tartess.common.utils._
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.data.AnvilSaveFormat
 
+import scala.collection.mutable
 import scala.reflect.io.Directory
 import scala.util.Random
 
@@ -60,7 +61,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     var objectMouseOver: RayTraceResult = _
 
     var blockSelectPosition: BlockState = _
-
+    val futureTaskQueue: mutable.Queue[()=>Unit] = new mutable.Queue[()=>Unit]
     def startGame(): Unit = {
 
 
@@ -165,6 +166,12 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         if (window.isClose) running = false
 
         timer.update()
+
+
+        futureTaskQueue synchronized {
+            while (futureTaskQueue.nonEmpty)futureTaskQueue.dequeue()()
+        }
+
 
         for (_ <- 0 until timer.tick) {
             update()
@@ -371,4 +378,5 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 object Tartess {
     var tartess: Tartess = _
+    def getSystemTime: Long = System.currentTimeMillis
 }

@@ -1,4 +1,4 @@
-package ru.megains.tartess.common
+package ru.megains.tartess.client.network
 
 import ru.megains.tartess.client.Tartess
 import ru.megains.tartess.common.block.Block

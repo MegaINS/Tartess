@@ -25,11 +25,18 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
     var onGround:Boolean = false
     val body: AABB = new AABB()
     var world: World = _
+
+     def setWorld( world: World): Unit ={
+         this.world = world
+     }
+
     var chunkCoordX = 0
     var chunkCoordY = 0
     var chunkCoordZ = 0
     var side:BlockDirection = BlockDirection.DOWN
     setPosition(0, 16, 0)
+
+
     def update(): Unit
 
     def setPosition(x: Float, y: Float, z: Float) {

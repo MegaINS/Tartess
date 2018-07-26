@@ -6,7 +6,6 @@ import ru.megains.tartess.common.entity.Entity
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.physics.{AABBs, BoundingBoxes}
-import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.common.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.common.world.World
 
@@ -16,20 +15,20 @@ abstract class Block(val name:String) {
 
 
     val mass = 1
-    var texture: TextureAtlas = _
+   // var texture: TextureAtlas = _
     val blockBodies:AABBs
     val boundingBoxes:BoundingBoxes
     val airState = new BlockState(this,new BlockPos(0,0,0))
 
     def isOpaqueCube = true
 
-    def registerTexture(textureRegister: TTextureRegister): Unit = {
-        texture = textureRegister.registerTexture(name)
-    }
-
-    def getATexture(blockState: BlockState,blockDirection: BlockDirection,world: World ): TextureAtlas = texture
-
-    def getATexture(pos: BlockPos = null,blockDirection: BlockDirection = BlockDirection.UP,world: World = null): TextureAtlas = texture
+//    def registerTexture(textureRegister: TTextureRegister): Unit = {
+//        texture = textureRegister.registerTexture(name)
+//    }
+//
+//    def getATexture(blockState: BlockState,blockDirection: BlockDirection,world: World ): TextureAtlas = texture
+//
+//    def getATexture(pos: BlockPos = null,blockDirection: BlockDirection = BlockDirection.UP,world: World = null): TextureAtlas = texture
 
     def getSelectedBoundingBox(blockState: BlockState): BoundingBoxes  = getBoundingBox(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
 

@@ -1,15 +1,11 @@
 package ru.megains.tartess.common.block
 
-import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos}
-import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas}
-import ru.megains.tartess.common.world.World
-
 
 class BlockGrass(name: String) extends BlockWG(name) {
 
-
-    var aTextureUp: TextureAtlas = _
-    var aTextureDown: TextureAtlas = _
+//    var  texture: TextureAtlas = _
+//    var aTextureUp: TextureAtlas = _
+//    var aTextureDown: TextureAtlas = _
 
 
 //    override def randomUpdate(world: World, BlockWorldPos: BlockPos, rand: Random): Unit = {
@@ -24,21 +20,21 @@ class BlockGrass(name: String) extends BlockWG(name) {
 //
 //    }
 
-    override def registerTexture(textureRegister: TTextureRegister): Unit = {
-
-        texture = textureRegister.registerTexture(name + "_side")
-        aTextureUp = textureRegister.registerTexture(name + "_up")
-        aTextureDown = textureRegister.registerTexture(name + "_down")
-    }
-
-    override def getATexture(pos: BlockPos,blockDirection: BlockDirection,world: World): TextureAtlas = {
-        blockDirection match {
-            case BlockDirection.UP => aTextureUp
-            case BlockDirection.DOWN => aTextureDown
-            case _ => texture
-        }
-
-    }
+//    override def registerTexture(textureRegister: TTextureRegister): Unit = {
+//
+//        texture = textureRegister.registerTexture(name + "_side")
+//        aTextureUp = textureRegister.registerTexture(name + "_up")
+//        aTextureDown = textureRegister.registerTexture(name + "_down")
+//    }
+//
+//    override def getATexture(pos: BlockPos,blockDirection: BlockDirection,world: World): TextureAtlas = {
+//        blockDirection match {
+//            case BlockDirection.UP => aTextureUp
+//            case BlockDirection.DOWN => aTextureDown
+//            case _ => texture
+//        }
+//
+//    }
 
 
 }

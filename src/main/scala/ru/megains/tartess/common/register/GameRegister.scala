@@ -21,8 +21,8 @@ object GameRegister {
     def registerBlock(id: Int, block: Block): Unit = {
         if (privateRegisterBlock(id, block)) {
             block match {
-                case _:BlockWG =>  registerBlockRender(block,RenderBlockWG)
-                case _ =>   registerBlockRender(block,RenderBlockStandart)
+                case blockWG:BlockWG =>  registerBlockRender(block,RenderBlockWG(blockWG))
+                case _ =>   registerBlockRender(block,RenderBlockStandart(block))
             }
             if(block.name != "air"){
                 val item = new ItemBlock(block)
