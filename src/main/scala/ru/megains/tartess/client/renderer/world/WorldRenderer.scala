@@ -16,6 +16,7 @@ import ru.megains.tartess.client.renderer.{Renderer, Transformation}
 import ru.megains.tartess.common.utils.RayTraceResult
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.chunk.Chunk
+import ru.megains.tartess.common.world.chunk.data.ChunkPosition
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -109,9 +110,9 @@ class WorldRenderer(val world: World) {
 
     def getRenderChunk(x: Int, y: Int, z: Int): RenderChunk = {
         val i: Long = Chunk.getIndex(x, y, z)
-        if (renderChunks.contains(i)/* && !renderChunks(i).isVoid*/) renderChunks(i)
+        if (renderChunks.contains(i) && !renderChunks(i).isVoid) renderChunks(i)
         else {
-            val chunkRen = createChunkRen(x, y, z)
+            val  chunkRen = createChunkRen(x, y, z)
             renderChunks += i -> chunkRen
             chunkRen
         }
@@ -253,7 +254,18 @@ class WorldRenderer(val world: World) {
         getRenderChunk(x, y, z + 1).reRender()
         getRenderChunk(x, y, z - 1).reRender()
     }
-
+    def reRender(position: ChunkPosition): Unit = {
+        val x: Int = position.x
+        val y: Int = position.y
+        val z: Int = position.z
+        getRenderChunk(x, y, z).reRender()
+        getRenderChunk(x + 1, y, z).reRender()
+        getRenderChunk(x - 1, y, z).reRender()
+        getRenderChunk(x, y + 1, z).reRender()
+        getRenderChunk(x, y - 1, z).reRender()
+        getRenderChunk(x, y, z + 1).reRender()
+        getRenderChunk(x, y, z - 1).reRender()
+    }
     def reRenderWorld(): Unit = {
         renderChunks.values.foreach(_.reRender())
     }

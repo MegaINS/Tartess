@@ -1,14 +1,16 @@
 package ru.megains.tartess.server
 
+import ru.megains.tartess.common.PacketProcess
 import ru.megains.tartess.common.register.Bootstrap
 import ru.megains.tartess.common.utils.Logger
 import ru.megains.tartess.common.world.data.AnvilSaveFormat
+import ru.megains.tartess.server.network.NetworkSystem
 import ru.megains.tartess.server.world.WorldServer
 
 import scala.collection.mutable
 import scala.reflect.io.Directory
 
-class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessServer]{
+class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessServer] with PacketProcess{
 
 
     var serverRunning = true
@@ -144,7 +146,7 @@ class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessSe
 
 
 
-      //  networkSystem.networkTick()
+        networkSystem.networkTick()
         world.update()
 
     }
@@ -165,6 +167,9 @@ class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessSe
 
     def getServerStatusResponse: ServerStatusResponse = statusResponse
 
+    override def addPacket(packet:()=>Unit): Unit = {
+        futureTaskQueue += packet
+    }
 }
 
 object TartessServer {

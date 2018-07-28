@@ -4,11 +4,12 @@ import ru.megains.nbt.NBTData
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.utils.Logger
+import ru.megains.tartess.common.world.ISaveHandler
 import ru.megains.tartess.common.world.chunk.data.ChunkLoader
 
 import scala.reflect.io.{Directory, Path}
 
-class AnvilSaveHandler(savesDirectory: Directory, worldName: String)  extends Logger[AnvilSaveHandler] {
+class AnvilSaveHandler(savesDirectory: Directory, worldName: String)  extends ISaveHandler with Logger[AnvilSaveHandler] {
 
 
     def flush(): Unit = {}

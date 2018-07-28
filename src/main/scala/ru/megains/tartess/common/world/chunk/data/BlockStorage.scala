@@ -5,19 +5,18 @@ import ru.megains.tartess.common.block.data.{BlockCell, BlockPos, BlockState}
 import ru.megains.tartess.common.register.Blocks
 import ru.megains.tartess.common.utils.{RayTraceResult, Vec3f}
 import ru.megains.tartess.common.world.World
-import ru.megains.tartess.common.world.chunk.Chunk
 
 import scala.collection.mutable
 import scala.language.postfixOps
 
-class BlockStorage(chunk: Chunk, position: ChunkPosition) {
+class BlockStorage(position: ChunkPosition) {
 
 
     def getBlockCell(x: Int, y: Int, z: Int): BlockCell = {
         val index = getIndex(x>>4,y>>4,z>>4)
         containers.getOrElseUpdate(index,defaultValue ={
             blocksId(index) = -1
-            new BlockCell(chunk)
+            new BlockCell(position)
         })
     }
 

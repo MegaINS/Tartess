@@ -69,7 +69,7 @@ class ChunkLoader(worldDirectory: Directory) {
 
         for (i <- 0 until posList.getLength) {
             val index = posList.getShort(i)
-            val blockSell = new BlockCell(chunk)
+            val blockSell = new BlockCell(chunk.position)
             blockStorage.containers += index -> blockSell
             val blockSellNBT = blockSellsNBT.getCompound(i)
             val blocks = blockSellNBT.getInt("blocks")
@@ -177,5 +177,8 @@ class ChunkLoader(worldDirectory: Directory) {
 
 
 
+    }
+
+    def saveExtraChunkData(worldIn: World, chunkIn: Chunk) {
     }
 }

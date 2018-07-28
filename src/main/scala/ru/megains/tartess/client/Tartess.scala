@@ -11,6 +11,7 @@ import ru.megains.tartess.client.renderer.item.ItemRender
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.client.renderer.{Camera, Renderer}
+import ru.megains.tartess.common.PacketProcess
 import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
@@ -27,7 +28,8 @@ import scala.collection.mutable
 import scala.reflect.io.Directory
 import scala.util.Random
 
-class Tartess(clientDir: Directory) extends Logger[Tartess]  {
+class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  {
+    var renderViewEntity:EntityPlayer = _
 
 
     var playerName = ""
@@ -112,7 +114,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
         guiManager.init()
 
 
-        playerController = new PlayerControllerMP(this)
+        playerController = new PlayerControllerMP(this,null)
 
 
 
@@ -169,7 +171,11 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
 
         futureTaskQueue synchronized {
-            while (futureTaskQueue.nonEmpty)futureTaskQueue.dequeue()()
+            while (futureTaskQueue.nonEmpty){
+                val a = futureTaskQueue.dequeue()
+                if(a!= null) a()
+            }
+
         }
 
 
@@ -200,16 +206,16 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
             renderer.worldRenderer = worldRenderer
 
             if (player == null) {
-                player = new EntityPlayer(playerName)
+               // player = new EntityPlayerSP(playerName,newWorld)
 
+                //todo
+               // newWorld.saveHandler.readPlayerData(player)
 
-                newWorld.saveHandler.readPlayerData(player)
-
-                newWorld.spawnEntityInWorld(player)
-               // player = playerController.createClientPlayer(newWorld)
+                //newWorld.spawnEntityInWorld(player)
+                player = playerController.createClientPlayer(newWorld)
                 // playerController.flipPlayer(player)
             }
-           // renderViewEntity = player
+            renderViewEntity = player
             newWorld.spawnEntityInWorld(player)
 
         } else {
@@ -266,7 +272,7 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
 
             player.update(cameraInc.x, cameraInc.y, cameraInc.z)
             camera.setPosition(player.posX/16, (player.posY + player.levelView)/16, player.posZ/16)
-            camera.setRotation(player.xRot, player.yRot, 0)
+            camera.setRotation(player.rotationPitch, player.rotationYaw, 0)
 
 
             player.inventory.changeStackSelect(Mouse.getDWheel * -1)
@@ -373,6 +379,10 @@ class Tartess(clientDir: Directory) extends Logger[Tartess]  {
     def ungrabMouseCursor(): Unit = {
         //TODO  Mouse.setCursorPosition(Display.getWidth / 2, Display.getHeight / 2)
         Mouse.setGrabbed(false)
+    }
+
+    override def addPacket(packet:()=>Unit): Unit = {
+        futureTaskQueue += packet
     }
 }
 

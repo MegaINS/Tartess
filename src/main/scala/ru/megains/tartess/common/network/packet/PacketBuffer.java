@@ -4,6 +4,12 @@ package ru.megains.tartess.common.network.packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufProcessor;
+import ru.megains.tartess.common.block.data.BlockDirection;
+import ru.megains.tartess.common.block.data.BlockPos;
+import ru.megains.tartess.common.block.data.BlockState;
+import ru.megains.tartess.common.item.Item;
+import ru.megains.tartess.common.item.itemstack.ItemPack;
+import ru.megains.tartess.common.register.Blocks;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +29,72 @@ public class PacketBuffer extends ByteBuf {
     }
 
 
+
+    public void writeBlockPos(BlockPos pos) {
+        writeInt(pos.x());
+        writeInt(pos.y());
+        writeInt(pos.z());
+    }
+
+    public void writeItemPackToBuffer(ItemPack itemStack) throws IOException {
+        if (itemStack == null) {
+            writeInt(-1);
+        } else {
+            writeInt(Item.getIdFromItem(itemStack.item()));
+            writeByte(itemStack.stackSize());
+            //  writeShort(itemStack.getItemDamage());
+            //   NBTTagCompound var2 = null;
+
+//            if (itemStack.getItem().isDamageable() || itemStack.getItem().getShareTag())
+//            {
+//                var2 = itemStack.stackTagCompound;
+//            }
+
+            // this.writeNBTTagCompoundToBuffer(var2);
+        }
+    }
+    public void writeBlockState(BlockState blockState) throws IOException {
+        if (blockState == null) {
+            writeInt(-1);
+        } else {
+            writeInt(Blocks.getIdByBlock( blockState.block()));
+            writeByte(blockState.blockDirection().id());
+            writeBlockPos(blockState.pos());
+        }
+    }
+
+
+    public BlockState readBlockState() throws IOException {
+        BlockState var1 = null;
+        int id = readInt();
+
+        if (id >= 0) {
+           var1 = new BlockState( Blocks.getBlockById(id),readBlockPos(),BlockDirection.DIRECTIONAL_BY_ID()[readByte()]);
+        }
+
+        return var1;
+    }
+    public ItemPack readItemPackFromBuffer() throws IOException {
+        ItemPack var1 = null;
+        int var2 = readInt();
+
+        if (var2 >= 0) {
+            byte var3 = this.readByte();
+            // short var4 = this.readShort();
+            var1 = new ItemPack(Item.getItemById(var2), var3);
+            //  var1.stackTagCompound = this.readNBTTagCompoundFromBuffer();
+        }
+
+        return var1;
+    }
+    public BlockPos readBlockPos() {
+
+        int x = readInt();
+        int y = readInt();
+        int z = readInt();
+        return new BlockPos(x, y, z);
+
+    }
 
 //    public void writeItemUser(ItemUser item)throws IOException {
 //        writeInt(item.id());

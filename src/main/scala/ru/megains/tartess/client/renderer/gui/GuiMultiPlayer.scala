@@ -33,7 +33,7 @@ class GuiMultiPlayer(guiMainMenu: GuiMenu) extends GuiMenu {
         button.id match {
             case 0 => ping()
             case 1 => tar.guiManager.setGuiScreen(guiMainMenu)
-           // case 2 => connectToServer(server)
+            case 2 => connectToServer(server)
             case _ =>
         }
     }
@@ -46,9 +46,9 @@ class GuiMultiPlayer(guiMainMenu: GuiMenu) extends GuiMenu {
         }
     }
 
-//    def connectToServer(server: ServerData) {
-//        tar.guiManager.setGuiScreen(new GuiConnecting(this, tar, server))
-//    }
+    def connectToServer(server: ServerData) {
+        tar.guiManager.setGuiScreen(new GuiConnecting(this, tar, server))
+    }
 
     def ping(): Unit = {
         try {

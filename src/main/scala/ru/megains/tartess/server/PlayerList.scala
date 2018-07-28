@@ -1,13 +1,15 @@
 package ru.megains.tartess.server
 
 import ru.megains.nbt.tag.NBTCompound
+import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.entity.player.EntityPlayer
+import ru.megains.tartess.common.network.NetworkManager
 import ru.megains.tartess.common.network.handler.INetHandler
 import ru.megains.tartess.common.network.packet.Packet
-import ru.megains.tartess.common.world.World
+import ru.megains.tartess.common.network.packet.play.server.{SPacketHeldItemChange, SPacketJoinGame, SPacketSpawnPosition}
 import ru.megains.tartess.common.world.data.AnvilSaveHandler
 import ru.megains.tartess.server.entity.EntityPlayerMP
-import ru.megains.tartess.server.network.NetworkManager
+import ru.megains.tartess.server.network.handler.NetHandlerPlayServer
 import ru.megains.tartess.server.world.WorldServer
 
 import scala.collection.mutable
@@ -52,7 +54,7 @@ class PlayerList(server: TartessServer) {
     def initializeConnectionToPlayer(netManager: NetworkManager, playerIn: EntityPlayerMP) {
 
 
-        //todo val nethandlerplayserver: NetHandlerPlayServer = new NetHandlerPlayServer(server, netManager, playerIn)
+        val nethandlerplayserver: NetHandlerPlayServer = new NetHandlerPlayServer(server, netManager, playerIn)
 
 
 
@@ -80,19 +82,19 @@ class PlayerList(server: TartessServer) {
         //  var s1: String = "local"
         //  if (netManager.getRemoteAddress != null) s1 = netManager.getRemoteAddress.toString
         //  LOG.info("{}[{}] logged in with entity id {} at ({}, {}, {})", Array[AnyRef](playerIn.getName, s1, Integer.valueOf(playerIn.getEntityId), Double.valueOf(playerIn.posX), Double.valueOf(playerIn.posY), Double.valueOf(playerIn.posZ)))
-        val worldserver: World = server.world
+        val worldserver: WorldServer = server.world
         //  val worldinfo: WorldInfo = worldserver.getWorldInfo
-        //todo  val blockpos: BlockPos = worldserver.spawnPoint
+          val blockpos: BlockPos = worldserver.spawnPoint
         //  setPlayerGameTypeBasedOnOther(playerIn, null.asInstanceOf[EntityPlayerMP], worldserver)
 
 
-        //todo  playerIn.connection = nethandlerplayserver
-        //todo nethandlerplayserver.sendPacket(new SPacketJoinGame())
+        playerIn.connection = nethandlerplayserver
+         nethandlerplayserver.sendPacket(new SPacketJoinGame())
         //  nethandlerplayserver.sendPacket(new SPacketCustomPayload("MC|Brand", new PacketBuffer(Unpooled.buffer).writeString(this.getServerInstance.getServerModName)))
         // nethandlerplayserver.sendPacket(new SPacketServerDifficulty(worldinfo.getDifficulty, worldinfo.isDifficultyLocked))
-        //todo nethandlerplayserver.sendPacket(new SPacketSpawnPosition(blockpos))
+         nethandlerplayserver.sendPacket(new SPacketSpawnPosition(blockpos))
         //  nethandlerplayserver.sendPacket(new SPacketPlayerAbilities(playerIn.capabilities))
-        //todo nethandlerplayserver.sendPacket(new SPacketHeldItemChange(playerIn.inventory.stackSelect))
+         nethandlerplayserver.sendPacket(new SPacketHeldItemChange(playerIn.inventory.stackSelect))
 
 
         // updatePermissionLevel(playerIn)
@@ -106,7 +108,7 @@ class PlayerList(server: TartessServer) {
         //  textcomponenttranslation.getStyle.setColor(TextFormatting.YELLOW)
         //this.sendChatMsg(textcomponenttranslation)
         playerLoggedIn(playerIn)
-        //todo nethandlerplayserver.setPlayerLocation(playerIn.posX, playerIn.posY, playerIn.posZ, playerIn.rotationYaw, playerIn.rotationPitch)
+        nethandlerplayserver.setPlayerLocation(playerIn.posX, playerIn.posY, playerIn.posZ, playerIn.rotationYaw, playerIn.rotationPitch)
         //  updateTimeAndWeatherForPlayer(playerIn, worldserver)
         // if (!this.mcServer.getResourcePackUrl.isEmpty) playerIn.loadResourcePack(this.mcServer.getResourcePackUrl, this.mcServer.getResourcePackHash)
         //        for (potioneffect <- playerIn.getActivePotionEffects) {
@@ -141,7 +143,7 @@ class PlayerList(server: TartessServer) {
         //            val entity1: Entity = AnvilChunkLoader.readWorldEntity(nbttagcompound.getCompoundTag("Riding"), worldserver, true)
         //            if (entity1 != null) playerIn.startRiding(entity1, true)
         //        }
-        //todo playerIn.addSelfToInternalCraftingInventory()
+         playerIn.addSelfToInternalCraftingInventory()
     }
 
     def readPlayerDataFromFile(playerIn: EntityPlayerMP): NBTCompound = {
@@ -183,13 +185,13 @@ class PlayerList(server: TartessServer) {
 
     def preparePlayer(playerIn: EntityPlayerMP, worldIn: WorldServer) {
         val worldserver: WorldServer = playerIn.getWorldServer
-        //todo  if (worldIn != null) worldIn.playerManager.removePlayer(playerIn)
-        //todo worldserver.playerManager.addPlayer(playerIn)
-        worldserver.chunkProvider.provideChunk(playerIn.posX.toInt >> 4, playerIn.posY.toInt >> 4, playerIn.posZ.toInt >> 4)
+          if (worldIn != null) worldIn.playerManager.removePlayer(playerIn)
+         worldserver.playerManager.addPlayer(playerIn)
+        worldserver.chunkProvider.provideChunk(playerIn.posX.toInt >> 8, playerIn.posY.toInt >> 8, playerIn.posZ.toInt >> 8)
     }
 
     def writePlayerData(playerIn: EntityPlayerMP): Unit = {
-        //todo  if (playerIn.connection == null) return
+          if (playerIn.connection == null) return
         playerNBTManager.writePlayerData(playerIn)
     }
 
@@ -212,7 +214,7 @@ class PlayerList(server: TartessServer) {
         //            }
         //        }
         // worldserver.removeEntity(playerIn)
-        //todo worldserver.playerManager.removePlayer(playerIn)
+        worldserver.playerManager.removePlayer(playerIn)
         playerEntityList -= playerIn
 
         val player = nameToPlayerMap(playerIn.name)
@@ -230,11 +232,11 @@ class PlayerList(server: TartessServer) {
     }
 
     def serverUpdateMountedMovingPlayer(player: EntityPlayerMP) {
-        //todo    player.getWorldServer.playerManager.updateMountedMovingPlayer(player)
+          player.getWorldServer.playerManager.updateMountedMovingPlayer(player)
     }
 
     def sendPacketToAllPlayers(packetIn: Packet[_ <: INetHandler]) {
-        //todo  playerEntityList.foreach(_.connection.sendPacket(packetIn))
+         playerEntityList.foreach(_.connection.sendPacket(packetIn))
     }
 
     def getPlayerByID(playerID: Int): EntityPlayer = idToPlayerMap.getOrElse(playerID, null)

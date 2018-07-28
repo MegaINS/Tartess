@@ -12,6 +12,6 @@ object StartServer extends App {
         val server = new TartessServer(path)
         server.run()
     } catch {
-        case e:Exception => println(e)
+        case e:Exception => e.printStackTrace()
     }
 }

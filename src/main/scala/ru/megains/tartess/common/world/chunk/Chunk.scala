@@ -21,13 +21,22 @@ class Chunk(val position: ChunkPosition,val world: World) {
 
 
 
-
-
-    var blockStorage = new BlockStorage(this,position)
+    var isPopulated: Boolean = true
+    var isSaved = true
+    var blockStorage = new BlockStorage(position)
     var chunkEntityMap: ArrayBuffer[Entity] = new ArrayBuffer[Entity]()
     var chunkTileEntityMap = new mutable.HashMap[Long,TileEntity]()
-
-
+    def needsSaving(p_76601_1: Boolean): Boolean = {
+        isSaved
+    }
+    def isVoid: Boolean = {
+        val blockData = blockStorage.blocksId
+        val airId = Blocks.getIdByBlock(Blocks.air)
+        for (i <- 0 until 4096) {
+            if (blockData(i) != airId) return false
+        }
+        true
+    }
     def isAirBlock(pos: BlockPos): Boolean = {
         getBlock(pos).block == Blocks.air
     }

@@ -4,33 +4,34 @@ package ru.megains.tartess.client.renderer.world
 import ru.megains.tartess.common.register.GameRegister
 import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.client.renderer.texture.TextureManager
-import ru.megains.tartess.common.world.chunk.Chunk
+import ru.megains.tartess.common.world.chunk.{Chunk, ChunkVoid}
 
 class RenderChunk(var chunk: Chunk){
 
-
+    val isVoid: Boolean = chunk.isInstanceOf[ChunkVoid]
     var isReRender: Boolean = true
     var blockRender: Int = 0
     val meshes: Array[Mesh] = new Array[Mesh](2)
 
 
     def render(layer: Int) {
-        // if (!isVoid) {
-        if (isReRender) {
-            if (RenderChunk.rend < 5) {
-                // if (!chunk.isVoid) {
+         if (!isVoid) {
 
-                blockRender = 0
-                cleanUp()
-                makeChunk(0)
-                // }
-                isReRender = false
-                RenderChunk.rend += 1
-                RenderChunk.chunkUpdate += 1
+             if (isReRender) {
+                 if (RenderChunk.rend < 5) {
+                     if (!chunk.isVoid) {
+
+                        blockRender = 0
+                        cleanUp()
+                        makeChunk(0)
+                     }
+                    isReRender = false
+                    RenderChunk.rend += 1
+                    RenderChunk.chunkUpdate += 1
+                }
             }
-        }
-        renderChunk(layer)
-        //  }
+            renderChunk(layer)
+         }
 
     }
 

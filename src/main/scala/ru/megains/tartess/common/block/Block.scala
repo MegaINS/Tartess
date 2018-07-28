@@ -52,7 +52,7 @@ abstract class Block(val name:String) {
 
     }
 
-    def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemPack, blockDirection:BlockDirection, float1: Float, float2: Float): Boolean = {
+    def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemPack, blockDirection:BlockDirection, float1: Float, float2: Float,float3: Float): Boolean = {
         false
     }
 
@@ -113,6 +113,17 @@ abstract class Block(val name:String) {
 
         val blockState = new BlockState(this,posSet,side)
         if (worldIn.isAirBlock(blockState)) blockState else null
+    }
+
+    def removedByPlayer(world: World, pos: BlockPos, player: EntityPlayer, willHarvest: Boolean): Boolean = {
+        onBlockHarvested(world, pos, player)
+        world.setAirBlock(pos)
+    }
+
+    def onBlockHarvested(worldIn: World, pos: BlockPos, player: EntityPlayer) {
+    }
+
+    def onBlockDestroyedByPlayer(worldIn: World, pos: BlockPos) {
     }
 }
 

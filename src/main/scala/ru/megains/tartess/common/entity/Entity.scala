@@ -12,27 +12,42 @@ import scala.language.postfixOps
 
 abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
-    var posX:Float =0
-    var posY:Float =0
-    var posZ:Float =0
-    var yRot: Float = 0
-    var xRot: Float = 0
-    var motionX:Float =0
-    var motionY:Float =0
-    var motionZ:Float =0
+
+
+
     var goY:Int =8
     var speed: Float = 24
     var onGround:Boolean = false
     val body: AABB = new AABB()
     var world: World = _
+    var chunkCoordX = 0
+    var chunkCoordY = 0
+    var chunkCoordZ = 0
 
+    var posX:Float =0
+    var posY:Float =0
+    var posZ:Float =0
+
+    var prevPosX: Double = .0
+    var prevPosY: Double = .0
+    var prevPosZ: Double = .0
+
+    var motionX: Float = .0f
+    var motionY: Float = .0f
+    var motionZ: Float = .0f
+
+    var rotationYaw: Float = 0
+    var rotationPitch: Float = 0
+    var prevRotationYaw: Float = .0f
+    var prevRotationPitch: Float = .0f
+
+
+    def isSneaking: Boolean = false
      def setWorld( world: World): Unit ={
          this.world = world
      }
 
-    var chunkCoordX = 0
-    var chunkCoordY = 0
-    var chunkCoordZ = 0
+
     var side:BlockDirection = BlockDirection.DOWN
     setPosition(0, 16, 0)
 
@@ -46,6 +61,30 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         posZ = z
         val i = wight/2
         body.set(x-i, y, z-i, x+i,y+ height, z+i)
+    }
+
+    def setPositionAndRotation(x: Float, y: Float, z: Float, yaw: Float, pitchIn: Float) {
+        posX = MathHelper.clamp_double(x, -3.0E7f, 3.0E7f)
+        posY = y
+        posZ = MathHelper.clamp_double(z, -3.0E7f, 3.0E7f)
+        prevPosX = posX
+        prevPosY = posY
+        prevPosZ = posZ
+        val pitch = MathHelper.clamp_float(pitchIn, -90.0F, 90.0F)
+        rotationYaw = yaw
+        rotationPitch = pitch
+        prevRotationYaw = rotationYaw
+        prevRotationPitch = rotationPitch
+        val d0: Double = (prevRotationYaw - yaw).toDouble
+        if (d0 < -180.0D) prevRotationYaw += 360.0F
+        if (d0 >= 180.0D) prevRotationYaw -= 360.0F
+        setPosition(posX, posY, posZ)
+        setRotation(yaw, pitch)
+    }
+
+    protected def setRotation(yaw: Float, pitch: Float) {
+        rotationYaw = yaw % 360.0F
+        rotationPitch = pitch % 360.0F
     }
 
     def move(x: Float, y: Float, z: Float) {
@@ -122,8 +161,8 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
             dist = limit / dist * speed
             val x1 = dist * x
             val z1 = dist * z
-            val f4: Float = MathHelper.sin(yRot * Math.PI.toFloat / 180.0F)
-            val f5: Float = MathHelper.cos(yRot * Math.PI.toFloat / 180.0F)
+            val f4: Float = MathHelper.sin(rotationYaw * Math.PI.toFloat / 180.0F)
+            val f5: Float = MathHelper.cos(rotationYaw * Math.PI.toFloat / 180.0F)
             motionX += (x1 * f5 - z1 * f4)
             motionZ += (z1 * f5 + x1 * f4)
         }
@@ -138,11 +177,11 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
     def getLook(partialTicks: Float): Vec3f = {
         if (partialTicks == 1.0F) {
-            getVectorForRotation(this.xRot, this.yRot)
+            getVectorForRotation(this.rotationPitch, this.rotationYaw)
         }
         else {
-            val f: Float = xRot
-            val f1: Float = yRot
+            val f: Float = rotationPitch
+            val f1: Float = rotationYaw
             getVectorForRotation(f, f1)
         }
     }
@@ -181,17 +220,17 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
        // prevPosX = posX
        // prevPosY = posY
         //prevPosZ = posZ
-        yRot = listRotation.getFloat(0)
-        xRot  = listRotation.getFloat(1)
-       // rotationYaw = listRotation.getFloat(0)
-      //  rotationPitch = listRotation.getFloat(1)
+       // yRot = listRotation.getFloat(0)
+       // xRot  = listRotation.getFloat(1)
+        rotationYaw = listRotation.getFloat(0)
+        rotationPitch = listRotation.getFloat(1)
       //  prevRotationYaw = rotationYaw
        // prevRotationPitch = rotationPitch
 
         onGround = compound.getBoolean("OnGround")
         readEntityFromNBT(compound)
         setPosition(posX, posY, posZ)
-        //setRotation(rotationYaw, rotationPitch)
+        setRotation(rotationYaw, rotationPitch)
 
     }
 
@@ -210,10 +249,10 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         listMotion.setValue(motionZ)
 
         val listRotation = compound.createList("Rotation", EnumNBTFloat)
-       // listRotation.setValue(rotationYaw)
-        //listRotation.setValue(rotationPitch)
-         listRotation.setValue(yRot)
-        listRotation.setValue(xRot)
+        listRotation.setValue(rotationYaw)
+        listRotation.setValue(rotationPitch)
+         //listRotation.setValue(yRot)
+       // listRotation.setValue(xRot)
         compound.setValue("OnGround", onGround)
         writeEntityToNBT(compound)
 

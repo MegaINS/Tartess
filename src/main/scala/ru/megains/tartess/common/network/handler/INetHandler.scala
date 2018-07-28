@@ -2,7 +2,7 @@ package ru.megains.tartess.common.network.handler
 
 import ru.megains.tartess.common.network.packet.Packet
 
-abstract class INetHandler {
+trait INetHandler {
 
 
     def onDisconnect(msg: String)

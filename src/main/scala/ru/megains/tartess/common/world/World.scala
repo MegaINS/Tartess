@@ -2,17 +2,15 @@ package ru.megains.tartess.common.world
 
 
 
+import ru.megains.tartess.client.renderer.world.WorldRenderer
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.common.entity.Entity
-import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.physics.{AABB, AABBs}
 import ru.megains.tartess.common.register.Blocks
-import ru.megains.tartess.client.renderer.world.WorldRenderer
 import ru.megains.tartess.common.tileentity.TileEntity
 import ru.megains.tartess.common.utils.{Logger, MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.common.world.chunk.Chunk
-import ru.megains.tartess.common.world.chunk.data.{ChunkLoader, ChunkProvider}
-import ru.megains.tartess.common.world.data.AnvilSaveHandler
+import ru.megains.tartess.common.world.chunk.data.{ChunkLoader, ChunkPosition, ChunkProvider}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -21,15 +19,15 @@ import scala.language.postfixOps
 
 
 
-class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
+class World(saveHandler:ISaveHandler) extends Logger[World]{
 
     val length: Int = 100000
     val width: Int = 100000
-    val height: Int = 1000
+    val height: Int = 10000
     val heightMap: WorldHeightMap = new WorldHeightMap(0)
     var worldRenderer:WorldRenderer = _
     val chunkLoader: ChunkLoader = saveHandler.getChunkLoader
-    val chunkProvider:ChunkProvider = new ChunkProvider(this,chunkLoader)
+    val chunkProvider:IChunkProvider = new ChunkProvider(this,chunkLoader)
     val entities: ParHashSet[Entity] = new ParHashSet[Entity]()
     val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
 
@@ -40,6 +38,10 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
             ChunkProvider.voidChunk
         }
 
+    }
+
+    def getChunk(pos: ChunkPosition): Chunk = {
+        chunkProvider.provideChunk(pos.x,pos.y,pos.z)
     }
 
     def getChunk(blockPos: BlockPos): Chunk = {
@@ -140,6 +142,7 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
     def addTileEntity(tile: TileEntity): Unit = {
         tickableTileEntities += tile
     }
+
 
     def setBlock(blockState: BlockState): Boolean ={
         if (!blockState.pos.isValid(this)) {
@@ -315,11 +318,12 @@ class World(val saveHandler: AnvilSaveHandler) extends Logger[World]{
         log.info("Saving chunks for level \'{}\'/{}")
         saveAllChunks(true)
         log.info("Saving players for level \'{}\'/{}")
-        entities.splitter. foreach {
-            case entityPlayer:EntityPlayer =>
-                saveHandler.writePlayerData(entityPlayer)
-            case _ =>
-        }
+        //todo
+//        entities.splitter. foreach {
+//            case entityPlayer:EntityPlayer =>
+//                saveHandler.writePlayerData(entityPlayer)
+//            case _ =>
+//        }
         log.info("World saved completed")
     }
     def saveAllChunks(p_73044_1: Boolean /*, progressCallback: IProgressUpdate*/) {

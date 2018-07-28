@@ -31,4 +31,17 @@ object MathHelper {
         if (double < i.toDouble) i - 1
         else i
     }
+
+    def clamp_double(p_151237_0:Float, p_151237_2: Float, p_151237_4: Float): Float = {
+        if (p_151237_0 < p_151237_2) p_151237_2
+        else if (p_151237_0 > p_151237_4) p_151237_4
+        else p_151237_0
+    }
+    def clamp_float(p_151237_0:Float, p_151237_2: Float, p_151237_4: Float): Float = {
+        if (p_151237_0 < p_151237_2) p_151237_2
+        else if (p_151237_0 > p_151237_4) p_151237_4
+        else p_151237_0
+    }
+
+
 }

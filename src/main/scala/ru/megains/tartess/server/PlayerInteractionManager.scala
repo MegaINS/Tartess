@@ -1,9 +1,10 @@
 package ru.megains.tartess.server
 
-import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos}
+import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.Item
 import ru.megains.tartess.common.item.itemstack.ItemPack
+import ru.megains.tartess.common.network.packet.play.server.SPacketBlockChange
 import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.common.utils.{ActionResult, EnumActionResult}
 import ru.megains.tartess.common.world.World
@@ -102,7 +103,7 @@ class PlayerInteractionManager(world: World) {
         var flag1: Boolean = false
         if (isCreative) {
             flag1 = removeBlock(pos)
-            //todo thisPlayerMP.connection.sendPacket(new SPacketBlockChange(world, pos))
+             thisPlayerMP.connection.sendPacket(new SPacketBlockChange(world, pos))
         }
         //                else {
         //                    val itemstack1: ItemStack = thisPlayerMP.getHeldItemMainhand
@@ -129,11 +130,11 @@ class PlayerInteractionManager(world: World) {
     private def removeBlock(pos: BlockPos): Boolean = removeBlock(pos, canHarvest = false)
 
     private def removeBlock(pos: BlockPos, canHarvest: Boolean): Boolean = {
-        //todo val block: Block = world.getBlock(pos)
-        //todo val flag: Boolean = block.removedByPlayer(world, pos, thisPlayerMP, canHarvest)
-        //todo if (flag) block.onBlockDestroyedByPlayer(world, pos)
-        //todo flag
-        false//todo
+         val block: BlockState = world.getBlock(pos)
+         val flag: Boolean = block.removedByPlayer(world, pos, thisPlayerMP, canHarvest)
+         if (flag) block.onBlockDestroyedByPlayer(world, pos)
+         flag
+
     }
 
     def blockRemoving(pos: BlockPos) {
@@ -220,10 +221,10 @@ class PlayerInteractionManager(world: World) {
         ///   for (s <- Array[ItemStack](player.getHeldItemMainhand, player.getHeldItemOffhand))
         //    bypass = bypass && (s == null || s.item.doesSneakBypassUse(s, worldIn, pos, player))
         var result: EnumActionResult = EnumActionResult.PASS
-        //todoif (!player.isSneaking || bypass) {
-        //todo    val block: Block = worldIn.getBlock(posMouseOver)
-        //todo   if (block.onBlockActivated(worldIn, posMouseOver, player, stack, facing, hitX, hitY, hitZ)) result = EnumActionResult.SUCCESS
-        //todo }
+        if (!player.isSneaking || bypass) {
+            val block: BlockState = worldIn.getBlock(posMouseOver)
+           if (block.onBlockActivated(worldIn, posMouseOver, player, stack, facing, hitX, hitY, hitZ)) result = EnumActionResult.SUCCESS
+         }
         if (stack == null) EnumActionResult.PASS
         // else if (player.getCooldownTracker.hasCooldown(stack.item)) EnumActionResult.PASS
         else {
@@ -231,17 +232,18 @@ class PlayerInteractionManager(world: World) {
             //                    val block: Block = stack.item.asInstanceOf[ItemBlock].getBlock
             //                    if (block.isInstanceOf[BlockCommandBlock] || block.isInstanceOf[BlockStructure]) return EnumActionResult.FAIL
             //                }
-            //todo if (isCreative) {
+            val block: BlockState = worldIn.getBlock(posMouseOver)
+             if (isCreative) {
                 //  val j: Int = stack.getMetadata
-            //todo  val i: Int = stack.stackSize
+            val i: Int = stack.stackSize
 
-                //todo  val enumactionresult: EnumActionResult = stack.onItemUse(player, worldIn, posBlockSet, facing, hitX, hitY, hitZ)
+                  val enumactionresult: EnumActionResult = stack.onItemUse(player, worldIn, block, facing, hitX, hitY, hitZ)
                 //  stack.setItemDamage(j)
-            //todo  stack.stackSize = i
-                //todo enumactionresult
+             stack.stackSize = i
+                 enumactionresult
 
-                //todo } else stack.onItemUse(player, worldIn, posBlockSet, facing, hitX, hitY, hitZ)
-        null//todo
+                } else stack.onItemUse(player, worldIn, block, facing, hitX, hitY, hitZ)
+
         }
         // }
     }

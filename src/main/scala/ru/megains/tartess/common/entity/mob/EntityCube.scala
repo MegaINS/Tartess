@@ -8,7 +8,7 @@ import scala.util.Random
 class EntityCube() extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
 
 
-    yRot = (Random.nextFloat()-0.5f)*720f
+    rotationYaw = (Random.nextFloat()-0.5f)*720f
 
 
 
@@ -52,19 +52,19 @@ class EntityCube() extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
     }
 
     def turn(xo: Float, yo: Float) {
-        yRot += yo //* 0.15f
-        xRot += xo //* 0.15f
-        if (xRot < -90.0F) {
-            xRot = -90.0F
+        rotationYaw += yo //* 0.15f
+        rotationPitch += xo //* 0.15f
+        if (rotationPitch < -90.0F) {
+            rotationPitch = -90.0F
         }
-        if (xRot > 90.0F) {
-            xRot = 90.0F
+        if (rotationPitch > 90.0F) {
+            rotationPitch = 90.0F
         }
-        if (yRot > 360.0F) {
-            yRot -= 360.0F
+        if (rotationYaw > 360.0F) {
+            rotationYaw -= 360.0F
         }
-        if (yRot < 0.0F) {
-            yRot += 360.0F
+        if (rotationYaw < 0.0F) {
+            rotationYaw += 360.0F
         }
     }
 

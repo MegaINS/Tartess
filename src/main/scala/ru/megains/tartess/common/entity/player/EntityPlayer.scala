@@ -18,21 +18,21 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
     val inventory = new InventoryPlayer(this)
     val inventoryContainer: Container = new ContainerPlayerInventory(inventory)
     var gameType:GameType = GameType.SURVIVAL
-
+    openContainer = inventoryContainer
     def turn(xo: Float, yo: Float) {
-        yRot += yo * 0.15f
-        xRot += xo * 0.15f
-        if (xRot < -90.0F) {
-            xRot = -90.0F
+        rotationYaw += yo * 0.15f
+        rotationPitch += xo * 0.15f
+        if (rotationPitch < -90.0F) {
+            rotationPitch = -90.0F
         }
-        if (xRot > 90.0F) {
-            xRot = 90.0F
+        if (rotationPitch > 90.0F) {
+            rotationPitch = 90.0F
         }
-        if (yRot > 360.0F) {
-            yRot -= 360.0F
+        if (rotationYaw > 360.0F) {
+            rotationYaw -= 360.0F
         }
-        if (yRot < 0.0F) {
-            yRot += 360.0F
+        if (rotationYaw < 0.0F) {
+            rotationYaw += 360.0F
         }
     }
 
@@ -79,7 +79,7 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
     }
 
     override def update(): Unit = {
-        yRot match {
+        rotationYaw match {
             case y if y > 315 || y <45 => side = BlockDirection.NORTH
             case y if y <135 => side = BlockDirection.EAST
             case y if y <225 => side = BlockDirection.SOUTH

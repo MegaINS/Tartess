@@ -3,12 +3,12 @@ package ru.megains.tartess.common.world.chunk.data
 import java.io.IOException
 
 import ru.megains.tartess.common.utils.Logger
-import ru.megains.tartess.common.world.World
+import ru.megains.tartess.common.world.{IChunkProvider, World}
 import ru.megains.tartess.common.world.chunk.{Chunk, ChunkVoid}
 
 import scala.collection.mutable
 
-class ChunkProvider(world: World,chunkLoader:ChunkLoader)  extends Logger[ChunkProvider]{
+class ChunkProvider(world: World,chunkLoader:ChunkLoader)  extends IChunkProvider with Logger[ChunkProvider]{
 
     ChunkProvider.voidChunk = new ChunkVoid(world)
     val chunkMap = new mutable.HashMap[Long,Chunk]()
@@ -73,8 +73,9 @@ class ChunkProvider(world: World,chunkLoader:ChunkLoader)  extends Logger[ChunkP
         }
     }
 
+    override def unload(chunk: Chunk): Unit = {
 
-
+    }
 }
 object ChunkProvider{
     var voidChunk:Chunk = _
