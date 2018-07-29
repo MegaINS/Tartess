@@ -11,6 +11,7 @@ import ru.megains.tartess.common.tileentity.TileEntity
 import ru.megains.tartess.common.utils.{Logger, MathHelper, RayTraceResult, Vec3f}
 import ru.megains.tartess.common.world.chunk.Chunk
 import ru.megains.tartess.common.world.chunk.data.{ChunkLoader, ChunkPosition, ChunkProvider}
+import ru.megains.tartess.server.world.WorldServer
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -30,6 +31,12 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
     val chunkProvider:IChunkProvider = new ChunkProvider(this,chunkLoader)
     val entities: ParHashSet[Entity] = new ParHashSet[Entity]()
     val tickableTileEntities: ArrayBuffer[TileEntity] = new ArrayBuffer[TileEntity]()
+    val eventListeners: ArrayBuffer[IWorldEventListener] = ArrayBuffer[IWorldEventListener]()
+
+
+
+
+
 
     def getChunk(x: Int, y: Int, z: Int): Chunk = {
         if((x<<8 <= length && x<<8 >= -length) && (z<<8 <= width  && z<<8 >= -width) && (y<<8 <= height && y<<8 >= -height)){
@@ -148,11 +155,33 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
         if (!blockState.pos.isValid(this)) {
             return false
         }
-        worldRenderer.reRender(blockState.pos)
+        if(!this.isInstanceOf[WorldServer]){
+            worldRenderer.reRender(blockState.pos)
+        }
+
         val chunk = getChunk(blockState.pos)
+        markAndNotifyBlock(blockState, chunk)
         chunk.setBlock(blockState)
     }
+    def markAndNotifyBlock(pos: BlockState, chunk: Chunk) {
 
+        if (chunk == null || chunk.isPopulated) notifyBlockUpdate(pos)
+        //                if (!isRemote && (flags & 1) != 0) {
+        //                    notifyNeighborsRespectDebug(pos, iblockstate.getBlock)
+        //                  //  if (newState.hasComparatorInputOverride) this.updateComparatorOutputLevel(pos, newState.getBlock)
+        //                }
+    }
+
+    def notifyBlockUpdate(pos: BlockState) {
+
+        for (i <- eventListeners.indices) {
+            eventListeners(i).notifyBlockUpdate(this, pos)
+        }
+
+    }
+    def addEventListener(listener: IWorldEventListener) {
+        eventListeners += listener
+    }
     def getTileEntity(blockPos: BlockPos): TileEntity ={
         if (!blockPos.isValid(this)){
             null

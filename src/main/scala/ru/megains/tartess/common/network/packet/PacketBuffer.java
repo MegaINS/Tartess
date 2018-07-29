@@ -58,8 +58,8 @@ public class PacketBuffer extends ByteBuf {
             writeInt(-1);
         } else {
             writeInt(Blocks.getIdByBlock( blockState.block()));
-            writeByte(blockState.blockDirection().id());
             writeBlockPos(blockState.pos());
+            writeByte(blockState.blockDirection().id());
         }
     }
 

@@ -89,11 +89,12 @@ class WorldRenderer(val world: World) {
         val posX: Int = entityPlayer.posX / 256 - (if (entityPlayer.posX < 0) 1 else 0) toInt
         val posY: Int = entityPlayer.posY / 256 - (if (entityPlayer.posY < 0) 1 else 0) toInt
         val posZ: Int = entityPlayer.posZ / 256 - (if (entityPlayer.posZ < 0) 1 else 0) toInt
-
+        val flag = playerRenderChunks.exists(_.isVoid)
         if(posX != lastX ||
                 posY != lastY ||
                 posZ != lastZ ||
-                playerRenderChunks.isEmpty){
+                playerRenderChunks.isEmpty ||
+                flag){
             lastX = posX
             lastY = posY
             lastZ = posZ

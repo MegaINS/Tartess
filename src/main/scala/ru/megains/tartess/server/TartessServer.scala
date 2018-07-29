@@ -5,7 +5,7 @@ import ru.megains.tartess.common.register.Bootstrap
 import ru.megains.tartess.common.utils.Logger
 import ru.megains.tartess.common.world.data.AnvilSaveFormat
 import ru.megains.tartess.server.network.NetworkSystem
-import ru.megains.tartess.server.world.WorldServer
+import ru.megains.tartess.server.world.{ServerWorldEventHandler, WorldServer}
 
 import scala.collection.mutable
 import scala.reflect.io.Directory
@@ -141,7 +141,13 @@ class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessSe
 
     def tick(): Unit = {
         futureTaskQueue synchronized {
-            while (futureTaskQueue.nonEmpty)futureTaskQueue.dequeue()()
+            while (futureTaskQueue.nonEmpty){
+                val a =  futureTaskQueue.dequeue()
+                if(a!= null){
+                    a()
+                }
+            }
+
         }
 
 
@@ -154,7 +160,7 @@ class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessSe
     def loadAllWorlds(): Unit = {
         val saveHandler = saveLoader.getSaveLoader("world")
         world = new WorldServer(this, saveHandler)
-       // world.addEventListener(new ServerWorldEventHandler(this, world))
+        world.addEventListener(new ServerWorldEventHandler(this, world))
         playerList = new PlayerList(this)
 
         initialWorldChunkLoad()

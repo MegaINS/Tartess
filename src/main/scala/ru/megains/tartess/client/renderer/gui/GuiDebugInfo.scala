@@ -16,8 +16,13 @@ class GuiDebugInfo extends GuiInGame with GuiText {
     var entityAll = 0
     var entity = 0
     var entityItem = 0
-    override def initGui(): Unit = {
+    var name:String =""
 
+    var x = 0f
+    var y = 0f
+    var z = 0f
+    override def initGui(): Unit = {
+        addText("name", createString("Player name: "+name, Color.WHITE))
 
         addText("position", createString("Player position:", Color.WHITE))
         addText("position.x", createString("x:", Color.WHITE))
@@ -36,12 +41,13 @@ class GuiDebugInfo extends GuiInGame with GuiText {
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
         val height = tar.window.height
         val width = tar.window.width
-        drawObject(0, height - 20, 1, text("position"))
-        drawObject(0, height - 40, 1, text("position.x"))
-        drawObject(0, height - 60, 1, text("position.y"))
-        drawObject(0, height - 80, 1, text("position.z"))
-        drawObject(0, height - 100, 1, text("position.side"))
-        drawObject(0, height - 120, 1, text("gameType"))
+        drawObject(0, height - 20, 1, text("name"))
+        drawObject(0, height - 40, 1, text("position"))
+        drawObject(0, height - 60, 1, text("position.x"))
+        drawObject(0, height - 80, 1, text("position.y"))
+        drawObject(0, height - 100, 1, text("position.z"))
+        drawObject(0, height - 120, 1, text("position.side"))
+        drawObject(0, height - 140, 1, text("gameType"))
 
 
 
@@ -55,10 +61,25 @@ class GuiDebugInfo extends GuiInGame with GuiText {
 
     override def tick(): Unit = {
         val player = tar.player
-        addText("position.x", createString("x: " + player.posX, Color.WHITE))
-        addText("position.y", createString("y: " + player.posY, Color.WHITE))
-        addText("position.z", createString("z: " + player.posZ, Color.WHITE))
+        if(player.posX!= x){
+            x = player.posX
+            addText("position.x", createString("x: " + player.posX, Color.WHITE))
+        }
+        if(player.posX!= y){
+            y = player.posY
+            addText("position.y", createString("y: " + player.posY, Color.WHITE))
+        }
+        if(player.posX!= z){
+            z = player.posZ
+            addText("position.z", createString("z: " + player.posZ, Color.WHITE))
+        }
 
+
+
+        if(tar.playerName != name){
+            name = tar.playerName
+            addText("name", createString("Player name: "+name, Color.WHITE))
+        }
 
         if(tar.world.entities.size != entityAll){
             entityAll = tar.world.entities.size

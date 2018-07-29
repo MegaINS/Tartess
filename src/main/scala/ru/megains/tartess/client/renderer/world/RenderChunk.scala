@@ -8,13 +8,16 @@ import ru.megains.tartess.common.world.chunk.{Chunk, ChunkVoid}
 
 class RenderChunk(var chunk: Chunk){
 
-    val isVoid: Boolean = chunk.isInstanceOf[ChunkVoid]
+
     var isReRender: Boolean = true
     var blockRender: Int = 0
     val meshes: Array[Mesh] = new Array[Mesh](2)
 
 
     def render(layer: Int) {
+
+
+
          if (!isVoid) {
 
              if (isReRender) {
@@ -34,7 +37,7 @@ class RenderChunk(var chunk: Chunk){
          }
 
     }
-
+    def isVoid: Boolean = chunk.isInstanceOf[ChunkVoid]
     private def makeChunk(layer: Int) {
 
 

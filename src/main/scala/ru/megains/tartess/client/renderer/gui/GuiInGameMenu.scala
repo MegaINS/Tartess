@@ -16,7 +16,9 @@ class GuiInGameMenu extends GuiGame {
     override def actionPerformed(button: GuiButton): Unit = {
         button.id match {
 
-            case 0 => tar.loadWorld(null)
+            case 0 =>
+                tar.playerController.sendQuittingDisconnectingPacket()
+                tar.loadWorld(null)
                 tar.guiManager.setGuiScreen(new GuiMainMenu())
 
             case 1 => tar.guiManager.setGuiScreen(null)

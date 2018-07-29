@@ -13,7 +13,7 @@ import ru.megains.tartess.server.entity.EntityPlayerMP
 class PlayerInteractionManager(world: World) {
 
     var thisPlayerMP: EntityPlayerMP = _
-    var blockReachDistance: Double = 5.0d
+    var blockReachDistance: Double = 5.0d *16
     var gameType: GameType = GameType.CREATIVE
     var isDestroyingBlock: Boolean = false
 

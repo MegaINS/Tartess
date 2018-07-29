@@ -119,9 +119,10 @@ class NetworkManager(server:PacketProcess) extends SimpleChannelInboundHandler[P
     }
     def closeChannel(error: String): Unit = {
 
+        packetListener.onDisconnect(error)
         if (channel.isOpen) {
             channel.close().awaitUninterruptibly
-            packetListener.onDisconnect(error)
+
         }
     }
 

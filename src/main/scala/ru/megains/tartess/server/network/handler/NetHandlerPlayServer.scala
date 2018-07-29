@@ -81,6 +81,7 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         //   textcomponenttranslation.getStyle.setColor(TextFormatting.YELLOW)
         // this.serverController.getPlayerList.sendChatMsg(textcomponenttranslation)
         //  this.playerEntity.mountEntityAndWakeUp()
+
         server.playerList.playerLoggedOut(playerEntity)
 
         //        if (this.serverController.isSinglePlayer && this.playerEntity.getName == this.serverController.getServerOwner) {

@@ -26,7 +26,7 @@ class TartessMessageCodec extends ByteToMessageCodec[Packet[_<:INetHandler]] wit
         val size = out.readableBytes()
         val name = ConnectionState.getFromPacket(msg).name
         val packetName = msg.getClass.getSimpleName
-        log.info(s"Encoder $name, packet $packetName, id $id, size $size")
+        log.debug(s"Encoder $name, packet $packetName, id $id, size $size")
     }
 
     override def decode(ctx: ChannelHandlerContext, in: ByteBuf, out: util.List[AnyRef]): Unit = {
@@ -43,7 +43,7 @@ class TartessMessageCodec extends ByteToMessageCodec[Packet[_<:INetHandler]] wit
 
             val packetName = packet.getClass.getSimpleName
 
-            log.info(s"Decoder $name, packet $packetName, id $id, size $size")
+            log.debug(s"Decoder $name, packet $packetName, id $id, size $size")
             packet.readPacketData(buffer)
 
             if (in.readableBytes > 0) throw new IOException("Packet was larger than I expected, found " + in.readableBytes + " bytes extra whilst reading packet " + id)

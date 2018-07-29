@@ -11,8 +11,9 @@ import ru.megains.tartess.client.renderer.item.ItemRender
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.client.renderer.{Camera, Renderer}
+import ru.megains.tartess.client.world.WorldClient
 import ru.megains.tartess.common.PacketProcess
-import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
+import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
@@ -208,11 +209,17 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
             if (player == null) {
                // player = new EntityPlayerSP(playerName,newWorld)
 
-                //todo
-               // newWorld.saveHandler.readPlayerData(player)
+
+
 
                 //newWorld.spawnEntityInWorld(player)
-                player = playerController.createClientPlayer(newWorld)
+                if(newWorld.isInstanceOf[WorldClient]){
+                    player = playerController.createClientPlayer(newWorld)
+                }else{
+                    player = new EntityPlayer(playerName)
+                    //todo newWorld.saveHandler .readPlayerData(player)
+                }
+
                 // playerController.flipPlayer(player)
             }
             renderViewEntity = player
@@ -329,8 +336,8 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
         }
 
         if (button == 0 && buttonState && objectMouseOver != null) {
-
-            world.setAirBlock(objectMouseOver.blockPos)
+            playerController.clickBlock(objectMouseOver.blockPos, BlockDirection.DOWN)
+           // world.setAirBlock(objectMouseOver.blockPos)
         }
 
     }
