@@ -21,7 +21,7 @@ class NetworkManager(server:PacketProcess) extends SimpleChannelInboundHandler[P
     var channel: Channel = _
     var packetListener: INetHandler = _
     var disconnected = false
-
+    var isOpen = true
     val readWriteLock: ReentrantReadWriteLock = new ReentrantReadWriteLock
     val outboundPacketsQueue: ConcurrentLinkedQueue[Packet[_ <: INetHandler]] = new ConcurrentLinkedQueue[Packet[_ <: INetHandler]]
 
@@ -93,7 +93,7 @@ class NetworkManager(server:PacketProcess) extends SimpleChannelInboundHandler[P
             log.debug("Disabled auto read")
             channel.config.setAutoRead(false)
         }
-        if (channel.eventLoop.inEventLoop) {
+        if (channel.eventLoop.inEventLoop && isChannelOpen) {
             if (enumconnectionstate != enumconnectionstate1) this.setConnectionState(enumconnectionstate)
             val channelfuture: ChannelFuture = this.channel.writeAndFlush(inPacket)
             channelfuture.addListener(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE)
@@ -119,7 +119,12 @@ class NetworkManager(server:PacketProcess) extends SimpleChannelInboundHandler[P
     }
     def closeChannel(error: String): Unit = {
 
-        packetListener.onDisconnect(error)
+//        if(isOpen){
+//            isOpen = false
+//            packetListener.onDisconnect(error)
+//        }
+
+
         if (channel.isOpen) {
             channel.close().awaitUninterruptibly
 

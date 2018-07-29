@@ -1,6 +1,7 @@
 package ru.megains.tartess.common.network
 
 import io.netty.util.AttributeKey
+import ru.megains.tartess.client.module.NEI.CPacketNEI
 import ru.megains.tartess.common.network.packet.Packet
 import ru.megains.tartess.common.network.packet.handshake.client.CHandshake
 import ru.megains.tartess.common.network.packet.login.client.CPacketLoginStart
@@ -98,7 +99,7 @@ object ConnectionState {
         registerPacket( classOf[CPacketPlayerTryUseItem])
         registerPacket( classOf[CPacketPlayerTryUseItemOnBlock])
         registerPacket( classOf[CPacketClickWindow])
-
+        registerPacket( classOf[CPacketNEI])
 
 
 

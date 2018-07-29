@@ -192,7 +192,7 @@ class PlayerInteractionManager(world: World) {
         //  }
     }
 
-    def processRightClickBlock(player: EntityPlayer, worldIn: World, stack: ItemPack, posMouseOver: BlockPos, posBlockSet: BlockPos, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
+    def processRightClickBlock(player: EntityPlayer, worldIn: World, stack: ItemPack, posMouseOver: BlockPos, posBlockSet: BlockState, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
         //        if (this.gameType eq GameType.SPECTATOR) {
         //            val tileentity: TileEntity = worldIn.getTileEntity(pos)
         //            if (tileentity.isInstanceOf[ILockableContainer]) {
@@ -237,7 +237,7 @@ class PlayerInteractionManager(world: World) {
                 //  val j: Int = stack.getMetadata
             val i: Int = stack.stackSize
 
-                  val enumactionresult: EnumActionResult = stack.onItemUse(player, worldIn, block, facing, hitX, hitY, hitZ)
+                  val enumactionresult: EnumActionResult = stack.onItemUse(player, worldIn, posBlockSet, facing, hitX, hitY, hitZ)
                 //  stack.setItemDamage(j)
              stack.stackSize = i
                  enumactionresult

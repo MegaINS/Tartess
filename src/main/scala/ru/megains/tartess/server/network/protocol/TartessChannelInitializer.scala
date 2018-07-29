@@ -5,6 +5,7 @@ import io.netty.channel.{ChannelInitializer, ChannelOption}
 import ru.megains.tartess.common.network.NetworkManager
 import ru.megains.tartess.common.network.protocol.{TartessCodec, TartessMessageCodec}
 import ru.megains.tartess.server.TartessServer
+import ru.megains.tartess.server.network.NetworkSystem
 import ru.megains.tartess.server.network.handler.NetHandlerHandshake
 
 class TartessChannelInitializer(server:TartessServer) extends ChannelInitializer[NioSocketChannel]{
@@ -19,8 +20,8 @@ class TartessChannelInitializer(server:TartessServer) extends ChannelInitializer
         ch.config.setOption(ChannelOption.TCP_NODELAY, Boolean.box(true))
 
 
-       // NetworkSystem.networkManagers :+= networkManager
 
         networkManager.setNetHandler(new NetHandlerHandshake(server, networkManager))
+        NetworkSystem.networkManagers += networkManager
     }
 }

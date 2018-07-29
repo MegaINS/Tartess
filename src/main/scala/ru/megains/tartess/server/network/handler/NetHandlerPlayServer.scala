@@ -1,6 +1,7 @@
 package ru.megains.tartess.server.network.handler
 
-import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos}
+import ru.megains.tartess.client.module.NEI.CPacketNEI
+import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.inventory.InventoryPlayer
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.network.NetworkManager
@@ -49,6 +50,9 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
 
     var teleportId: Int = 0
 
+    def processNEI(packetIn: CPacketNEI): Unit ={
+        playerEntity.inventory.addItemStackToInventory(packetIn.itemPack)
+    }
 
     def setPlayerLocation(x: Float, y: Float, z: Float, yaw: Float, pitch: Float, relativeSet: HashSet[SPacketPlayerPosLook.EnumFlags.EnumFlags]) {
 
@@ -262,7 +266,7 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
 
         var itemstack: ItemPack = this.playerEntity.getHeldItem
         val posMouseOver: BlockPos = packetIn.posMouseOver
-        val posBlockSet: BlockPos = packetIn.posBlockSet
+        val posBlockSet: BlockState = packetIn.posBlockSet
         val enumfacing: BlockDirection = packetIn.placedBlockDirection
         playerEntity.markPlayerActive()
         //  if (/*blockpos.getY < this.serverController.getBuildLimit - 1 ||*/ /*(enumfacing ne EnumFacing.UP) &&*/ blockpos.getY < this.serverController.getBuildLimit) {
@@ -277,7 +281,10 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         //  this.playerEntity.connection.sendPacket(new SPacketChat(textcomponenttranslation))
         //  }
         playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posMouseOver))
-        playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posBlockSet))
+        if(posBlockSet != null){
+            playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posBlockSet.pos))
+        }
+
         itemstack = this.playerEntity.getHeldItem
         if (itemstack != null && itemstack.stackSize == 0) {
             playerEntity.setHeldItem(null)

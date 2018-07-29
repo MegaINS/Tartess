@@ -8,13 +8,13 @@ import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockStat
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.Item
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.common.network.packet.play.client.CPacketPlayerDigging
+import ru.megains.tartess.common.network.packet.play.client._
 import ru.megains.tartess.common.register.Blocks
 import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.common.utils.{ActionResult, EnumActionResult, Vec3f}
 import ru.megains.tartess.common.world.World
 
-class PlayerControllerMP(tar:Tartess,net: NetHandlerPlayClient) {
+class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
 
     var isHittingBlock: Boolean = false
     var blockHitDelay: Int = 0
@@ -54,7 +54,7 @@ class PlayerControllerMP(tar:Tartess,net: NetHandlerPlayClient) {
         flag = block.onBlockActivated(worldIn, pos, player, stack, facing, f, f1,f2)
        // if (flag) result = EnumActionResult.SUCCESS
 
-
+        net.sendPacket(new CPacketPlayerTryUseItemOnBlock(pos, tar.blockSelectPosition, facing, f, f1, f2))
         if (!flag) {
             if (stack == null){
                 EnumActionResult.PASS
@@ -72,7 +72,7 @@ class PlayerControllerMP(tar:Tartess,net: NetHandlerPlayClient) {
 
     def processRightClick(player: EntityPlayer, worldIn: World, stack: ItemPack): EnumActionResult = {
         syncCurrentPlayItem()
-
+        net.sendPacket(new CPacketPlayerTryUseItem())
         val i: Int = stack.stackSize
         val actionresult: ActionResult[ItemPack] = stack.useItemRightClick(worldIn, player)
         val itemstack: ItemPack = actionresult.result
@@ -90,6 +90,7 @@ class PlayerControllerMP(tar:Tartess,net: NetHandlerPlayClient) {
         val i: Int = tar.player.inventory.stackSelect
         if (i != currentPlayerItem) {
             currentPlayerItem = i
+            net.sendPacket(new CPacketHeldItemChange(currentPlayerItem))
         }
     }
 
@@ -228,5 +229,8 @@ class PlayerControllerMP(tar:Tartess,net: NetHandlerPlayClient) {
         }
         //  }
     }
-
+    def windowClick(x: Int, y: Int, button: Int, player: EntityPlayer): Unit = {
+        player.openContainer.mouseClicked(x, y, button, player)
+        net.sendPacket(new CPacketClickWindow(x, y, button))
+    }
 }

@@ -39,8 +39,8 @@ abstract class GuiContainer(val inventorySlots: Container) extends GuiGame {
 
     override def mouseClicked(x: Int, y: Int, button: Int, player: EntityPlayer): Unit = {
 
-        player.openContainer.mouseClicked(x-posX, y-posY, button, player)
-      //  oc.playerController.windowClick(x, y, button, player: EntityPlayer)
+       // player.openContainer.mouseClicked(x-posX, y-posY, button, player)
+        tar.playerController.windowClick(x-posX, y-posY, button, player: EntityPlayer)
     }
 
     def getSlotAtPosition(x: Int, y: Int): Slot = inventorySlots.inventorySlots.find(inventorySlots.isMouseOverSlot(_, x, y)).orNull

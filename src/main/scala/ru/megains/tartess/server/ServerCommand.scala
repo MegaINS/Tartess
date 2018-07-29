@@ -7,6 +7,7 @@ import scala.io.StdIn
 
 class ServerCommand(server: TartessServer) extends Thread {
 
+    val MB: Int = 1014*1024
     val commands: mutable.HashMap[String, Array[String] => Unit] = new mutable.HashMap[String, Array[String] => Unit]
     initCommand()
 
@@ -57,6 +58,12 @@ class ServerCommand(server: TartessServer) extends Thread {
                 println("Player offline")
             }
         })
+
+        commands += "status"->((_: Array[String]) => {
+            val r: Runtime = Runtime.getRuntime
+            System.out.println("Memory usage: total=" + r.totalMemory / MB + " MB, free=" + r.freeMemory / MB + " MB, max=" + r.maxMemory / MB + "f MB")
+        })
+
     }
 
 

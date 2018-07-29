@@ -217,7 +217,7 @@ class PlayerList(server: TartessServer) {
         worldserver.playerManager.removePlayer(playerIn)
         playerEntityList -= playerIn
 
-        val player = nameToPlayerMap(playerIn.name)
+        val player = nameToPlayerMap.getOrElse(playerIn.name,null)
         if (playerIn == player) {
             nameToPlayerMap -= playerIn.name
         }

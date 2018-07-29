@@ -1,8 +1,10 @@
 package ru.megains.tartess.common.network.handler
 
+import ru.megains.tartess.client.module.NEI.CPacketNEI
 import ru.megains.tartess.common.network.packet.play.client._
 
 trait INetHandlerPlayServer extends INetHandler {
+    def processNEI(packetIn: CPacketNEI): Unit
 
 
     def processClickWindow(packetIn: CPacketClickWindow): Unit

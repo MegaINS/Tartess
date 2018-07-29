@@ -2,13 +2,12 @@ package ru.megains.tartess.common.entity.player
 
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.client.Tartess
+import ru.megains.tartess.client.renderer.gui.GuiPlayerInventory
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.common.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.common.entity.EntityLivingBase
 import ru.megains.tartess.common.inventory.InventoryPlayer
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.client.renderer.gui.GuiPlayerInventory
-import ru.megains.tartess.common.tileentity.ATileEntityInventory
 import ru.megains.tartess.common.world.World
 
 class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
@@ -40,14 +39,7 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
     }
 
     def openGui(world: World, pos: BlockPos): Unit = {
-        val tileEntity = world.getTileEntity(pos)
-        tileEntity match {
-            case inv:ATileEntityInventory =>
-                val gui = inv.getGui(this)
-                openContainer = gui.inventorySlots
-                Tartess.tartess.guiManager.setGuiScreen(gui)
-            case _=>
-        }
+
 
     }
 

@@ -1,9 +1,11 @@
 package ru.megains.tartess.server.entity
 
+import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.container.Container
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.network.packet.play.server.{SPacketChangeGameState, SPacketSetSlot, SPacketWindowItems}
+import ru.megains.tartess.common.tileentity.ATileEntityInventory
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.server.network.handler.NetHandlerPlayServer
 import ru.megains.tartess.server.world.WorldServer
@@ -57,6 +59,16 @@ class EntityPlayerMP(name: String, world: World, val interactionManager: PlayerI
 
     override def update(): Unit = {
         super.update()
-       //todo openContainer.detectAndSendChanges()
+        openContainer.detectAndSendChanges()
+    }
+
+    override def openGui(world: World, pos: BlockPos): Unit = {
+        val tileEntity = world.getTileEntity(pos)
+        tileEntity match {
+            case inv:ATileEntityInventory =>
+                openContainer = inv.getContainer(this)
+            case _=>
+        }
+
     }
 }

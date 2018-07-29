@@ -1,5 +1,6 @@
 package ru.megains.tartess.client.module.NEI
 
+import ru.megains.tartess.client.Tartess
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.item.ItemType
 import ru.megains.tartess.common.item.itemstack.ItemPack
@@ -44,6 +45,7 @@ class ContainerNEI {
             case ItemType.STACK => new ItemPack(slot.itemPack.item,if(button == 0) 1 else 64)
         }
 
+        Tartess.tartess.playerController.net.sendPacket(new CPacketNEI(itemPack))
         player.inventory.addItemStackToInventory(itemPack)
 
     }

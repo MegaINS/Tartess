@@ -1,19 +1,19 @@
 package ru.megains.tartess.common.network.packet.play.client
 
 
-import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos}
+import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.network.handler.INetHandlerPlayServer
 import ru.megains.tartess.common.network.packet.{Packet, PacketBuffer}
 
 class CPacketPlayerTryUseItemOnBlock() extends Packet[INetHandlerPlayServer] {
     var posMouseOver: BlockPos = _
-    var posBlockSet: BlockPos = _
+    var posBlockSet: BlockState = _
     var placedBlockDirection: BlockDirection = _
     var facingX: Float = .0f
     var facingY: Float = .0f
     var facingZ: Float = .0f
 
-    def this(posMouseOverIn: BlockPos, posBlockSetIn: BlockPos, placedBlockDirectionIn: BlockDirection, facingXIn: Float, facingYIn: Float, facingZIn: Float) {
+    def this(posMouseOverIn: BlockPos, posBlockSetIn: BlockState, placedBlockDirectionIn: BlockDirection, facingXIn: Float, facingYIn: Float, facingZIn: Float) {
         this()
         posMouseOver = posMouseOverIn
         posBlockSet = posBlockSetIn
@@ -29,7 +29,7 @@ class CPacketPlayerTryUseItemOnBlock() extends Packet[INetHandlerPlayServer] {
 
     def readPacketData(buf: PacketBuffer) {
         posMouseOver = buf.readBlockPos
-        posBlockSet = buf.readBlockPos
+        posBlockSet = buf.readBlockState
         placedBlockDirection = BlockDirection.DIRECTIONAL_BY_ID(buf.readByte())
         facingX = buf.readUnsignedByte.toFloat / 16.0F
         facingY = buf.readUnsignedByte.toFloat / 16.0F
@@ -42,7 +42,7 @@ class CPacketPlayerTryUseItemOnBlock() extends Packet[INetHandlerPlayServer] {
 
     def writePacketData(buf: PacketBuffer) {
         buf.writeBlockPos(posMouseOver)
-        buf.writeBlockPos(posBlockSet)
+        buf.writeBlockState(posBlockSet)
         buf.writeByte(placedBlockDirection.id)
 
         buf.writeByte((facingX * 16.0F).toInt)

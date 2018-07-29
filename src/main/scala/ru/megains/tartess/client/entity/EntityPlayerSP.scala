@@ -2,9 +2,11 @@ package ru.megains.tartess.client.entity
 
 import ru.megains.tartess.client.Tartess
 import ru.megains.tartess.client.network.handler.NetHandlerPlayClient
+import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.network.packet.play.client.CPacketPlayer
 import ru.megains.tartess.common.physics.AABB
+import ru.megains.tartess.common.tileentity.ATileEntityInventory
 import ru.megains.tartess.common.world.World
 
 class EntityPlayerSP(oc: Tartess, world: World, val connection: NetHandlerPlayClient) extends EntityPlayer(" ") {
@@ -18,6 +20,20 @@ class EntityPlayerSP(oc: Tartess, world: World, val connection: NetHandlerPlayCl
     private var positionUpdateTicks: Int = 0
     private var prevOnGround: Boolean = false
 
+
+
+
+    override def openGui(world: World, pos: BlockPos): Unit = {
+        val tileEntity = world.getTileEntity(pos)
+        tileEntity match {
+            case inv:ATileEntityInventory =>
+                val gui = inv.getGui(this)
+                openContainer = gui.inventorySlots
+                Tartess.tartess.guiManager.setGuiScreen(gui)
+            case _=>
+        }
+
+    }
 
     override def update() {
         // if (worldObj.isBlockLoaded(new BlockPos(posX, 0.0D, posZ))) {
