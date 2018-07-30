@@ -46,8 +46,8 @@ object NBTData{
 
     def writeToStream(data:NBT,output: DataOutputStream): Unit ={
         data match {
-            case nbt:NBTCompound   =>
-            case nbt:NBTList  =>
+            case _:NBTCompound | _:NBTList  =>
+
             case _ => throw new Exception("NBT Class must be NBTCompound or NBTList")
         }
         output.writeUTF(VERSION_NBT)

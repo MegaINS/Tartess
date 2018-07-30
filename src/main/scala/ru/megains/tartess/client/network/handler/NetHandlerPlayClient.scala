@@ -82,13 +82,15 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
     def handleChunkData(packetIn: SPacketChunkData): Unit = {
        // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
 
-
-
-
         clientWorldController.doPreChunk(packetIn.position, loadChunk = true)
-        val chunk = clientWorldController.getChunk(packetIn.position)
-        chunk.blockStorage = packetIn.blockStorage
-        gameController.worldRenderer.reRender(packetIn.position)
+        if(!packetIn.chunkVoid){
+            val chunk = clientWorldController.getChunk(packetIn.position)
+            chunk.blockStorage = packetIn.blockStorage
+            packetIn.tileEntityMap.foreach(chunk.addTileEntity)
+            gameController.worldRenderer.reRender(packetIn.position)
+        }
+
+
 
     }
 

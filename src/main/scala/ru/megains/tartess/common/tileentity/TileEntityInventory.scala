@@ -4,11 +4,10 @@ import ru.megains.nbt.NBTType.EnumNBTCompound
 import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.inventory.Inventory
-import ru.megains.tartess.common.item.{Item, ItemType}
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.common.world.World
+import ru.megains.tartess.common.item.{Item, ItemType}
 
-abstract class TileEntityInventory(pos:BlockPos, world: World,slotSize:Int) extends TileEntity(pos, world) with Inventory with ATileEntityInventory{
+abstract class TileEntityInventory(pos:BlockPos, slotSize:Int) extends TileEntity(pos) with Inventory with ATileEntityInventory{
 
     var slots:Array[ItemPack] = new Array[ItemPack](slotSize)
 

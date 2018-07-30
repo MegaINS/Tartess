@@ -67,6 +67,7 @@ class EntityPlayerMP(name: String, world: World, val interactionManager: PlayerI
         tileEntity match {
             case inv:ATileEntityInventory =>
                 openContainer = inv.getContainer(this)
+                openContainer.addListener(this)
             case _=>
         }
 

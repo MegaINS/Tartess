@@ -280,7 +280,7 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         //  textcomponenttranslation.getStyle.setColor(TextFormatting.RED)
         //  this.playerEntity.connection.sendPacket(new SPacketChat(textcomponenttranslation))
         //  }
-        playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posMouseOver))
+       // playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posMouseOver))
         if(posBlockSet != null){
             playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posBlockSet.pos))
         }

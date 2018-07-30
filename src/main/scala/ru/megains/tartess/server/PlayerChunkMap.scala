@@ -144,7 +144,6 @@ class PlayerChunkMap(val worldServer: WorldServer) {
 
     def removePlayer(player: EntityPlayerMP) {
 
-
         val x: Int = player.managedPosX.toInt >> 8
         val y: Int = player.managedPosY.toInt >> 8
         val z: Int = player.managedPosZ.toInt >> 8

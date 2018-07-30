@@ -9,7 +9,7 @@ import scala.collection.mutable
 
 class BlockChest(name:String) extends BlockContainer(name){
 
-    override def createNewTileEntity(worldIn: World, blockState: BlockState): TileEntity = new TileEntityChest(blockState.pos,worldIn)
+    override def createNewTileEntity(worldIn: World, blockState: BlockState): TileEntity = new TileEntityChest(blockState.pos)
 
 
     override val blockBodies: AABBs  = new AABBs(mutable.HashSet(new AABB(0,0,0.3f*16,16,16,1.7f*16)))

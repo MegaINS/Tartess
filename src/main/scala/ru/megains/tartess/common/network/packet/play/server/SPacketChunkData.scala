@@ -1,12 +1,16 @@
 package ru.megains.tartess.common.network.packet.play.server
 
 
+import io.netty.buffer.{ByteBufInputStream, ByteBufOutputStream}
+import ru.megains.nbt.NBTData
 import ru.megains.tartess.common.block.data.{BlockCell, BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.network.handler.INetHandlerPlayClient
 import ru.megains.tartess.common.network.packet.{Packet, PacketBuffer}
-import ru.megains.tartess.common.register.Blocks
+import ru.megains.tartess.common.register.{Blocks, GameRegister}
+import ru.megains.tartess.common.tileentity.TileEntity
 import ru.megains.tartess.common.world.chunk.Chunk
 import ru.megains.tartess.common.world.chunk.data.{BlockStorage, ChunkPosition}
+
 
 class SPacketChunkData extends Packet[INetHandlerPlayClient] {
 
@@ -15,12 +19,14 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
     var blockStorage: BlockStorage = _
     var chunkVoid: Boolean = false
     var position: ChunkPosition =_
+    var tileEntityMap:Array[TileEntity] = _
 
     def this(chunkIn: Chunk) {
         this()
         blockStorage = chunkIn.blockStorage
         chunkVoid = chunkIn.isVoid
         position = chunkIn.position
+        tileEntityMap = chunkIn.chunkTileEntityMap.values.toArray
 
     }
 
@@ -46,6 +52,7 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
     def readChunk(buf: PacketBuffer): BlockStorage = {
         val blockStorage: BlockStorage = new BlockStorage(position)
         val blocksId = blockStorage.blocksId
+
        // val blocksHp = blockStorage.blocksHp
        // val multiBlockStorage = blockStorage.multiBlockStorage
         for (i <- 0 until 4096) {
@@ -71,10 +78,10 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
 //            multiBlockStorage.put(posMultiBlock, multiBlock)
 //        }
 
-        val size = buf.readInt()
+        val sizeBlocks = buf.readInt()
 
 
-        for (i <- 0 until size) {
+        for (_ <- 0 until sizeBlocks) {
             val index = buf.readInt()
             val blockSell = new BlockCell(position)
             blockStorage.containers += index.toShort -> blockSell
@@ -84,7 +91,7 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
            // val blockStatesNBT = blockSellNBT.getList("blockStates")
 
             val blocks = buf.readInt()
-            for(i <- 0 until blocks){
+            for(_ <- 0 until blocks){
 
                // val blockStateNBT = blockStatesNBT.getCompound(i)
                 val id = buf.readInt()
@@ -96,6 +103,30 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
                 //todo val blockState = getBlockState(id,side,x,y,z)
                 blockSell.blocks += blockState
             }
+
+        }
+
+        val sizeTileEntity = buf.readInt()
+        tileEntityMap = new Array[TileEntity](sizeTileEntity)
+
+        for (i <- tileEntityMap.indices) {
+            val id = buf.readInt()
+            val x = buf.readInt()
+            val y = buf.readInt()
+            val z = buf.readInt()
+            val pos = new BlockPos(x,y,z)
+            val tileEntityClass = GameRegister.getTileEntityById(id)
+
+            if(tileEntityClass != null){
+                val tileEntity:TileEntity = tileEntityClass.getConstructor(classOf[BlockPos]).newInstance(pos)
+                val nbt = NBTData.createCompound()
+                nbt.read(new ByteBufInputStream(buf))
+                tileEntity.readFromNBT(nbt)
+                tileEntityMap(i) = tileEntity
+            }else{
+                println(s"error load tileEntity $id")
+            }
+
 
         }
 
@@ -175,7 +206,20 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
                 }
         }
 
+        buf.writeInt(tileEntityMap.length)
 
+        for (tileEntity <- tileEntityMap) {
+
+            buf.writeInt(GameRegister.getIdByTileEntity(tileEntity.getClass ))
+            buf.writeInt(tileEntity.pos.x)
+            buf.writeInt(tileEntity.pos.y)
+            buf.writeInt(tileEntity.pos.z)
+
+            val nbt = NBTData.createCompound()
+            tileEntity.writeToNBT(nbt)
+            nbt.write(new ByteBufOutputStream(buf))
+
+        }
 
     }
 

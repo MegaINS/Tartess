@@ -102,7 +102,7 @@ class ChunkLoader(worldDirectory: Directory) {
             val tileEntityClass = GameRegister.getTileEntityById(id)
 
             if(tileEntityClass != null){
-                val tileEntity = tileEntityClass.getConstructor(classOf[BlockPos],classOf[World]).newInstance(pos,chunk.world)
+                val tileEntity = tileEntityClass.getConstructor(classOf[BlockPos]).newInstance(pos)
                 tileEntity.readFromNBT(tileEntityNBT)
                 chunk.addTileEntity(tileEntity)
             }else{

@@ -213,7 +213,7 @@ class PlayerList(server: TartessServer) {
         //                worldserver.getChunkFromChunkCoords(playerIn.chunkCoordX, playerIn.chunkCoordZ).setChunkModified()
         //            }
         //        }
-        // worldserver.removeEntity(playerIn)
+        worldserver.removeEntity(playerIn)
         worldserver.playerManager.removePlayer(playerIn)
         playerEntityList -= playerIn
 

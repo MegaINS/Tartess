@@ -4,7 +4,7 @@ import ru.megains.nbt.tag.NBTCompound
 import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.world.World
 
-abstract class TileEntity(val pos:BlockPos, val world: World) {
+abstract class TileEntity(val pos:BlockPos) {
 
     def update(world: World): Unit = {
 
