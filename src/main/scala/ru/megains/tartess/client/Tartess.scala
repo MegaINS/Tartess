@@ -13,7 +13,7 @@ import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.client.renderer.{Camera, Renderer}
 import ru.megains.tartess.client.world.WorldClient
 import ru.megains.tartess.common.PacketProcess
-import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
@@ -284,9 +284,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
 
             player.inventory.changeStackSelect(Mouse.getDWheel * -1)
 
-
             objectMouseOver = player.rayTrace(20*16, 0.1f)
-
 
             if (objectMouseOver != null) {
                 worldRenderer.updateBlockMouseOver( world.getBlock(objectMouseOver.blockPos))
@@ -333,10 +331,12 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
 
         if (button == 1 && buttonState) {
             rightClickMouse()
+            playerController.rightClickMouse()
         }
 
         if (button == 0 && buttonState && objectMouseOver != null) {
-            playerController.clickBlock(objectMouseOver.blockPos, BlockDirection.DOWN)
+           // playerController.clickBlock(objectMouseOver.blockPos, BlockDirection.DOWN)
+            playerController.leftClickMouse()
            // world.setAirBlock(objectMouseOver.blockPos)
         }
 
@@ -366,14 +366,14 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
 
 
                 val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
-                if (enumactionresult eq EnumActionResult.SUCCESS) {
+                if (enumactionresult == EnumActionResult.SUCCESS) {
                     if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
                     return
                 }
             }
         }
 
-        if (itemstack != null && (playerController.processRightClick(player, world, itemstack) eq EnumActionResult.SUCCESS)) {
+        if (itemstack != null && (playerController.processRightClick(player, world, itemstack) == EnumActionResult.SUCCESS)) {
             return
         }
 

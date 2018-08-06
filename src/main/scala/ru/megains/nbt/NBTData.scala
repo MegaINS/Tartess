@@ -12,7 +12,6 @@ import scala.reflect.io.{Directory, File, Path}
 object NBTData{
 
     val VERSION_NBT:String = "NBT v0.5"
-   // val VERSION_NBT:String = "0.4"
     val FILE_EXTENSION:String = ".nbt"
 
 

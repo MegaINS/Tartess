@@ -14,13 +14,12 @@ class BlockCell(val position: ChunkPosition/*,val x:Int,val y:Int,val z:Int*/) {
     def isEmpty: Boolean = blocks.isEmpty
 
     def collisionRayTrace(world: World, vec31: Vec3f, vec32: Vec3f):RayTraceResult = {
-        var rayTraceResult: RayTraceResult = null
         blocks.foreach{
             block =>
-                rayTraceResult = block.collisionRayTrace(world, vec31, vec32)
+                val rayTraceResult = block.collisionRayTrace(world, vec31, vec32)
                 if (rayTraceResult != null) return rayTraceResult
         }
-        rayTraceResult
+        new RayTraceResult()
     }
 
     def getBlock(x: Int, y: Int, z: Int):BlockState = {

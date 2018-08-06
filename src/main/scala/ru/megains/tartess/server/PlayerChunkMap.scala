@@ -43,28 +43,28 @@ class PlayerChunkMap(val worldServer: WorldServer) {
 
         playerInstancesToUpdate.foreach(_.update())
         playerInstancesToUpdate.clear()
+/*
+                if (this.sortMissingChunks && i % 4L == 0L) {
+                    this.sortMissingChunks = false
+                    Collections.sort(this.playersNeedingChunks, new Comparator[PlayerChunkMapEntry]() {
+                        def compare(p_compare_1_:
 
-        //        if (this.sortMissingChunks && i % 4L == 0L) {
-        //            this.sortMissingChunks = false
-        //            Collections.sort(this.playersNeedingChunks, new Comparator[PlayerChunkMapEntry]() {
-        //                def compare(p_compare_1_:
-        //
-        //                PlayerChunkMapEntry, p_compare_2_: PlayerChunkMapEntry): Int = {
-        //                    return ComparisonChain.start.compare(p_compare_1_.getClosestPlayerDistance, p_compare_2_.getClosestPlayerDistance).result
-        //                }
-        //            })
-        //        }
-        //        if (this.sortSendToPlayers && i % 4L == 2L) {
-        //            this.sortSendToPlayers = false
-        //            Collections.sort(this.pendingSendToPlayers, new Comparator[PlayerChunkMapEntry]() {
-        //                def compare(p_compare_1_:
-        //
-        //                PlayerChunkMapEntry, p_compare_2_: PlayerChunkMapEntry): Int = {
-        //                    return ComparisonChain.start.compare(p_compare_1_.getClosestPlayerDistance, p_compare_2_.getClosestPlayerDistance).result
-        //                }
-        //            })
-        //        }
+                        PlayerChunkMapEntry, p_compare_2_: PlayerChunkMapEntry): Int = {
+                            return ComparisonChain.start.compare(p_compare_1_.getClosestPlayerDistance, p_compare_2_.getClosestPlayerDistance).result
+                        }
+                    })
+                }
+                if (this.sortSendToPlayers && i % 4L == 2L) {
+                    this.sortSendToPlayers = false
+                    Collections.sort(this.pendingSendToPlayers, new Comparator[PlayerChunkMapEntry]() {
+                        def compare(p_compare_1_:
 
+                        PlayerChunkMapEntry, p_compare_2_: PlayerChunkMapEntry): Int = {
+                            return ComparisonChain.start.compare(p_compare_1_.getClosestPlayerDistance, p_compare_2_.getClosestPlayerDistance).result
+                        }
+                    })
+                }
+*/
 
         if (playersNeedingChunks.nonEmpty) {
             val l: Long = System.nanoTime + 50000000L

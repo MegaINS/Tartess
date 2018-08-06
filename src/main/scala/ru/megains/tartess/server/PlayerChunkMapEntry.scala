@@ -111,20 +111,22 @@ class PlayerChunkMapEntry(playerChunkMap: PlayerChunkMap, chunkX: Int, chunkY: I
             else {
                 sendPacket(new SPacketMultiBlockChange(changedBlocks, chunk))
 
-                //                var l: Int = 0
-                //                while (l < changes) {
-                //                    {
-                //                        val i1: Int = (changedBlocks(l) >> 12 & 15) + pos.chunkXPos * 16
-                //                        val j1: Int = changedBlocks(l) & 255
-                //                        val k1: Int = (changedBlocks(l) >> 8 & 15) + pos.chunkZPos * 16
-                //                        val blockpos1: BlockPos = new BlockPos(i1, j1, k1)
-                //                  //      val state: IBlockState = playerChunkMap.getWorldServer.getBlockState(blockpos1)
-                //                       // if (state.getBlock.hasTileEntity(state)) sendBlockEntity(playerChunkMap.getWorldServer.getTileEntity(blockpos1))
-                //                    }
-                //                    {
-                //                        l += 1; l
-                //                    }
-                //                }
+                /*
+                                var l: Int = 0
+                                while (l < changes) {
+                                    {
+                                        val i1: Int = (changedBlocks(l) >> 12 & 15) + pos.chunkXPos * 16
+                                        val j1: Int = changedBlocks(l) & 255
+                                        val k1: Int = (changedBlocks(l) >> 8 & 15) + pos.chunkZPos * 16
+                                        val blockpos1: BlockPos = new BlockPos(i1, j1, k1)
+                                        val state: IBlockState = playerChunkMap.getWorldServer.getBlockState(blockpos1)
+                                        if (state.getBlock.hasTileEntity(state)) sendBlockEntity(playerChunkMap.getWorldServer.getTileEntity(blockpos1))
+                                    }
+                                    {
+                                        l += 1; l
+                                    }
+                                }
+                */
             }
             changes = 0
             changedBlocks.clear()

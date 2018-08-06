@@ -119,12 +119,6 @@ class NetworkManager(server:PacketProcess) extends SimpleChannelInboundHandler[P
     }
     def closeChannel(error: String): Unit = {
 
-//        if(isOpen){
-//            isOpen = false
-//            packetListener.onDisconnect(error)
-//        }
-
-
         if (channel.isOpen) {
             channel.close().awaitUninterruptibly
 
@@ -139,7 +133,6 @@ class NetworkManager(server:PacketProcess) extends SimpleChannelInboundHandler[P
                 packet.processPacket(packetListener)
             }else{
                 server.addPacket(()=>{packet.processPacket(packetListener)})
-               // server.gameLogicHandler.addPacketToProcess(()=>{packet.processPacket(packetListener)})
 
             }
 

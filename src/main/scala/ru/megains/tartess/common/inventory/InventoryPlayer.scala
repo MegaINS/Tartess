@@ -44,7 +44,7 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends Inventory {
                 }
 
             case ItemType.STACK =>
-                val itemOp =  mainInventory.filter(_ ne null).find(_.item ==itemStack.item)
+                val itemOp =  mainInventory.filter(_ != null).find(_.item ==itemStack.item)
                 if(itemOp.nonEmpty){
                     itemOp.get.stackSize += itemStack.stackSize
                     itemOp.get.stackMass += itemStack.stackMass
@@ -59,7 +59,7 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends Inventory {
                     }
                 }
             case ItemType.MASS =>
-                val itemOp =  mainInventory.filter(_ ne null).find(_.item ==itemStack.item)
+                val itemOp =  mainInventory.filter(_ != null).find(_.item ==itemStack.item)
                 if(itemOp.nonEmpty){
                     itemOp.get.stackMass += itemStack.stackMass
                     true

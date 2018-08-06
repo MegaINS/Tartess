@@ -51,10 +51,8 @@ object ConnectionState {
 
 
     case object HANDSHAKING extends ConnectionState("HANDSHAKING", 0) {
-        // registerServerPacket(classOf[SPacketDisconnect])
-
-        registerPacket(classOf[CHandshake])
-         }
+               registerPacket(classOf[CHandshake])
+    }
 
 
     case object STATUS extends ConnectionState("STATUS", 1) {
@@ -101,36 +99,17 @@ object ConnectionState {
         registerPacket( classOf[CPacketClickWindow])
         registerPacket( classOf[CPacketNEI])
 
-
+        registerPacket( classOf[CPacketPlayerMouse])
 
 
 
     }
-//    case object BATTLE_SERVER extends ConnectionState("BATTLE_SERVER", 4) {
-//        registerPacket(classOf[SPacketDisconnect])
-//        registerPacket(classOf[SPacketPlayerInfo])
-//        registerPacket(classOf[SPacketLocInfo])
-//        registerPacket(classOf[SPacketInventory])
-//        registerPacket(classOf[SPacketBody])
-//        registerPacket(classOf[SPacketActionReturn])
-//        registerPacket(classOf[SPacketStore])
-//        registerPacket(classOf[SPacketInvUpdate])
-//
-//
-//        registerPacket(classOf[CPacketAction])
-//        registerPacket(classOf[PCreateBattle])
-//
-//
-//        registerPacket(classOf[PBattleStatus])
-//
-//    }
 
     val STATES_BY_ID = Array(HANDSHAKING, STATUS, LOGIN, PLAY)
     addClass(HANDSHAKING)
     addClass(STATUS)
     addClass(LOGIN)
     addClass(PLAY)
-    //addClass(BATTLE_SERVER)
 
     def addClass(state: ConnectionState): Unit = {
 

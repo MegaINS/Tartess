@@ -13,7 +13,6 @@ object BlockAir extends Block("air") {
 
     override def isOpaqueCube: Boolean = false
 
-   // override def registerTexture(textureRegister: TTextureRegister): Unit = {}
 
 
 }

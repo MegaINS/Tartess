@@ -8,6 +8,7 @@ import ru.megains.tartess.common.block.data.BlockDirection;
 import ru.megains.tartess.common.block.data.BlockPos;
 import ru.megains.tartess.common.block.data.BlockState;
 import ru.megains.tartess.common.item.Item;
+import ru.megains.tartess.common.item.ItemType;
 import ru.megains.tartess.common.item.itemstack.ItemPack;
 import ru.megains.tartess.common.register.Blocks;
 
@@ -41,17 +42,39 @@ public class PacketBuffer extends ByteBuf {
             writeInt(-1);
         } else {
             writeInt(Item.getIdFromItem(itemStack.item()));
-            writeByte(itemStack.stackSize());
-            //  writeShort(itemStack.getItemDamage());
-            //   NBTTagCompound var2 = null;
+            if(itemStack.item().itemType() != ItemType.MASS()){
+                writeInt(itemStack.stackSize());
+            }else{
+                writeInt(itemStack.stackMass());
+            }
 
-//            if (itemStack.getItem().isDamageable() || itemStack.getItem().getShareTag())
-//            {
-//                var2 = itemStack.stackTagCompound;
-//            }
 
-            // this.writeNBTTagCompoundToBuffer(var2);
+            /*
+              writeShort(itemStack.getItemDamage());
+               NBTTagCompound var2 = null;
+
+            if (itemStack.getItem().isDamageable() || itemStack.getItem().getShareTag())
+            {
+                var2 = itemStack.stackTagCompound;
+            }
+
+             this.writeNBTTagCompoundToBuffer(var2);
+            */
         }
+    }
+
+    public ItemPack readItemPackFromBuffer() throws IOException {
+        ItemPack var1 = null;
+        int id = readInt();
+
+        if (id >= 0) {
+            int sizeOrMass = this.readInt();
+
+            var1 = new ItemPack(Item.getItemById(id), sizeOrMass);
+            //  var1.stackTagCompound = this.readNBTTagCompoundFromBuffer();
+        }
+
+        return var1;
     }
     public void writeBlockState(BlockState blockState) throws IOException {
         if (blockState == null) {
@@ -60,6 +83,7 @@ public class PacketBuffer extends ByteBuf {
             writeInt(Blocks.getIdByBlock( blockState.block()));
             writeBlockPos(blockState.pos());
             writeByte(blockState.blockDirection().id());
+
         }
     }
 
@@ -74,19 +98,7 @@ public class PacketBuffer extends ByteBuf {
 
         return var1;
     }
-    public ItemPack readItemPackFromBuffer() throws IOException {
-        ItemPack var1 = null;
-        int var2 = readInt();
 
-        if (var2 >= 0) {
-            byte var3 = this.readByte();
-            // short var4 = this.readShort();
-            var1 = new ItemPack(Item.getItemById(var2), var3);
-            //  var1.stackTagCompound = this.readNBTTagCompoundFromBuffer();
-        }
-
-        return var1;
-    }
     public BlockPos readBlockPos() {
 
         int x = readInt();
@@ -95,69 +107,61 @@ public class PacketBuffer extends ByteBuf {
         return new BlockPos(x, y, z);
 
     }
-
-//    public void writeItemUser(ItemUser item)throws IOException {
-//        writeInt(item.id());
-//        writeStringToBuffer(item.name());
-//        writeStringToBuffer(item.img());
-//        writeInt(item.amount());
-//        writeByte(item.action().id());
-//        writeByte(item.slot().id());
-//    }
-
-
-//    public void writeItemBase(ItemBase item)throws IOException {
-//        writeInt(item.id());
-//        writeStringToBuffer(item.name());
-//        writeStringToBuffer(item.img());
-//    }
+/*
+    public void writeItemUser(ItemUser item)throws IOException {
+        writeInt(item.id());
+        writeStringToBuffer(item.name());
+        writeStringToBuffer(item.img());
+        writeInt(item.amount());
+        writeByte(item.action().id());
+        writeByte(item.slot().id());
+    }
 
 
+    public void writeItemBase(ItemBase item)throws IOException {
+        writeInt(item.id());
+        writeStringToBuffer(item.name());
+        writeStringToBuffer(item.img());
+    }
 
 
 
 
 
-    /**
-     * Writes a compressed NBTTagCompound to this buffer
-     */
-//    public void writeNBTTagCompoundToBuffer(NBTTagCompound p_150786_1_) throws IOException
-//    {
-//        if (p_150786_1_ == null)
-//        {
-//            this.writeShort(-1);
-//        }
-//        else
-//        {
-//            byte[] var2 = CompressedStreamTools.compress(p_150786_1_);
-//            this.writeShort((short)var2.length);
-//            this.writeBytes(var2);
-//        }
-//    }
 
-    /**
-     * Reads a compressed NBTTagCompound from this buffer
-     */
-//    public NBTTagCompound readNBTTagCompoundFromBuffer() throws IOException
-//    {
-//        short var1 = this.readShort();
-//
-//        if (var1 < 0)
-//        {
-//            return null;
-//        }
-//        else
-//        {
-//            byte[] var2 = new byte[var1];
-//            this.readBytes(var2);
-//            return CompressedStreamTools.func_152457_a(var2, new NBTSizeTracker(2097152L));
-//        }
-//    }
 
-    /**
-     * Writes the ItemStack's ID (short), then size (byte), then damage. (short)
-     */
+    public void writeNBTTagCompoundToBuffer(NBTTagCompound p_150786_1_) throws IOException
+    {
+        if (p_150786_1_ == null)
+        {
+            this.writeShort(-1);
+        }
+        else
+        {
+            byte[] var2 = CompressedStreamTools.compress(p_150786_1_);
+            this.writeShort((short)var2.length);
+            this.writeBytes(var2);
+        }
+    }
 
+
+    public NBTTagCompound readNBTTagCompoundFromBuffer() throws IOException
+    {
+        short var1 = this.readShort();
+
+        if (var1 < 0)
+        {
+            return null;
+        }
+        else
+        {
+            byte[] var2 = new byte[var1];
+            this.readBytes(var2);
+            return CompressedStreamTools.func_152457_a(var2, new NBTSizeTracker(2097152L));
+        }
+    }
+
+*/
 
 
 

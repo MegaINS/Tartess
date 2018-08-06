@@ -7,10 +7,9 @@ import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.network.NetworkManager
 import ru.megains.tartess.common.network.handler.{INetHandler, INetHandlerPlayServer}
 import ru.megains.tartess.common.network.packet.Packet
-import ru.megains.tartess.common.network.packet.play.client.CPacketPlayerDigging.Action._
 import ru.megains.tartess.common.network.packet.play.client._
 import ru.megains.tartess.common.network.packet.play.server.{SPacketBlockChange, SPacketPlayerPosLook}
-import ru.megains.tartess.common.utils.{Logger, Vec3f}
+import ru.megains.tartess.common.utils.{Logger, RayTraceType, Vec3f}
 import ru.megains.tartess.server.TartessServer
 import ru.megains.tartess.server.entity.EntityPlayerMP
 import ru.megains.tartess.server.world.WorldServer
@@ -31,7 +30,6 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
     private var firstGoodX: Float = .0f
     private var firstGoodY: Float = .0f
     private var firstGoodZ: Float = .0f
-    // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.playerEntity.getServerWorld)
 
     override def sendPacket(packetIn: Packet[_ <: INetHandler]) {
 
@@ -187,55 +185,53 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         //  }
     }
 
-    override def processPlayerDigging(packetIn: CPacketPlayerDigging): Unit = {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, playerEntity.getWorldServer)
-        val worldserver: WorldServer = server.world
-        val blockpos: BlockPos = packetIn.position
-        playerEntity.markPlayerActive()
-        packetIn.action match {
-            //            case SWAP_HELD_ITEMS =>
-            //                if (!this.playerEntity.isSpectator) {
-            //                    val itemstack1: ItemPack = this.playerEntity.getHeldItem(EnumHand.OFF_HAND)
-            //                    this.playerEntity.setHeldItem(EnumHand.OFF_HAND, this.playerEntity.getHeldItem(EnumHand.MAIN_HAND))
-            //                    this.playerEntity.setHeldItem(EnumHand.MAIN_HAND, itemstack1)
-            //                }
-            //            case DROP_ITEM =>
-            //                if (!this.playerEntity.isSpectator) this.playerEntity.dropItem(false)
-            //            case DROP_ALL_ITEMS =>
-            //                if (!this.playerEntity.isSpectator) this.playerEntity.dropItem(true)
-            //            case RELEASE_USE_ITEM =>
-            //                this.playerEntity.stopActiveHand()
-            //                val itemstack: ItemPack = this.playerEntity.getHeldItemMainhand
-            //                if (itemstack != null && itemstack.stackSize == 0) this.playerEntity.setHeldItem(EnumHand.MAIN_HAND, null.asInstanceOf[ItemPack])
-
-            case START_DESTROY_BLOCK | ABORT_DESTROY_BLOCK | STOP_DESTROY_BLOCK =>
-
-                val d0: Double = playerEntity.posX - (blockpos.x.toDouble + 0.5D)
-                val d1: Double = playerEntity.posY - (blockpos.y.toDouble + 0.5D) + 1.5D
-                val d2: Double = playerEntity.posZ - (blockpos.z.toDouble + 0.5D)
-                val d3: Double = d0 * d0 + d1 * d1 + d2 * d2
-                var dist: Double = playerEntity.interactionManager.getBlockReachDistance + 1
-                dist *= dist
-                if (d3 > dist) {
-
-                    //  } else if (blockpos.getY >= serverController.getBuildLimit){
-
-                } else {
-                    if (packetIn.action eq START_DESTROY_BLOCK) /* if (!serverController.isBlockProtected(worldserver, blockpos, playerEntity) && worldserver.getWorldBorder.contains(blockpos))*/ playerEntity.interactionManager.onBlockClicked(blockpos, packetIn.facing)
-                    //  else playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, blockpos))
-                    else {
-                        if (packetIn.action eq STOP_DESTROY_BLOCK) playerEntity.interactionManager.blockRemoving(blockpos)
-                        else if (packetIn.action eq ABORT_DESTROY_BLOCK) playerEntity.interactionManager.cancelDestroyingBlock()
-                        if (worldserver.isAirBlock(blockpos)) playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, blockpos))
-                    }
-                }
-            case _ =>
-                throw new IllegalArgumentException("Invalid player action")
-        }
-    }
+//    override def processPlayerDigging(packetIn: CPacketPlayerDigging): Unit = {
+//        val worldserver: WorldServer = server.world
+//        val blockpos: BlockPos = packetIn.position
+//        playerEntity.markPlayerActive()
+//        packetIn.action match {
+//            //            case SWAP_HELD_ITEMS =>
+//            //                if (!this.playerEntity.isSpectator) {
+//            //                    val itemstack1: ItemPack = this.playerEntity.getHeldItem(EnumHand.OFF_HAND)
+//            //                    this.playerEntity.setHeldItem(EnumHand.OFF_HAND, this.playerEntity.getHeldItem(EnumHand.MAIN_HAND))
+//            //                    this.playerEntity.setHeldItem(EnumHand.MAIN_HAND, itemstack1)
+//            //                }
+//            //            case DROP_ITEM =>
+//            //                if (!this.playerEntity.isSpectator) this.playerEntity.dropItem(false)
+//            //            case DROP_ALL_ITEMS =>
+//            //                if (!this.playerEntity.isSpectator) this.playerEntity.dropItem(true)
+//            //            case RELEASE_USE_ITEM =>
+//            //                this.playerEntity.stopActiveHand()
+//            //                val itemstack: ItemPack = this.playerEntity.getHeldItemMainhand
+//            //                if (itemstack != null && itemstack.stackSize == 0) this.playerEntity.setHeldItem(EnumHand.MAIN_HAND, null.asInstanceOf[ItemPack])
+//
+//            case START_DESTROY_BLOCK | ABORT_DESTROY_BLOCK | STOP_DESTROY_BLOCK =>
+//
+//                val d0: Double = playerEntity.posX - (blockpos.x.toDouble + 0.5D)
+//                val d1: Double = playerEntity.posY - (blockpos.y.toDouble + 0.5D) + 1.5D
+//                val d2: Double = playerEntity.posZ - (blockpos.z.toDouble + 0.5D)
+//                val d3: Double = d0 * d0 + d1 * d1 + d2 * d2
+//                var dist: Double = playerEntity.interactionManager.getBlockReachDistance + 1
+//                dist *= dist
+//                if (d3 > dist) {
+//
+//                    //  } else if (blockpos.getY >= serverController.getBuildLimit){
+//
+//                } else {
+//                    if (packetIn.action eq START_DESTROY_BLOCK) /* if (!serverController.isBlockProtected(worldserver, blockpos, playerEntity) && worldserver.getWorldBorder.contains(blockpos))*/ playerEntity.interactionManager.onBlockClicked(blockpos, packetIn.facing)
+//                    //  else playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, blockpos))
+//                    else {
+//                        if (packetIn.action eq STOP_DESTROY_BLOCK) playerEntity.interactionManager.blockRemoving(blockpos)
+//                        else if (packetIn.action eq ABORT_DESTROY_BLOCK) playerEntity.interactionManager.cancelDestroyingBlock()
+//                        if (worldserver.isAirBlock(blockpos)) playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, blockpos))
+//                    }
+//                }
+//            case _ =>
+//                throw new IllegalArgumentException("Invalid player action")
+//        }
+//    }
 
     override def processHeldItemChange(packetIn: CPacketHeldItemChange) {
-        //PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, playerEntity.getWorldServer)
         if (packetIn.slotId >= 0 && packetIn.slotId < InventoryPlayer.hotBarSize) {
             playerEntity.inventory.stackSelect = packetIn.slotId
             playerEntity.markPlayerActive()
@@ -245,7 +241,6 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
 
     def processPlayerBlockPlacement(packetIn: CPacketPlayerTryUseItem) {
 
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.playerEntity.getWorldServer)
         val worldserver: WorldServer = server.world
 
         var itemstack: ItemPack = this.playerEntity.getHeldItem
@@ -261,8 +256,7 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
     }
 
     def processRightClickBlock(packetIn: CPacketPlayerTryUseItemOnBlock) {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.playerEntity.getWorldServer)
-        val worldserver: WorldServer = server.world
+              val worldserver: WorldServer = server.world
 
         var itemstack: ItemPack = this.playerEntity.getHeldItem
         val posMouseOver: BlockPos = packetIn.posMouseOver
@@ -293,12 +287,46 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
     }
 
     override def processClickWindow(packetIn: CPacketClickWindow): Unit = {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, playerEntity.getWorldServer)
         playerEntity.openContainer.mouseClicked(packetIn.mouseX, packetIn.mouseY, packetIn.button, playerEntity)
         playerEntity.updateHeldItem()
     }
 
     override def disconnect(msg: String): Unit = {
 
+    }
+
+    override def processPlayerMouse(packetIn: CPacketPlayerMouse): Unit = {
+        packetIn.button match {
+            case 0 =>
+
+                val rayTrace = playerEntity.rayTrace(20*16, 0.1f)
+
+                rayTrace match {
+                    case RayTraceType.BLOCK  =>
+                        val blockPos: BlockPos = rayTrace.blockPos
+
+                        val d0: Double = playerEntity.posX - (blockPos.x.toDouble + 0.5D)
+                        val d1: Double = playerEntity.posY - (blockPos.y.toDouble + 0.5D) + 1.5D
+                        val d2: Double = playerEntity.posZ - (blockPos.z.toDouble + 0.5D)
+                        val d3: Double = d0 * d0 + d1 * d1 + d2 * d2
+                        var dist: Double = playerEntity.interactionManager.getBlockReachDistance + 1
+                        dist *= dist
+                        if (d3 > dist) {
+
+                        } else {
+                            playerEntity.interactionManager.onBlockClicked(blockPos, rayTrace.sideHit)
+                        }
+                    case RayTraceType.VOID  =>
+                    case RayTraceType.ENTITY  =>
+                }
+
+
+
+
+
+
+            case 1 =>
+            case _=> log.info(s"${playerEntity.name} click mouse button ${packetIn.button}")
+        }
     }
 }

@@ -20,7 +20,6 @@ class TextureAtlas(val name:String) {
   var height: Int = _
   var maxV: Float = _
 
- // io.Source.fromFile("/textures/"+ name+".png")
   val is: InputStream = getClass.getResourceAsStream("/textures/"+ name+".png")
   var byteByf: ByteBuffer = _
   var startX:Int = 0

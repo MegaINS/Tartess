@@ -61,9 +61,11 @@ class RenderChunk(var chunk: Chunk){
     private def renderChunk(layer: Int) {
         if (blockRender != 0) if (meshes(layer) ne null) {
             meshes(layer).render
-            //            chunk.chunkTileEntityMap.values.foreach(tileEntity =>
-            //                    GameRegister.getTileEntityRender(tileEntity.getClass).render(tileEntity,world ,textureManager)
-            //            )
+            /*
+                        chunk.chunkTileEntityMap.values.foreach(tileEntity =>
+                                GameRegister.getTileEntityRender(tileEntity.getClass).render(tileEntity,world ,textureManager)
+                        )
+            */
             RenderChunk.chunkRender += 1
         }
     }

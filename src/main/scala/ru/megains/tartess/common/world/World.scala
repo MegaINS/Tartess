@@ -166,10 +166,12 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
     def markAndNotifyBlock(pos: BlockState, chunk: Chunk) {
 
         if (chunk == null || chunk.isPopulated) notifyBlockUpdate(pos)
-        //                if (!isRemote && (flags & 1) != 0) {
-        //                    notifyNeighborsRespectDebug(pos, iblockstate.getBlock)
-        //                  //  if (newState.hasComparatorInputOverride) this.updateComparatorOutputLevel(pos, newState.getBlock)
-        //                }
+        /*
+                        if (!isRemote && (flags & 1) != 0) {
+                            notifyNeighborsRespectDebug(pos, iblockstate.getBlock)
+                          //  if (newState.hasComparatorInputOverride) this.updateComparatorOutputLevel(pos, newState.getBlock)
+                        }
+        */
     }
 
     def notifyBlockUpdate(pos: BlockState) {
@@ -338,7 +340,7 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
 
 
         }
-        null
+            new RayTraceResult()
     }
 
 

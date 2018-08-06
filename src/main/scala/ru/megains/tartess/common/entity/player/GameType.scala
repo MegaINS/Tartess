@@ -2,34 +2,34 @@ package ru.megains.tartess.common.entity.player
 
 sealed abstract class GameType private(val id: Int, val name: String, val shortName: String) {
 
+/*
+        def configurePlayerCapabilities(capabilities: PlayerCapabilities) {
+            if (this eq GameType.CREATIVE) {
+                capabilities.allowFlying = true
+                capabilities.isCreativeMode = true
+                capabilities.disableDamage = true
+            }
+            else if (this eq GameType.SPECTATOR) {
+                capabilities.allowFlying = true
+                capabilities.isCreativeMode = false
+                capabilities.disableDamage = true
+                capabilities.isFlying = true
+            }
+            else {
+                capabilities.allowFlying = false
+                capabilities.isCreativeMode = false
+                capabilities.disableDamage = false
+                capabilities.isFlying = false
+            }
+            capabilities.allowEdit = !this.isAdventure
+        }
+*/
 
-    //    def configurePlayerCapabilities(capabilities: PlayerCapabilities) {
-    //        if (this eq GameType.CREATIVE) {
-    //            capabilities.allowFlying = true
-    //            capabilities.isCreativeMode = true
-    //            capabilities.disableDamage = true
-    //        }
-    //        else if (this eq GameType.SPECTATOR) {
-    //            capabilities.allowFlying = true
-    //            capabilities.isCreativeMode = false
-    //            capabilities.disableDamage = true
-    //            capabilities.isFlying = true
-    //        }
-    //        else {
-    //            capabilities.allowFlying = false
-    //            capabilities.isCreativeMode = false
-    //            capabilities.disableDamage = false
-    //            capabilities.isFlying = false
-    //        }
-    //        capabilities.allowEdit = !this.isAdventure
-    //    }
 
 
-   // def isAdventure: Boolean = (this eq GameType.ADVENTURE) || (this eq GameType.SPECTATOR)
+    def isCreative: Boolean = this == GameType.CREATIVE
 
-    def isCreative: Boolean = this eq GameType.CREATIVE
-
-    def isSurvival/*OrAdventure*/: Boolean = /*(*/this eq GameType.SURVIVAL//)// || (this eq GameType.ADVENTURE)
+    def isSurvival: Boolean = this == GameType.SURVIVAL
 }
 
 
@@ -59,9 +59,7 @@ object GameType {
 
     case object CREATIVE extends GameType(1, "creative", "c")
 
-//    case object ADVENTURE extends GameType(2, "adventure", "a")
-//
-//    case object SPECTATOR extends GameType(3, "spectator", "sp")
+
 
 
 }

@@ -4,6 +4,8 @@ import ru.megains.tartess.client.module.NEI.CPacketNEI
 import ru.megains.tartess.common.network.packet.play.client._
 
 trait INetHandlerPlayServer extends INetHandler {
+    def processPlayerMouse(packetIn: CPacketPlayerMouse): Unit
+
     def processNEI(packetIn: CPacketNEI): Unit
 
 
@@ -11,7 +13,7 @@ trait INetHandlerPlayServer extends INetHandler {
 
     def processPlayer(packetIn: CPacketPlayer): Unit
 
-    def processPlayerDigging(packetIn: CPacketPlayerDigging): Unit
+  //  def processPlayerDigging(packetIn: CPacketPlayerDigging): Unit
 
     def processHeldItemChange(packetIn: CPacketHeldItemChange): Unit
 

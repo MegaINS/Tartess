@@ -62,7 +62,7 @@ abstract class Container {
                     }
                 }
             case 1 =>
-                if (inventoryPlayer.itemStack ne null) {
+                if (inventoryPlayer.itemStack != null) {
                     if (slot.isEmpty) {
                         slot.putStack(inventoryPlayer.itemStack.splitStack(1))
                     } else if (slot.getStack.item == inventoryPlayer.itemStack.item) {

@@ -41,31 +41,32 @@ class BoundingBoxes(val hashSet: mutable.HashSet[BoundingBox]){
         minZ
     }
 
+/*
+    def getCopy = new BoundingBoxes(minX, minY, minZ, maxX, maxY, maxZ)
+    def sum(x: Int, y: Int, z: Int) = new BoundingBoxes(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z)
 
-//    def getCopy = new BoundingBoxes(minX, minY, minZ, maxX, maxY, maxZ)
-//    def sum(x: Int, y: Int, z: Int) = new BoundingBoxes(minX + x, minY + y, minZ + z, maxX + x, maxY + y, maxZ + z)
-//
-//    def getSidePos(side: BlockDirection): BlockSidePos = {
-//        side match {
-//            case BlockDirection.EAST =>
-//                new BlockSidePos(maxX, minY, minZ, maxX, maxY - 1, maxZ - 1)
-//            case BlockDirection.WEST =>
-//                new BlockSidePos(minX, minY, minZ, minX, maxY - 1, maxZ - 1)
-//            case BlockDirection.SOUTH =>
-//                new BlockSidePos(minX, minY, maxZ, maxX - 1, maxY - 1, maxZ)
-//            case BlockDirection.NORTH =>
-//                new BlockSidePos(minX, minY, minZ, maxX - 1, maxY - 1, minZ)
-//            case BlockDirection.DOWN =>
-//                new BlockSidePos(minX, minY, minZ, maxX - 1, minY, maxZ - 1)
-//            case BlockDirection.UP =>
-//                new BlockSidePos(minX, maxY, minZ, maxX - 1, maxY, maxZ - 1)
-//            case _ =>
-//                null
-//
-//        }
-//
-//    }
-//
+    def getSidePos(side: BlockDirection): BlockSidePos = {
+        side match {
+            case BlockDirection.EAST =>
+                new BlockSidePos(maxX, minY, minZ, maxX, maxY - 1, maxZ - 1)
+            case BlockDirection.WEST =>
+                new BlockSidePos(minX, minY, minZ, minX, maxY - 1, maxZ - 1)
+            case BlockDirection.SOUTH =>
+                new BlockSidePos(minX, minY, maxZ, maxX - 1, maxY - 1, maxZ)
+            case BlockDirection.NORTH =>
+                new BlockSidePos(minX, minY, minZ, maxX - 1, maxY - 1, minZ)
+            case BlockDirection.DOWN =>
+                new BlockSidePos(minX, minY, minZ, maxX - 1, minY, maxZ - 1)
+            case BlockDirection.UP =>
+                new BlockSidePos(minX, maxY, minZ, maxX - 1, maxY, maxZ - 1)
+            case _ =>
+                null
+
+        }
+
+    }
+
+    */
     def pointIsCube(x: Int, y: Int, z: Int): Boolean = hashSet.exists(_.pointIsCube(x,y,z))
 
 }

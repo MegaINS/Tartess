@@ -42,17 +42,17 @@ class AABB( var minX:Float = .0f,
         this.maxY = aabb.maxY
         this.maxZ = aabb.maxZ
     }
-
-//    def expand(x: Float, y: Float, z: Float): AABB = {
-//        val d0 = this.minX - x
-//        val d1 = this.minY - y
-//        val d2 = this.minZ - z
-//        val d3 = this.maxX + x
-//        val d4 = this.maxY + y
-//        val d5 = this.maxZ + z
-//        new AABB(d0, d1, d2, d3, d4, d5)
-//    }
-
+/*
+    def expand(x: Float, y: Float, z: Float): AABB = {
+        val d0 = this.minX - x
+        val d1 = this.minY - y
+        val d2 = this.minZ - z
+        val d3 = this.maxX + x
+        val d4 = this.maxY + y
+        val d5 = this.maxZ + z
+        new AABB(d0, d1, d2, d3, d4, d5)
+    }
+*/
     def expand(x: Float, y: Float, z: Float): AABB = {
         var x0 = minX
         var y0 = minY
@@ -92,7 +92,7 @@ class AABB( var minX:Float = .0f,
 
     def mul(value:Int): AABB = new AABB(minX * value, minY * value, minZ * value, maxX * value, maxY * value, maxZ * value)
 
-    def calculateIntercept(vecA: Vec3f, vecB: Vec3f): RayTraceResult = {
+    def calculateIntercept(vecA: Vec3f, vecB: Vec3f): (Vec3f,BlockDirection) = {
 
         var enumfacing:BlockDirection = BlockDirection.WEST
 
@@ -123,7 +123,7 @@ class AABB( var minX:Float = .0f,
             enumfacing = BlockDirection.SOUTH
         }
         if (vec3d == null) null
-        else new RayTraceResult(vec3d, enumfacing)
+        else (vec3d, enumfacing)
     }
 
     def checkDistance(vec3f1:Vec3f, vec3f2: Vec3f, vec3f3: Vec3f): Boolean = {

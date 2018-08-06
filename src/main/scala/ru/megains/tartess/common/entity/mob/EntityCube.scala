@@ -68,11 +68,5 @@ class EntityCube() extends EntityLivingBase(1.8f*16, 0.6f*16, 1.6f*16) {
         }
     }
 
-//    override def getItemStackFromSlot: ItemStack = {
-//        null
-//    }
-//
-//    override def setItemStackToSlot(stack: ItemStack): Unit = {
-//
-//    }
+
 }

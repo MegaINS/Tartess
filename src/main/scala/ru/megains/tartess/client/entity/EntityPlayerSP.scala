@@ -36,33 +36,15 @@ class EntityPlayerSP(oc: Tartess, world: World, val connection: NetHandlerPlayCl
     }
 
     override def update() {
-        // if (worldObj.isBlockLoaded(new BlockPos(posX, 0.0D, posZ))) {
+
         super.update()
-        //            if (this.isRiding) {
-        //                this.connection.sendPacket(new CPacketPlayer.Rotation(this.rotationYaw, this.rotationPitch, this.onGround))
-        //                this.connection.sendPacket(new CPacketInput(this.moveStrafing, this.moveForward, this.movementInput.jump, this.movementInput.sneak))
-        //                val entity: Entity = this.getLowestRidingEntity
-        //                if ((entity ne this) && entity.canPassengerSteer) this.connection.sendPacket(new CPacketVehicleMove(entity))
-        //            }
-        //            else
         onUpdateWalkingPlayer()
-        //  }
+
     }
 
 
     def onUpdateWalkingPlayer() {
-        // val flag: Boolean =  isSprinting
-        //        if (flag !=  serverSprintState) {
-        //            if (flag)  connection.sendPacket(new CPacketEntityAction(this, CPacketEntityAction.Action.START_SPRINTING))
-        //            else  connection.sendPacket(new CPacketEntityAction(this, CPacketEntityAction.Action.STOP_SPRINTING))
-        //             serverSprintState = flag
-        //        }
-        // val flag1: Boolean =  isSneaking
-        //        if (flag1 !=  serverSneakState) {
-        //            if (flag1)  connection.sendPacket(new CPacketEntityAction(this, CPacketEntityAction.Action.START_SNEAKING))
-        //            else  connection.sendPacket(new CPacketEntityAction(this, CPacketEntityAction.Action.STOP_SNEAKING))
-        //             serverSneakState = flag1
-        //        }
+
         if (isCurrentViewEntity) {
             val axisalignedbb: AABB = body
             val d0: Double = posX - lastReportedPosX
@@ -73,11 +55,7 @@ class EntityPlayerSP(oc: Tartess, world: World, val connection: NetHandlerPlayCl
             positionUpdateTicks += 1
             val flag2: Boolean = d0 * d0 + d1 * d1 + d2 * d2 > 9.0E-4D || positionUpdateTicks >= 20
             val flag3: Boolean = d3 != 0.0D || d4 != 0.0D
-            //            if ( isRiding) {
-            //                 connection.sendPacket(new CPacketPlayer.PositionRotation( motionX, -999.0D,  motionZ,  rotationYaw,  rotationPitch,  onGround))
-            //                flag2 = false
-            //            }
-            //   else
+
 
             if (flag2 && flag3) connection.sendPacket(new CPacketPlayer.PositionRotation(posX, axisalignedbb.minY, posZ, rotationYaw, rotationPitch, onGround))
             else if (flag2) connection.sendPacket(new CPacketPlayer.Position(posX, axisalignedbb.minY, posZ, onGround))
@@ -94,7 +72,7 @@ class EntityPlayerSP(oc: Tartess, world: World, val connection: NetHandlerPlayCl
                 lastReportedPitch = rotationPitch
             }
             prevOnGround = onGround
-            //   field_189811_cr =  mc.gameSettings.field_189989_R
+
         }
     }
 

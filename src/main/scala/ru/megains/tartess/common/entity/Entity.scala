@@ -217,15 +217,14 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
         posZ = listPos.getFloat(2)
 
-       // prevPosX = posX
-       // prevPosY = posY
-        //prevPosZ = posZ
-       // yRot = listRotation.getFloat(0)
-       // xRot  = listRotation.getFloat(1)
+        prevPosX = posX
+        prevPosY = posY
+        prevPosZ = posZ
+
         rotationYaw = listRotation.getFloat(0)
         rotationPitch = listRotation.getFloat(1)
-      //  prevRotationYaw = rotationYaw
-       // prevRotationPitch = rotationPitch
+        prevRotationYaw = rotationYaw
+        prevRotationPitch = rotationPitch
 
         onGround = compound.getBoolean("OnGround")
         readEntityFromNBT(compound)
@@ -251,8 +250,6 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         val listRotation = compound.createList("Rotation", EnumNBTFloat)
         listRotation.setValue(rotationYaw)
         listRotation.setValue(rotationPitch)
-         //listRotation.setValue(yRot)
-       // listRotation.setValue(xRot)
         compound.setValue("OnGround", onGround)
         writeEntityToNBT(compound)
 

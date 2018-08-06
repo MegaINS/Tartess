@@ -96,19 +96,21 @@ class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessSe
 
         if (!dontLog) log.info("Saving chunks for level \'{}\'/{}")
         world.saveAllChunks(true)
-        //        for (worldserver <- this.worldServers) {
-        //            if (worldserver != null) {
-        //                if (!dontLog) log.info("Saving chunks for level \'{}\'/{}", Array[AnyRef](worldserver.getWorldInfo.getWorldName, worldserver.provider.getDimensionType.getName))
-        //                try
-        //                    worldserver.saveAllChunks(true, null.asInstanceOf[IProgressUpdate])
-        //
-        //                catch {
-        //                    case minecraftexception: MinecraftException => {
-        //                        LOG.warn(minecraftexception.getMessage)
-        //                    }
-        //                }
-        //            }
-        //        }
+        /*
+                for (worldserver <- this.worldServers) {
+                    if (worldserver != null) {
+                        if (!dontLog) log.info("Saving chunks for level \'{}\'/{}", Array[AnyRef](worldserver.getWorldInfo.getWorldName, worldserver.provider.getDimensionType.getName))
+                        try
+                            worldserver.saveAllChunks(true, null.asInstanceOf[IProgressUpdate])
+
+                        catch {
+                            case minecraftexception: MinecraftException => {
+                                LOG.warn(minecraftexception.getMessage)
+                            }
+                        }
+                    }
+                }
+        */
     }
 
     def stopServer(): Unit = {
@@ -121,21 +123,25 @@ class TartessServer(serverDir: Directory) extends Runnable with Logger[TartessSe
 
         if (world != null) {
             log.info("Saving worlds")
-            //            for (worldserver <- this.worldServers) {
-            //                if (worldserver != null) worldserver.disableLevelSaving = false
-            //            }
             saveAllWorlds(false)
+
+
+            /*
+                          for (worldserver <- this.worldServers) {
+                            if (worldserver != null) worldserver.disableLevelSaving = false
+                        }
             //todo  world.flush()
-            //            for (worldserver1 <- this.worldServers) {
-            //                if (worldserver1 != null) {
-            //                    net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new WorldEvent.Unload(worldserver1))
-            //                    worldserver1.flush()
-            //                }
-            //            }
-            //            val tmp: Array[WorldServer] = worldServers
-            //            for (world <- tmp) {
-            //                net.minecraftforge.common.DimensionManager.setWorld(world.provider.getDimension, null, this)
-            //            }
+                        for (worldserver1 <- this.worldServers) {
+                            if (worldserver1 != null) {
+                                net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new WorldEvent.Unload(worldserver1))
+                                worldserver1.flush()
+                            }
+                        }
+                        val tmp: Array[WorldServer] = worldServers
+                        for (world <- tmp) {
+                            net.minecraftforge.common.DimensionManager.setWorld(world.provider.getDimension, null, this)
+                        }
+            */
         }
     }
 

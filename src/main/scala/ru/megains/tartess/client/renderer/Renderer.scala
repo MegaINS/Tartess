@@ -32,7 +32,6 @@ class Renderer(val tar: Tartess) {
     var guiShaderProgram = new GuiShaderProgram
     val dirLight = new DirLight
     var isLight = true
-   // var mesh:Mesh = _
 
 
     def init() {
@@ -48,25 +47,25 @@ class Renderer(val tar: Tartess) {
         dirLight.specular.set(0)
         dirLight.shininess = 32
 
+/*
+        val mm = MeshMaker
 
-//        val mm = MeshMaker
-//
-//        mm.startMakeTriangles()
-//
-//
-//        mm.setCurrentIndex()
-        //mm.addColor(Color.ORANGE)
-//        mm.addVertex(0, 0, -20)
-//        mm.addVertex(0, 16, -20)
-//        mm.addVertex(16, 0, -20)
-//        mm.addVertex(16, 16, -20)
-//        mm.addVertex(8, 8, -20)
-//        mm.addIndex(1, 0, 4)
-//        mm.addIndex(4, 0, 2)
-//        mm.addIndex(4, 2, 3)
-//        mm.addIndex(3, 1, 4)
-//        mesh = mm.makeMesh()
+        mm.startMakeTriangles()
 
+
+        mm.setCurrentIndex()
+        mm.addColor(Color.ORANGE)
+        mm.addVertex(0, 0, -20)
+        mm.addVertex(0, 16, -20)
+        mm.addVertex(16, 0, -20)
+        mm.addVertex(16, 16, -20)
+        mm.addVertex(8, 8, -20)
+        mm.addIndex(1, 0, 4)
+        mm.addIndex(4, 0, 2)
+        mm.addIndex(4, 2, 3)
+        mm.addIndex(3, 1, 4)
+        mesh = mm.makeMesh()
+*/
     }
 
     def setupSceneShader():Unit = {
@@ -109,14 +108,15 @@ class Renderer(val tar: Tartess) {
 
         RenderChunk.clearRend()
 
+/*
+        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
+        mesh.render
 
-//        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,0)))
-//        mesh.render
-//
-//
-//
-//        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,1)))
-//        mesh.render
+
+
+        sceneShaderProgram.setUniform("model",  transformation.buildChunkModelViewMatrix(new ChunkPosition(0,0,1)))
+        mesh.render
+        */
         worldRenderer.getRenderChunks(tar.player).foreach((renderChunk: RenderChunk) => {
             if(frustum.chunkInFrustum(renderChunk.chunk.position)){
                 Renderer.currentShaderProgram.setUniform("model", transformation.buildChunkModelViewMatrix(renderChunk.chunk.position))

@@ -45,7 +45,7 @@ class CPacketPlayerDigging() extends Packet[INetHandlerPlayServer] {
       * Passes this Packet on to the NetHandler for processing.
       */
     def processPacket(handler: INetHandlerPlayServer) {
-        handler.processPlayerDigging(this)
+       // handler.processPlayerDigging(this)
     }
 
 

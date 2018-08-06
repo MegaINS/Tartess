@@ -11,10 +11,10 @@ import ru.megains.tartess.server.network.handler.NetHandlerPlayServer
 import ru.megains.tartess.server.world.WorldServer
 import ru.megains.tartess.server.{PlayerInteractionManager, TartessServer}
 
-class EntityPlayerMP(name: String, world: World, val interactionManager: PlayerInteractionManager) extends EntityPlayer(name: String) {
-    setWorld(world)
+class EntityPlayerMP(name: String, val interactionManager: PlayerInteractionManager) extends EntityPlayer(name: String) {
 
-    val ocServer = getWorldServer.server
+
+    //val ocServer = getWorldServer.server
     interactionManager.thisPlayerMP = this
     var connection: NetHandlerPlayServer = _
     var managedPosZ: Double = .0
@@ -26,10 +26,7 @@ class EntityPlayerMP(name: String, world: World, val interactionManager: PlayerI
     def setGameType(gameType: GameType) {
         interactionManager.setGameType(gameType)
         this.connection.sendPacket(new SPacketChangeGameState(3, gameType.id))
-        //    if (gameType eq GameType.SPECTATOR) this.dismountRidingEntity()
-        //  else this.setSpectatingEntity(this)
-        //  this.sendPlayerAbilities()
-        //  this.markPotionsDirty()
+
     }
 
 

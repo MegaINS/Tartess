@@ -37,7 +37,6 @@ class RenderBlockGrass(block:Block) extends TRenderBlock{
         var isRender = false
 
         val pos = blockState.pos
-        val block = blockState.block
         val aabb:AABB = blockState.getBlockBody.hashSet.last.div(16).sum(pos.rendX, pos.rendY, pos.rendZ)
         val minX = aabb.minX
         val minY = aabb.minY

@@ -6,7 +6,7 @@ import ru.megains.tartess.common.entity.Entity
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.physics.{AABBs, BoundingBoxes}
-import ru.megains.tartess.common.utils.{RayTraceResult, Vec3f}
+import ru.megains.tartess.common.utils.{RayTraceResult, RayTraceType, Vec3f}
 import ru.megains.tartess.common.world.World
 
 import scala.language.postfixOps
@@ -15,20 +15,12 @@ abstract class Block(val name:String) {
 
 
     val mass = 1
-   // var texture: TextureAtlas = _
     val blockBodies:AABBs
     val boundingBoxes:BoundingBoxes
     val airState = new BlockState(this,new BlockPos(0,0,0))
 
     def isOpaqueCube = true
 
-//    def registerTexture(textureRegister: TTextureRegister): Unit = {
-//        texture = textureRegister.registerTexture(name)
-//    }
-//
-//    def getATexture(blockState: BlockState,blockDirection: BlockDirection,world: World ): TextureAtlas = texture
-//
-//    def getATexture(pos: BlockPos = null,blockDirection: BlockDirection = BlockDirection.UP,world: World = null): TextureAtlas = texture
 
     def getSelectedBoundingBox(blockState: BlockState): BoundingBoxes  = getBoundingBox(blockState).sum(blockState.pos.x, blockState.pos.y, blockState.pos.z)
 
@@ -42,14 +34,10 @@ abstract class Block(val name:String) {
         val pos = blockState.pos
         val vec3d: Vec3f = new Vec3f(start.x , start.y , start.z ).sub(pos.x, pos.y, pos.z)
         val vec3d1: Vec3f = new Vec3f(end.x , end.y , end.z ).sub(pos.x, pos.y, pos.z)
-        var res:RayTraceResult = getBlockBody(blockState).calculateIntercept(vec3d, vec3d1 )
+        val res = getBlockBody(blockState).calculateIntercept(vec3d, vec3d1 )
 
-        if (res != null) {
-            res =  new RayTraceResult(res.hitVec.add(pos.x, pos.y, pos.z), res.sideHit, pos, this)
-        }
-
-        res
-
+        if (res != null) new RayTraceResult(RayTraceType.BLOCK, res._1.add(pos.x, pos.y, pos.z), res._2, pos, this)
+        else new RayTraceResult()
     }
 
     def onBlockActivated(world: World, pos: BlockPos, player: EntityPlayer, itemStack: ItemPack, blockDirection:BlockDirection, float1: Float, float2: Float,float3: Float): Boolean = {

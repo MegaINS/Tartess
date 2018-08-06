@@ -53,30 +53,11 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
         val blockStorage: BlockStorage = new BlockStorage(position)
         val blocksId = blockStorage.blocksId
 
-       // val blocksHp = blockStorage.blocksHp
-       // val multiBlockStorage = blockStorage.multiBlockStorage
         for (i <- 0 until 4096) {
             blocksId(i) = buf.readShort()
-           // blocksHp(i) = buf.readInt()
+
         }
 
-//        val sizeMultiBlock = buf.readInt()
-//        for (_ <- 0 until sizeMultiBlock) {
-//
-//            val posMultiBlock = buf.readInt()
-//            val multiBlock = new MultiBlock()
-//            val blockData = multiBlock.blockData
-//
-//            val sizeBlock = buf.readInt()
-//            for (_ <- 0 until sizeBlock) {
-//
-//                val posBlock = buf.readInt()
-//                val blockId = buf.readInt()
-//                val blockHp = buf.readInt()
-//                blockData += MultiBlockPos.getForIndex(posBlock) -> (Blocks.getBlockById(blockId), blockHp)
-//            }
-//            multiBlockStorage.put(posMultiBlock, multiBlock)
-//        }
 
         val sizeBlocks = buf.readInt()
 
@@ -86,14 +67,9 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
             val blockSell = new BlockCell(position)
             blockStorage.containers += index.toShort -> blockSell
 
-            //val blockSellNBT = blockSellsNBT.getCompound(i)
-            //val blocks = blockSellNBT.getInt("blocks")
-           // val blockStatesNBT = blockSellNBT.getList("blockStates")
-
             val blocks = buf.readInt()
             for(_ <- 0 until blocks){
 
-               // val blockStateNBT = blockStatesNBT.getCompound(i)
                 val id = buf.readInt()
                 val side = buf.readInt()
                 val x = buf.readInt()
@@ -138,57 +114,23 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
     def writeChunk(buf: PacketBuffer): Unit = {
 
         val blocksId = blockStorage.blocksId
-      //  val blockHp = blockStorage.blocksHp
         for (i <- 0 until 4096) {
             buf.writeShort(blocksId(i))
-           // buf.writeInt(blockHp(i))
+
         }
 
 
-//        val multiBlockStorage = blockStorage.multiBlockStorage
-//
-//        //Колличество мультиБлоков
-//        buf.writeInt(multiBlockStorage.size)
-//
-//
-//        multiBlockStorage.foreach(
-//            (data: (Int, MultiBlock)) => {
-//                //Координаты мультиБлока
-//                buf.writeInt(data._1)
-//
-//                val blockData = data._2.blockData
-//                //Колличество блоков в мультиБлоке
-//                buf.writeInt(blockData.size)
-//
-//                blockData.foreach(
-//                    (data2: (MultiBlockPos, (Block, Int))) => {
-//                        //Координаты блока
-//                        buf.writeInt(data2._1.getIndex)
-//                        //Id блока
-//                        buf.writeInt(Blocks.getIdByBlock(data2._2._1))
-//                        //Hp блока
-//                        buf.writeInt(data2._2._2)
-//                    }
-//                )
-//            }
-//        )
         val containers = blockStorage.containers
-        //Колличество
+
         buf.writeInt(containers.size)
 
         containers.foreach {
             case (index, blockSell) =>
-                //Координаты
+
                 buf.writeInt(index)
 
-               // posList.setValue(index)
-                //Колличество блоков в мультиБлоке
                 buf.writeInt(blockSell.blocks.size)
-                //val blockSellNBT = blockSellsNBT.createCompound()
 
-                //blockSellNBT.setValue("blocks", blockSell.blocks.size)
-
-              //  val blockStatesNBT = blockSellNBT.createList("blockStates", EnumNBTCompound)
                 blockSell.blocks.foreach {
                     blockState =>
                         buf.writeInt(Blocks.getIdByBlock(blockState.block))
@@ -196,13 +138,6 @@ class SPacketChunkData extends Packet[INetHandlerPlayClient] {
                         buf.writeInt(blockState.pos.x)
                         buf.writeInt( blockState.pos.y)
                         buf.writeInt(blockState.pos.z)
-
-                       // val blockStateNBT = blockStatesNBT.createCompound()
-                       // blockStateNBT.setValue("id", Blocks.getIdByBlock(blockState.block))
-                       // blockStateNBT.setValue("side", blockState.blockDirection.id)
-                       // blockStateNBT.setValue("x", blockState.pos.x)
-                       // blockStateNBT.setValue("y", blockState.pos.y)
-                       // blockStateNBT.setValue("z", blockState.pos.z)
                 }
         }
 

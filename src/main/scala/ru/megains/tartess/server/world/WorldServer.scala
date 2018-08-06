@@ -7,7 +7,7 @@ import ru.megains.tartess.server.{EntityTracker, PlayerChunkMap, TartessServer}
 
 class WorldServer(val server:TartessServer,val saveHandler:AnvilSaveHandler) extends World(saveHandler){
 
-    val spawnPoint: BlockPos = new BlockPos(0, 20, 0)
+    val spawnPoint: BlockPos = new BlockPos(0, 20*16, 0)
     val playerManager: PlayerChunkMap = new PlayerChunkMap(this)
     val entityTracker: EntityTracker = new EntityTracker(this)
     var disableLevelSaving: Boolean = false

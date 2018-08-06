@@ -79,31 +79,31 @@ class GuiManager(val tar: Tartess) {
         guiInGame.getOrElse(name, null)
     }
 
-    def handleInput(): Unit = {
-//                while (Mouse.next()) {
-//
-//                    val x = Mouse.getX
-//                    val y = Mouse.getY
-//                    val button = Mouse.getEventButton
-//                    val buttonState = Mouse.getEventButtonState
-//                    if (button == -1) {
-//                        guiScreen.mouseClickMove(x, y)
-//                    } else if (buttonState) {
-//                        guiScreen.mouseClicked(x, y, button, orangeCraft.player)
-//                    } else {
-//                        guiScreen.mouseReleased(x, y, button)
-//                    }
-//                }
-//
-//
-//
-//                while (Keyboard.next()) {
-//                    if (Keyboard.getEventKeyState) {
-//                        guiScreen.keyTyped(Keyboard.getEventCharacter, Keyboard.getEventKey)
-//                    }
-//
-//
-//                }
+    def handleInput(): Unit = {/*
+                while (Mouse.next()) {
+
+                    val x = Mouse.getX
+                    val y = Mouse.getY
+                    val button = Mouse.getEventButton
+                    val buttonState = Mouse.getEventButtonState
+                    if (button == -1) {
+                        guiScreen.mouseClickMove(x, y)
+                    } else if (buttonState) {
+                        guiScreen.mouseClicked(x, y, button, orangeCraft.player)
+                    } else {
+                        guiScreen.mouseReleased(x, y, button)
+                    }
+                }
+
+
+
+                while (Keyboard.next()) {
+                    if (Keyboard.getEventKeyState) {
+                        guiScreen.keyTyped(Keyboard.getEventCharacter, Keyboard.getEventKey)
+                    }
+
+
+                }*/
     }
 
     def runTickKeyboard(key: Int, action: Int, mods: Int): Unit = {
