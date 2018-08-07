@@ -6,12 +6,12 @@ import ru.megains.tartess.common.block.Block
 import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.client.renderer.gui.base.GuiInGame
-import ru.megains.tartess.common.utils.{RayTraceResult, Vec3f}
+import ru.megains.tartess.common.utils.{RayTraceResult, RayTraceType, Vec3f}
 
 
 class GuiBlockSelect extends GuiInGame with GuiText {
 
-    var ray: RayTraceResult = _
+    var ray: RayTraceResult = new RayTraceResult()
     var blockSelect: Block = _
 
     override def initGui(): Unit = {
@@ -28,7 +28,7 @@ class GuiBlockSelect extends GuiInGame with GuiText {
     override def tick(): Unit = {
         if (tar.objectMouseOver != ray) {
             ray = tar.objectMouseOver
-            if (ray  != null) {
+            if (ray.rayTraceType  == RayTraceType.BLOCK) {
                 val posB: BlockPos = ray.blockPos
                 val vec: Vec3f = ray.hitVec
 
@@ -44,7 +44,7 @@ class GuiBlockSelect extends GuiInGame with GuiText {
     }
 
     override def drawScreen(mouseX: Int, mouseY: Int): Unit = {
-        if (ray ne null) {
+        if (ray.rayTraceType  == RayTraceType.BLOCK) {
             val weight = tar.window.width / 2 - 100
             val height = tar.window.height
             drawObject(weight, height - 20, 1, text("Block.name"))

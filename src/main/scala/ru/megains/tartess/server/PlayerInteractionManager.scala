@@ -2,15 +2,17 @@ package ru.megains.tartess.server
 
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
-import ru.megains.tartess.common.item.Item
+import ru.megains.tartess.common.item.{Item, ItemBlock}
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.network.packet.play.server.SPacketBlockChange
 import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
-import ru.megains.tartess.common.utils.{ActionResult, EnumActionResult}
+import ru.megains.tartess.common.utils.{ActionResult, EnumActionResult, RayTraceResult}
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.server.entity.EntityPlayerMP
 
 class PlayerInteractionManager(world: World) {
+
+
 
     var thisPlayerMP: EntityPlayerMP = _
     var blockReachDistance: Double = 5.0d *16
@@ -121,6 +123,30 @@ class PlayerInteractionManager(world: World) {
 
     }
 
+    def processRightClickBlock(rayTrace: RayTraceResult): Unit = {
 
+
+        val itemstack: ItemPack = thisPlayerMP.getHeldItem
+        val block: BlockState = world.getBlock(rayTrace.blockPos)
+
+        if (block.onBlockActivated(world, rayTrace.blockPos, thisPlayerMP, itemstack, rayTrace.sideHit, rayTrace.hitVec.x, rayTrace.hitVec.y, rayTrace.hitVec.z)){
+
+        }else{
+            itemstack.item match {
+                case itemBlock:ItemBlock =>
+                    val blockState = itemBlock.block.getSelectPosition(world, thisPlayerMP, rayTrace)
+                    if(blockState!=null){
+                        itemstack.onItemUse(thisPlayerMP, world,blockState, rayTrace.sideHit, rayTrace.hitVec.x, rayTrace.hitVec.y, rayTrace.hitVec.z)
+                        thisPlayerMP.connection.sendPacket(new SPacketBlockChange(world, blockState.pos))
+                    }
+
+                case _ => itemstack.useItemRightClick(world, thisPlayerMP)
+            }
+
+
+        }
+
+
+    }
 }
 

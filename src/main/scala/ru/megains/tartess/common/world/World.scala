@@ -63,6 +63,9 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
 
     }
     def getBlock(blockPos: BlockPos): BlockState = {
+        if(blockPos== null){
+            blockPos.x
+        }
         if (!blockPos.isValid(this)) {
             return Blocks.air.airState
         }
@@ -234,7 +237,7 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
         var i1: Int = MathHelper.floor_double(vec31.y)
         var j1: Int = MathHelper.floor_double(vec31.z)
         var blockpos: BlockPos = null
-        val raytraceresult2: RayTraceResult = null
+        val raytraceresult2: RayTraceResult = new RayTraceResult()
         var chunk:Chunk = null
 
         var xBS,yBS,zBS = 0
@@ -242,7 +245,7 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
         while (k1 >=0) {
             k1-=1
             if (l == i && i1 == j && j1 == k) {
-                return if (returnLastUncollidableBlock) raytraceresult2 else null
+                return if (returnLastUncollidableBlock) raytraceresult2 else new RayTraceResult()
             }
             var flag2: Boolean = true
             var flag: Boolean = true

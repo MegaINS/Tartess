@@ -12,7 +12,7 @@ import ru.megains.tartess.client.renderer.light.DirLight
 import ru.megains.tartess.client.renderer.shader.{GuiShaderProgram, LightShaderProgram, SceneShaderProgram, ShaderProgram}
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
-import ru.megains.tartess.common.utils.MathHelper
+import ru.megains.tartess.common.utils.{MathHelper, RayTraceType}
 
 class Renderer(val tar: Tartess) {
 
@@ -136,13 +136,13 @@ class Renderer(val tar: Tartess) {
             worldRenderer.renderBlockSelect()
         }else{
             val objectMouseOver = tar.objectMouseOver
-            if (objectMouseOver != null) {
+            if (objectMouseOver.rayTraceType == RayTraceType.BLOCK) {
                 Renderer.currentShaderProgram.setUniform("model", transformation.buildObjectMouseOverViewMatrix(objectMouseOver.blockPos))
                 worldRenderer.renderBlockMouseOver()
             }
         }
         val objectMouseOver = tar.objectMouseOver
-        if(objectMouseOver != null){
+        if(objectMouseOver.rayTraceType == RayTraceType.BLOCK){
             val ve3f =objectMouseOver.hitVec
             Renderer.currentShaderProgram.setUniform("model", transformation.buildViewMatrix(
                 MathHelper.floor_double( objectMouseOver.blockPos.x + (ve3f.x-objectMouseOver.blockPos.x)),

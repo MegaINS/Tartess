@@ -7,9 +7,9 @@ import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.network.packet.play.server.{SPacketChangeGameState, SPacketSetSlot, SPacketWindowItems}
 import ru.megains.tartess.common.tileentity.ATileEntityInventory
 import ru.megains.tartess.common.world.World
+import ru.megains.tartess.server.PlayerInteractionManager
 import ru.megains.tartess.server.network.handler.NetHandlerPlayServer
 import ru.megains.tartess.server.world.WorldServer
-import ru.megains.tartess.server.{PlayerInteractionManager, TartessServer}
 
 class EntityPlayerMP(name: String, val interactionManager: PlayerInteractionManager) extends EntityPlayer(name: String) {
 
@@ -33,9 +33,9 @@ class EntityPlayerMP(name: String, val interactionManager: PlayerInteractionMana
     def getWorldServer: WorldServer = world.asInstanceOf[WorldServer]
 
 
-    def markPlayerActive() {
-        playerLastActiveTime = TartessServer.getCurrentTimeMillis
-    }
+//    def markPlayerActive() {
+//        playerLastActiveTime = TartessServer.getCurrentTimeMillis
+//    }
 
     def addSelfToInternalCraftingInventory() {
         openContainer.addListener(this)

@@ -61,7 +61,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
     var fontRender:FontRender =_
     var itemRender:ItemRender = _
     var playerController:PlayerControllerMP = _
-    var objectMouseOver: RayTraceResult = _
+    var objectMouseOver: RayTraceResult = new RayTraceResult()
 
     var blockSelectPosition: BlockState = _
     val futureTaskQueue: mutable.Queue[()=>Unit] = new mutable.Queue[()=>Unit]
@@ -286,7 +286,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
 
             objectMouseOver = player.rayTrace(20*16, 0.1f)
 
-            if (objectMouseOver != null) {
+            if (objectMouseOver.rayTraceType == RayTraceType.BLOCK) {
                 worldRenderer.updateBlockMouseOver( world.getBlock(objectMouseOver.blockPos))
 
                 val stack: ItemPack = player.inventory.getStackSelect
@@ -330,7 +330,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
 
 
         if (button == 1 && buttonState) {
-            rightClickMouse()
+           // rightClickMouse()
             playerController.rightClickMouse()
         }
 

@@ -234,7 +234,7 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
     override def processHeldItemChange(packetIn: CPacketHeldItemChange) {
         if (packetIn.slotId >= 0 && packetIn.slotId < InventoryPlayer.hotBarSize) {
             playerEntity.inventory.stackSelect = packetIn.slotId
-            playerEntity.markPlayerActive()
+          //  playerEntity.markPlayerActive()
         }
         else log.warn("{} tried to set an invalid carried item", Array[AnyRef](playerEntity.name))
     }
@@ -244,7 +244,7 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         val worldserver: WorldServer = server.world
 
         var itemstack: ItemPack = this.playerEntity.getHeldItem
-        playerEntity.markPlayerActive()
+       // playerEntity.markPlayerActive()
         if (itemstack != null) {
             playerEntity.interactionManager.processRightClick(playerEntity, worldserver, itemstack)
             itemstack = this.playerEntity.getHeldItem
@@ -256,25 +256,18 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
     }
 
     def processRightClickBlock(packetIn: CPacketPlayerTryUseItemOnBlock) {
-              val worldserver: WorldServer = server.world
 
+        val worldserver: WorldServer = server.world
         var itemstack: ItemPack = this.playerEntity.getHeldItem
         val posMouseOver: BlockPos = packetIn.posMouseOver
         val posBlockSet: BlockState = packetIn.posBlockSet
         val enumfacing: BlockDirection = packetIn.placedBlockDirection
-        playerEntity.markPlayerActive()
-        //  if (/*blockpos.getY < this.serverController.getBuildLimit - 1 ||*/ /*(enumfacing ne EnumFacing.UP) &&*/ blockpos.getY < this.serverController.getBuildLimit) {
-        var dist: Double = playerEntity.interactionManager.getBlockReachDistance + 3
-        dist *= dist
-        //  if (targetPos == null && playerEntity.getDistanceSq(blockpos.getX.toDouble + 0.5D, blockpos.getY.toDouble + 0.5D, blockpos.getZ.toDouble + 0.5D) < dist && !this.serverController.isBlockProtected(worldserver, blockpos, this.playerEntity) && worldserver.getWorldBorder.contains(blockpos))
+       // playerEntity.markPlayerActive()
+        //var dist: Double = playerEntity.interactionManager.getBlockReachDistance + 3
+        //dist *= dist
+
         playerEntity.interactionManager.processRightClickBlock(this.playerEntity, worldserver, itemstack, posMouseOver, posBlockSet, enumfacing, packetIn.facingX, packetIn.facingY, packetIn.facingZ)
-        // }
-        // else {
-        //  val textcomponenttranslation: TextComponentTranslation = new TextComponentTranslation("build.tooHigh", Array[AnyRef](Integer.valueOf(this.serverController.getBuildLimit)))
-        //  textcomponenttranslation.getStyle.setColor(TextFormatting.RED)
-        //  this.playerEntity.connection.sendPacket(new SPacketChat(textcomponenttranslation))
-        //  }
-       // playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posMouseOver))
+
         if(posBlockSet != null){
             playerEntity.connection.sendPacket(new SPacketBlockChange(worldserver, posBlockSet.pos))
         }
@@ -326,6 +319,16 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
 
 
             case 1 =>
+                val rayTrace = playerEntity.rayTrace(20*16, 0.1f)
+
+                rayTrace.rayTraceType match {
+                    case RayTraceType.VOID  =>
+                    case RayTraceType.BLOCK  =>
+
+                       playerEntity.interactionManager.processRightClickBlock(rayTrace)
+
+                    case RayTraceType.ENTITY  =>
+                }
             case _=> log.info(s"${playerEntity.name} click mouse button ${packetIn.button}")
         }
     }

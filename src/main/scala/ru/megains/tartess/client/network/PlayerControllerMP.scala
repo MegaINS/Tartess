@@ -19,6 +19,9 @@ class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
     var isHittingBlock: Boolean = false
     var blockHitDelay: Int = 0
     var currentPlayerItem: Int = 0
+
+    var currentGameType: GameType = GameType.CREATIVE
+
     def setGameType(gameType: GameType): Unit = {
         currentGameType = gameType
     }
@@ -31,23 +34,13 @@ class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
     }
 
 
-    var currentGameType: GameType = GameType.CREATIVE
+
 
 
     def rightClickMouse(): Unit = {
         net.sendPacket(new CPacketPlayerMouse(1,0))
     }
-//    def clickBlock(loc: BlockPos, face: BlockDirection): Boolean = {
-//
-//        if (currentGameType.isCreative) {
-//            net.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, loc, face))
-//
-//            //todo clickBlockCreative(this, loc)
-//            blockHitDelay = 5
-//        }
-//
-//        true
-//    }
+
     def leftClickMouse(): Unit = {
         net.sendPacket(new CPacketPlayerMouse(0,0))
     }
@@ -109,9 +102,22 @@ class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
             net.sendPacket(new CPacketHeldItemChange(currentPlayerItem))
         }
     }
+    def windowClick(x: Int, y: Int, button: Int, player: EntityPlayer): Unit = {
+        player.openContainer.mouseClicked(x, y, button, player)
+        net.sendPacket(new CPacketClickWindow(x, y, button))
+    }
 
-
-
+    //    def clickBlock(loc: BlockPos, face: BlockDirection): Boolean = {
+    //
+    //        if (currentGameType.isCreative) {
+    //            net.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, loc, face))
+    //
+    //            //todo clickBlockCreative(this, loc)
+    //            blockHitDelay = 5
+    //        }
+    //
+    //        true
+    //    }
 
 //    def resetBlockRemoving() {
 //
@@ -156,8 +162,5 @@ class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
 //
 //    }
 
-    def windowClick(x: Int, y: Int, button: Int, player: EntityPlayer): Unit = {
-        player.openContainer.mouseClicked(x, y, button, player)
-        net.sendPacket(new CPacketClickWindow(x, y, button))
-    }
+
 }
