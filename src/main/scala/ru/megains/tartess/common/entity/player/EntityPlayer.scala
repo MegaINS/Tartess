@@ -16,11 +16,12 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
 
 
 
-    var openContainer: Container = _
+
     val inventory = new InventoryPlayer(this)
+
     val inventoryContainer: Container = new ContainerPlayerInventory(inventory)
+    var openContainer: Container = inventoryContainer
     var gameType:GameType = GameType.SURVIVAL
-    openContainer = inventoryContainer
     def turn(xo: Float, yo: Float) {
         rotationYaw += yo * 0.15f
         rotationPitch += xo * 0.15f

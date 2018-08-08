@@ -9,9 +9,7 @@ import ru.megains.tartess.server.TartessServer
 class NetHandlerStatusServer(val server: TartessServer, val networkManager: NetworkManager) extends INetHandlerStatusServer {
     private var handled: Boolean = false
 
-    /**
-      * Invoked when disconnecting, the parameter is a ChatComponent describing the reason for termination
-      */
+
     def onDisconnect(reason: String) {
     }
 

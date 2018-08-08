@@ -126,7 +126,8 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends Inventory {
 
             if (itemStack != null) {
                 compound.setValue("id", Item.getIdFromItem(itemStack.item))
-                compound.setValue("stackSize", itemStack.stackSize)
+                compound.setValue("sizeOrMass", if(itemStack.item.itemType!= ItemType.MASS) itemStack.stackSize else itemStack.stackMass)
+
             } else {
                 compound.setValue("id", -1)
             }
@@ -139,7 +140,7 @@ class InventoryPlayer(val entityPlayer: EntityPlayer) extends Inventory {
             val compound = inventory.getCompound(i)
             val id: Int = compound.getInt("id")
             if (id != -1) {
-                val itemStack = new ItemPack(Item.getItemById(id), compound.getInt("stackSize"))
+                val itemStack = new ItemPack(Item.getItemById(id), compound.getInt("sizeOrMass"))
                 mainInventory(i) = itemStack
             }
         }

@@ -51,7 +51,7 @@ class BlockStorage(position: ChunkPosition) {
         val index = getIndex(x1,y1,z1)
         blocksId(index) match {
             case -1 => containers(index).collisionRayTrace( world, vec31, vec32)
-            case 0 => null
+            case 0 => new RayTraceResult()
             case id => new BlockState(Blocks.getBlockById(id),new BlockPos(position.minXP +(x1<<4),position.minYP  +(y1<<4),position.minZP +(z1<<4))).collisionRayTrace( world, vec31, vec32)
         }
     }

@@ -13,14 +13,13 @@ import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.client.renderer.{Camera, Renderer}
 import ru.megains.tartess.client.world.WorldClient
 import ru.megains.tartess.common.PacketProcess
-import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
+import ru.megains.tartess.common.block.data.BlockState
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.register.{Bootstrap, GameRegister}
-import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.common.utils._
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.data.AnvilSaveFormat
@@ -357,27 +356,27 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
         }
     }
 
-    def rightClickMouse() {
-        val itemstack: ItemPack = player.getHeldItem
-
-        if(objectMouseOver!= null) {
-            val blockpos: BlockPos = objectMouseOver.blockPos
-            if (!world.isAirBlock(blockpos)) {
-
-
-                val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
-                if (enumactionresult == EnumActionResult.SUCCESS) {
-                    if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
-                    return
-                }
-            }
-        }
-
-        if (itemstack != null && (playerController.processRightClick(player, world, itemstack) == EnumActionResult.SUCCESS)) {
-            return
-        }
-
-    }
+//    def rightClickMouse() {
+//        val itemstack: ItemPack = player.getHeldItem
+//
+//        if(objectMouseOver!= null) {
+//            val blockpos: BlockPos = objectMouseOver.blockPos
+//            if (!world.isAirBlock(blockpos)) {
+//
+//
+//                val enumactionresult: EnumActionResult = playerController.processRightClickBlock(player, world, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec)
+//                if (enumactionresult == EnumActionResult.SUCCESS) {
+//                    if (itemstack != null) if (itemstack.stackSize == 0) player.setHeldItem(null)
+//                    return
+//                }
+//            }
+//        }
+//
+//        if (itemstack != null && (playerController.processRightClick(player, world, itemstack) == EnumActionResult.SUCCESS)) {
+//            return
+//        }
+//
+//    }
 
     def grabMouseCursor(): Unit = {
         Mouse.setGrabbed(true)

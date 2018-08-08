@@ -59,6 +59,10 @@ class EntityPlayerMP(name: String, val interactionManager: PlayerInteractionMana
         openContainer.detectAndSendChanges()
     }
 
+    def closeContainer(): Unit = {
+        //this.openContainer.onContainerClosed(this)
+        this.openContainer = this.inventoryContainer
+    }
     override def openGui(world: World, pos: BlockPos): Unit = {
         val tileEntity = world.getTileEntity(pos)
         tileEntity match {

@@ -2,9 +2,8 @@ package ru.megains.tartess.client.renderer.shader
 
 import org.joml.Matrix4f
 import org.lwjgl.opengl.GL20._
-import ru.megains.old.utils.Utils
 import ru.megains.tartess.client.renderer.Renderer
-import ru.megains.tartess.common.utils.Vec3f
+import ru.megains.tartess.common.utils.{IOUtil, Vec3f}
 
 import scala.collection.mutable
 
@@ -22,8 +21,8 @@ abstract class ShaderProgram {
     var uniforms:mutable.HashMap[String, UniformData] = new mutable.HashMap()
 
     def create(): Unit = {
-        createVertexShader(Utils.loadResource(s"/shaders/$dir/vertex.vs"))
-        createFragmentShader(Utils.loadResource(s"/shaders/$dir/fragment.frag"))
+        createVertexShader(IOUtil.loadResource(s"/shaders/$dir/vertex.vs"))
+        createFragmentShader(IOUtil.loadResource(s"/shaders/$dir/fragment.frag"))
         link()
         createUniforms()
     }

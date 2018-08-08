@@ -74,9 +74,8 @@ class PlayerChunkMapEntry(playerChunkMap: PlayerChunkMap, chunkX: Int, chunkY: I
             isSentToPlayers = true
             val packet = new SPacketChunkData(chunk)
             players.foreach(
-                (player) => {
+                player => {
                     player.connection.sendPacket(packet)
-                    playerChunkMap.worldServer.entityTracker.sendLeashedEntitiesInChunk(player, chunk)
                 }
             )
 
@@ -147,7 +146,6 @@ class PlayerChunkMapEntry(playerChunkMap: PlayerChunkMap, chunkX: Int, chunkY: I
     def sendNearbySpecialEntities(player: EntityPlayerMP) {
         if (isSentToPlayers) {
             player.connection.sendPacket(new SPacketChunkData(chunk))
-            playerChunkMap.worldServer.entityTracker.sendLeashedEntitiesInChunk(player, chunk)
         }
     }
 

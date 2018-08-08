@@ -1,14 +1,14 @@
 package ru.megains.tartess.common.item
 
+import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.common.block.Block
-import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
+import ru.megains.tartess.common.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.item.ItemType.ItemType
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.register.GameRegister
-import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas}
+import ru.megains.tartess.common.utils.EnumActionResult
 import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
-import ru.megains.tartess.common.utils.{ActionResult, EnumActionResult}
 import ru.megains.tartess.common.world.World
 
 
@@ -25,9 +25,6 @@ abstract class Item(val name: String,val itemType: ItemType) {
 
     def onItemUse(stack: ItemPack, playerIn: EntityPlayer, worldIn: World, pos : BlockState, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = EnumActionResult.PASS
 
-    def onItemUseFirst(stack: ItemPack, player: EntityPlayer, world: World, pos: BlockPos, side: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = EnumActionResult.PASS
-
-    def onItemRightClick(itemStackIn: ItemPack, worldIn: World, playerIn: EntityPlayer): ActionResult[ItemPack] = new ActionResult[ItemPack](EnumActionResult.PASS, itemStackIn)
 }
 
 object Item {

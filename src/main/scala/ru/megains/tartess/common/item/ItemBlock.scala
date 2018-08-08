@@ -15,7 +15,7 @@ class ItemBlock(val block: Block) extends ItemStack(block.name) {
     override def onItemUse(stack: ItemPack, playerIn: EntityPlayer, worldIn: World, pos: BlockState, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
 
         if (placeBlockAt(stack, playerIn, worldIn, pos, facing, hitX, hitY, hitZ)) {
-            stack.stackSize -= 1
+           // stack.stackSize -= 1
         }
         EnumActionResult.SUCCESS
     }

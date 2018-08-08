@@ -93,13 +93,14 @@ object ConnectionState {
         registerPacket( classOf[CPacketPlayer.Position])
         registerPacket( classOf[CPacketPlayer.Rotation])
         registerPacket( classOf[CPacketPlayer.PositionRotation])
-        registerPacket( classOf[CPacketPlayerDigging])
-        registerPacket( classOf[CPacketPlayerTryUseItem])
-        registerPacket( classOf[CPacketPlayerTryUseItemOnBlock])
+       // registerPacket( classOf[CPacketPlayerDigging])
+        //registerPacket( classOf[CPacketPlayerTryUseItem])
+      //  registerPacket( classOf[CPacketPlayerTryUseItemOnBlock])
         registerPacket( classOf[CPacketClickWindow])
         registerPacket( classOf[CPacketNEI])
 
         registerPacket( classOf[CPacketPlayerMouse])
+        registerPacket( classOf[CPacketCloseWindow])
 
 
 

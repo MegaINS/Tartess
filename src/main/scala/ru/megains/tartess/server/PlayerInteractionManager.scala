@@ -1,12 +1,11 @@
 package ru.megains.tartess.server
 
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
-import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
-import ru.megains.tartess.common.item.{Item, ItemBlock}
+import ru.megains.tartess.common.entity.player.GameType
+import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.common.item.itemstack.ItemPack
 import ru.megains.tartess.common.network.packet.play.server.SPacketBlockChange
-import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
-import ru.megains.tartess.common.utils.{ActionResult, EnumActionResult, RayTraceResult}
+import ru.megains.tartess.common.utils.RayTraceResult
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.server.entity.EntityPlayerMP
 
@@ -59,69 +58,11 @@ class PlayerInteractionManager(world: World) {
 
     }
 
-    def blockRemoving(pos: BlockPos) {
-
-    }
-
-
-    def cancelDestroyingBlock() {
-        isDestroyingBlock = false
-
-    }
 
     def getBlockReachDistance: Double = blockReachDistance
 
-    def processRightClick(player: EntityPlayer, worldIn: World, stack: ItemPack): EnumActionResult = {
 
-        val i: Int = stack.stackSize
 
-        val actionresult: ActionResult[ItemPack] = stack.useItemRightClick(worldIn, player)
-        val itemstack: ItemPack = actionresult.result.asInstanceOf[ItemPack]
-
-        player.setHeldItem(itemstack)
-        if (this.isCreative) {
-            itemstack.stackSize = i
-        }
-        if (itemstack.stackSize == 0) {
-            player.setHeldItem(null)
-
-        }
-        actionresult.`type`
-
-    }
-
-    def processRightClickBlock(player: EntityPlayer, worldIn: World, stack: ItemPack, posMouseOver: BlockPos, posBlockSet: BlockState, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
-
-        val item: Item = if (stack == null) null
-        else stack.item
-        val ret: EnumActionResult = if (item == null) EnumActionResult.PASS
-        else item.onItemUseFirst(stack, player, worldIn, posMouseOver, facing, hitX, hitY, hitZ)
-        if (ret ne EnumActionResult.PASS) return ret
-        val bypass: Boolean = true
-
-        var result: EnumActionResult = EnumActionResult.PASS
-        if (!player.isSneaking || bypass) {
-            val block: BlockState = worldIn.getBlock(posMouseOver)
-           if (block.onBlockActivated(worldIn, posMouseOver, player, stack, facing, hitX, hitY, hitZ)) result = EnumActionResult.SUCCESS
-         }
-        if (stack == null) EnumActionResult.PASS
-
-        else {
-
-            val block: BlockState = worldIn.getBlock(posMouseOver)
-             if (isCreative) {
-            val i: Int = stack.stackSize
-
-                  val enumactionresult: EnumActionResult = stack.onItemUse(player, worldIn, posBlockSet, facing, hitX, hitY, hitZ)
-
-             stack.stackSize = i
-                 enumactionresult
-
-                } else stack.onItemUse(player, worldIn, block, facing, hitX, hitY, hitZ)
-
-        }
-
-    }
 
     def processRightClickBlock(rayTrace: RayTraceResult): Unit = {
 
@@ -132,17 +73,18 @@ class PlayerInteractionManager(world: World) {
         if (block.onBlockActivated(world, rayTrace.blockPos, thisPlayerMP, itemstack, rayTrace.sideHit, rayTrace.hitVec.x, rayTrace.hitVec.y, rayTrace.hitVec.z)){
 
         }else{
-            itemstack.item match {
-                case itemBlock:ItemBlock =>
-                    val blockState = itemBlock.block.getSelectPosition(world, thisPlayerMP, rayTrace)
-                    if(blockState!=null){
-                        itemstack.onItemUse(thisPlayerMP, world,blockState, rayTrace.sideHit, rayTrace.hitVec.x, rayTrace.hitVec.y, rayTrace.hitVec.z)
-                        thisPlayerMP.connection.sendPacket(new SPacketBlockChange(world, blockState.pos))
-                    }
+            if(itemstack!= null) {
+                itemstack.item match {
+                    case itemBlock: ItemBlock =>
+                        val blockState = itemBlock.block.getSelectPosition(world, thisPlayerMP, rayTrace)
+                        if (blockState != null) {
+                            itemstack.onItemUse(thisPlayerMP, world, blockState, rayTrace.sideHit, rayTrace.hitVec.x, rayTrace.hitVec.y, rayTrace.hitVec.z)
+                            thisPlayerMP.connection.sendPacket(new SPacketBlockChange(world, blockState.pos))
+                        }
 
-                case _ => itemstack.useItemRightClick(world, thisPlayerMP)
+                    case _ =>
+                }
             }
-
 
         }
 

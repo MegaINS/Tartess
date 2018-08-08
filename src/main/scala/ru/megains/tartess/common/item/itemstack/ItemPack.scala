@@ -4,7 +4,6 @@ import ru.megains.tartess.common.block.Block
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.item._
-import ru.megains.tartess.common.utils.ActionResult
 import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.common.world.World
 
@@ -48,7 +47,5 @@ class ItemPack private(val item: Item, var stackSize:Int, var stackMass:Int) {
         val enumactionresult: EnumActionResult = item.onItemUse(this, playerIn, worldIn, pos, side, hitX, hitY, hitZ)
         enumactionresult
     }
-
-    def useItemRightClick(worldIn: World, playerIn: EntityPlayer): ActionResult[ItemPack] = item.onItemRightClick(this, worldIn, playerIn)
 
 }

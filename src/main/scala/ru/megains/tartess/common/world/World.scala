@@ -8,7 +8,7 @@ import ru.megains.tartess.common.entity.Entity
 import ru.megains.tartess.common.physics.{AABB, AABBs}
 import ru.megains.tartess.common.register.Blocks
 import ru.megains.tartess.common.tileentity.TileEntity
-import ru.megains.tartess.common.utils.{Logger, MathHelper, RayTraceResult, Vec3f}
+import ru.megains.tartess.common.utils._
 import ru.megains.tartess.common.world.chunk.Chunk
 import ru.megains.tartess.common.world.chunk.data.{ChunkLoader, ChunkPosition, ChunkProvider}
 import ru.megains.tartess.server.world.WorldServer
@@ -63,9 +63,7 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
 
     }
     def getBlock(blockPos: BlockPos): BlockState = {
-        if(blockPos== null){
-            blockPos.x
-        }
+
         if (!blockPos.isValid(this)) {
             return Blocks.air.airState
         }
@@ -327,13 +325,13 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
 
 
                 val raytraceresult1: RayTraceResult = chunk.collisionRayTrace(blockpos,  vec31, vec32)
-                if (raytraceresult1 != null) {
+                if (raytraceresult1.rayTraceType != RayTraceType.VOID) {
                     return raytraceresult1
                 }
                 val block1: BlockState = getBlock(blockpos)
                 if (block1 != null && block1 != Blocks.air.airState) {
                     val raytraceresult1: RayTraceResult = block1.collisionRayTrace(this,  vec31, vec32)
-                    if (raytraceresult1 != null) {
+                    if (raytraceresult1.rayTraceType != RayTraceType.VOID) {
                         return raytraceresult1
                     }
                 }
