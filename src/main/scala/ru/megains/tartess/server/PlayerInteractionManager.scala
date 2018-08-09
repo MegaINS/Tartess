@@ -64,7 +64,7 @@ class PlayerInteractionManager(world: World) {
 
 
 
-    def processRightClickBlock(rayTrace: RayTraceResult): Unit = {
+    def processRightClickBlock(rayTrace: RayTraceResult,blockState:BlockState): Unit = {
 
 
         val itemstack: ItemPack = thisPlayerMP.getHeldItem
@@ -75,8 +75,7 @@ class PlayerInteractionManager(world: World) {
         }else{
             if(itemstack!= null) {
                 itemstack.item match {
-                    case itemBlock: ItemBlock =>
-                        val blockState = itemBlock.block.getSelectPosition(world, thisPlayerMP, rayTrace)
+                    case _: ItemBlock =>
                         if (blockState != null) {
                             itemstack.onItemUse(thisPlayerMP, world, blockState, rayTrace.sideHit, rayTrace.hitVec.x, rayTrace.hitVec.y, rayTrace.hitVec.z)
                             thisPlayerMP.connection.sendPacket(new SPacketBlockChange(world, blockState.pos))

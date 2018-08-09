@@ -5,27 +5,22 @@ import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockStat
 import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.client.renderer.api.TRenderItem
 import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
-import ru.megains.tartess.client.renderer.texture.{TextureAtlas, TextureManager}
+import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas, TextureManager}
 import ru.megains.tartess.common.register.GameRegister
 
 class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
-    override lazy val inventoryMesh: Mesh = createInventoryMesh()
-    override lazy val worldMesh: Mesh = createWorldMesh()
+    lazy val mesh: Mesh = createMesh()
     val block: Block = item.block
 
-    override def renderInWorld(): Unit = worldMesh.render
+    override def registerTexture(textureRegister: TTextureRegister): Unit = {}
 
-    override def renderInInventory(): Unit = inventoryMesh.render
+    override def renderInWorld(): Unit = mesh.render
 
-    def createWorldMesh(): Mesh = {
-
-        createInventoryMesh()
-    }
-
-    def createInventoryMesh(): Mesh = {
+    override def renderInInventory(): Unit = mesh.render
 
 
+    def createMesh(): Mesh = {
 
         val mm = MeshMaker.getMeshMaker
 
@@ -160,8 +155,6 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
 
 
-
-
             texture = blockRender.getATexture(blockDirection =BlockDirection.WEST)
             minU = texture.minU
             maxU = texture.maxU
@@ -215,14 +208,7 @@ class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 
         }
 
-
-
-
-
-
-
-
-
         mm.makeMesh()
     }
+
 }

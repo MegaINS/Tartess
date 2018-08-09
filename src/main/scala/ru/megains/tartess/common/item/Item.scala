@@ -1,6 +1,5 @@
 package ru.megains.tartess.common.item
 
-import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas}
 import ru.megains.tartess.common.block.Block
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.common.entity.player.EntityPlayer
@@ -17,11 +16,6 @@ abstract class Item(val name: String,val itemType: ItemType) {
 
     var maxStackSize: Int = 64
     val mass:Int = 1
-    var aTexture: TextureAtlas = _
-
-    def registerTexture(textureRegister: TTextureRegister): Unit = {
-        aTexture = textureRegister.registerTexture(name)
-    }
 
     def onItemUse(stack: ItemPack, playerIn: EntityPlayer, worldIn: World, pos : BlockState, facing: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = EnumActionResult.PASS
 

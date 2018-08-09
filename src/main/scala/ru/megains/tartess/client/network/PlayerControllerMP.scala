@@ -34,7 +34,7 @@ class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
 
     def rightClickMouse(): Unit = {
         syncCurrentPlayItem()
-        net.sendPacket(new CPacketPlayerMouse(1,0))
+        net.sendPacket(new CPacketPlayerMouse(1,0,tar))
         val rayTrace = tar.objectMouseOver
 
         rayTrace.rayTraceType match {
@@ -67,10 +67,9 @@ class PlayerControllerMP(tar:Tartess,val net: NetHandlerPlayClient) {
 
     def leftClickMouse(): Unit = {
         syncCurrentPlayItem()
-        net.sendPacket(new CPacketPlayerMouse(0,0))
-        val rayTrace = tar.objectMouseOver
+        net.sendPacket(new CPacketPlayerMouse(0,0, tar))
 
-        rayTrace.rayTraceType match {
+        tar.objectMouseOver.rayTraceType match {
             case RayTraceType.BLOCK  =>
             case RayTraceType.VOID  =>
             case RayTraceType.ENTITY  =>

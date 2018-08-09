@@ -4,14 +4,19 @@ package ru.megains.tartess.client.renderer.item
 import ru.megains.tartess.common.item.Item
 import ru.megains.tartess.client.renderer.api.TRenderItem
 import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
-import ru.megains.tartess.client.renderer.texture.{TextureAtlas, TextureManager}
+import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas, TextureManager}
 
 class RenderItemStandart(val item: Item) extends TRenderItem {
 
-    override lazy val inventoryMesh: Mesh = createInventoryMesh()
+    lazy val inventoryMesh: Mesh = createInventoryMesh()
 
-    override lazy val worldMesh: Mesh =  createWorldMesh()
+    lazy val worldMesh: Mesh =  createWorldMesh()
+    var aTexture: TextureAtlas = _
 
+
+    override def registerTexture(textureRegister: TTextureRegister): Unit = {
+        aTexture = textureRegister.registerTexture(item.name)
+    }
     override def renderInInventory(): Unit = {
         inventoryMesh.render
     }
@@ -37,16 +42,16 @@ class RenderItemStandart(val item: Item) extends TRenderItem {
         var maxU: Float = 0
         var minV: Float = 0
         var maxV: Float = 0
-        var texture: TextureAtlas = null
+
 
 
         mm.startMakeTriangles()
         mm.setTexture(TextureManager.locationBlockTexture)
-        texture = item.aTexture
-        minU = texture.minU
-        maxU = texture.maxU
-        minV = texture.minV
-        maxV = texture.maxV
+
+        minU = aTexture.minU
+        maxU = aTexture.maxU
+        minV = aTexture.minV
+        maxV = aTexture.maxV
 
         mm.setCurrentIndex()
         mm.addVertexWithUV(minX, minY, minZ, minU, maxV)
@@ -88,16 +93,16 @@ class RenderItemStandart(val item: Item) extends TRenderItem {
         var maxU: Float = 0
         var minV: Float = 0
         var maxV: Float = 0
-        var texture: TextureAtlas = null
+
 
 
         mm.startMakeTriangles()
         mm.setTexture(TextureManager.locationBlockTexture)
-        texture = item.aTexture
-        minU = texture.minU
-        maxU = texture.maxU
-        minV = texture.minV
-        maxV = texture.maxV
+
+        minU = aTexture.minU
+        maxU = aTexture.maxU
+        minV = aTexture.minV
+        maxV = aTexture.maxV
 
         mm.setCurrentIndex()
         mm.addVertexWithUV(minX, minY, zZero, minU, maxV)

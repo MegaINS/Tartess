@@ -26,7 +26,7 @@ class TextureMap() extends ATexture with TTextureRegister{
 
         textureBlockMap += "missing" -> missingTexture
         GameRegister.blockData.idRender.values.foreach(_.registerTexture(this))
-        GameRegister.getItems.foreach(_.registerTexture(this))
+        GameRegister.itemData.idRender.values.foreach(_.registerTexture(this))
     }
 
     def loadTextureAtlas(): Unit ={

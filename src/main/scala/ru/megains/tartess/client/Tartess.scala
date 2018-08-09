@@ -6,7 +6,7 @@ import ru.megains.tartess.client.network.PlayerControllerMP
 import ru.megains.tartess.client.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.client.renderer.font.FontRender
 import ru.megains.tartess.client.renderer.gui.base.GuiManager
-import ru.megains.tartess.client.renderer.gui.{GuiInGameMenu, GuiPlayerSelect}
+import ru.megains.tartess.client.renderer.gui.{GuiInGameMenu, GuiPlayerSelect, GuiTestSet}
 import ru.megains.tartess.client.renderer.item.ItemRender
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
@@ -14,7 +14,6 @@ import ru.megains.tartess.client.renderer.{Camera, Renderer}
 import ru.megains.tartess.client.world.WorldClient
 import ru.megains.tartess.common.PacketProcess
 import ru.megains.tartess.common.block.data.BlockState
-import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.ItemBlock
@@ -247,20 +246,20 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
         if (glfwGetKey(window.id, GLFW_KEY_SPACE) == GLFW_PRESS) cameraInc.y = 1
 
 
-        if (glfwGetKey(window.id, GLFW_KEY_O) == GLFW_PRESS){
-            val stack: ItemPack = player.inventory.getStackSelect
-            if(stack ne null){
-
-                val entityItem = new EntityItem()
-                entityItem.setItem(new ItemPack(stack.item))
-                entityItem.setPosition(player.posX +Random.nextInt(32)-16,player.posY+8+Random.nextInt(16),player.posZ+Random.nextInt(32)-16)
-
-                world.spawnEntityInWorld(entityItem)
-
-            }
-
-
-        }
+//        if (glfwGetKey(window.id, GLFW_KEY_O) == GLFW_PRESS){
+//            val stack: ItemPack = player.inventory.getStackSelect
+//            if(stack ne null){
+//
+//                val entityItem = new EntityItem()
+//                entityItem.setItem(new ItemPack(stack.item))
+//                entityItem.setPosition(player.posX +Random.nextInt(32)-16,player.posY+8+Random.nextInt(16),player.posZ+Random.nextInt(32)-16)
+//
+//                world.spawnEntityInWorld(entityItem)
+//
+//            }
+//
+//
+//        }
         if (glfwGetKey(window.id, GLFW_KEY_U) == GLFW_PRESS){
             val entityCube = new EntityCube()
             entityCube.setPosition(player.posX + Random.nextInt(50)-25,player.posY+Random.nextInt(50),player.posZ+Random.nextInt(50)-25)
@@ -351,6 +350,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
                 case GLFW_KEY_M => ungrabMouseCursor()
                 case GLFW_KEY_L => renderer.isLight = !renderer.isLight
                 case GLFW_KEY_C => player.gameType = if(player.gameType.isCreative) GameType.SURVIVAL else GameType.CREATIVE
+                case GLFW_KEY_O =>  guiManager.setGuiScreen(new GuiTestSet())
                 case _ =>
             }
         }

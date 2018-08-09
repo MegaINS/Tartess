@@ -134,11 +134,11 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         packetIn.button match {
             case 0 =>
 
-                val rayTrace = playerEntity.rayTrace(20*16, 0.1f)
 
-                rayTrace.rayTraceType match {
+
+              packetIn.rayTraceResult.rayTraceType match {
                     case RayTraceType.BLOCK  =>
-                        val blockPos: BlockPos = rayTrace.blockPos
+                        val blockPos: BlockPos = packetIn.rayTraceResult.blockPos
 
                         val d0: Double = playerEntity.posX - (blockPos.x.toDouble + 0.5D)
                         val d1: Double = playerEntity.posY - (blockPos.y.toDouble + 0.5D) + 1.5D
@@ -149,20 +149,20 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
                         if (d3 > dist) {
 
                         } else {
-                            playerEntity.interactionManager.onBlockClicked(blockPos, rayTrace.sideHit)
+                            playerEntity.interactionManager.onBlockClicked(blockPos, packetIn.rayTraceResult.sideHit)
                         }
                     case RayTraceType.VOID  =>
                     case RayTraceType.ENTITY  =>
                 }
 
             case 1 =>
-                val rayTrace = playerEntity.rayTrace(20*16, 0.1f)
 
-                rayTrace.rayTraceType match {
+
+                packetIn.rayTraceResult.rayTraceType match {
                     case RayTraceType.VOID  =>
                     case RayTraceType.BLOCK  =>
 
-                       playerEntity.interactionManager.processRightClickBlock(rayTrace)
+                       playerEntity.interactionManager.processRightClickBlock(packetIn.rayTraceResult,packetIn.blockState)
 
                     case RayTraceType.ENTITY  =>
                 }

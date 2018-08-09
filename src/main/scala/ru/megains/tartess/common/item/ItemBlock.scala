@@ -4,7 +4,6 @@ import ru.megains.tartess.common.block.Block
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.client.renderer.texture.TTextureRegister
 import ru.megains.tartess.common.utils.EnumActionResult
 import ru.megains.tartess.common.utils.EnumActionResult.EnumActionResult
 import ru.megains.tartess.common.world.World
@@ -19,8 +18,6 @@ class ItemBlock(val block: Block) extends ItemStack(block.name) {
         }
         EnumActionResult.SUCCESS
     }
-
-    override def registerTexture(textureRegister: TTextureRegister): Unit = {}
 
     def placeBlockAt(stack: ItemPack, player: EntityPlayer, world: World, pos: BlockState, side: BlockDirection, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
         if(pos == null) return false
