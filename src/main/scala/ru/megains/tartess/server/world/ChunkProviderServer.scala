@@ -1,11 +1,11 @@
-package ru.megains.tartess.common.world
+package ru.megains.tartess.server.world
 
 import java.io.IOException
 
 import ru.megains.tartess.common.utils.Logger
 import ru.megains.tartess.common.world.chunk.Chunk
 import ru.megains.tartess.common.world.chunk.data.ChunkLoader
-import ru.megains.tartess.server.world.WorldServer
+import ru.megains.tartess.common.world.{IChunkGenerator, IChunkProvider}
 
 import scala.collection.mutable
 

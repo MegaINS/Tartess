@@ -49,7 +49,7 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
 
     var side:BlockDirection = BlockDirection.DOWN
-    setPosition(0, 16, 0)
+   // setPosition(0, 16, 0)
 
 
     def update(): Unit

@@ -15,10 +15,5 @@ class TartessChannelInitializer(networkManager:NetworkManager) extends ChannelIn
                 .addLast("messageCodec", new TartessMessageCodec)
                 .addLast("packetHandler", networkManager)
         ch.config.setOption(ChannelOption.TCP_NODELAY, Boolean.box(true))
-
-
-       // NetworkSystem.networkManagers :+= networkManager
-
-       // networkManager.setNetHandler(new NetHandlerHandshakeTCP(server, networkManager))
     }
 }

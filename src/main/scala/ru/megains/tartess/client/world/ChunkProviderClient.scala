@@ -1,7 +1,8 @@
-package ru.megains.tartess.common.world
+package ru.megains.tartess.client.world
 
-import ru.megains.tartess.common.world.chunk.{Chunk, ChunkVoid}
 import ru.megains.tartess.common.world.chunk.data.ChunkPosition
+import ru.megains.tartess.common.world.chunk.{Chunk, ChunkVoid}
+import ru.megains.tartess.common.world.{IChunkProvider, World}
 
 import scala.collection.mutable
 

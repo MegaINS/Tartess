@@ -1,8 +1,6 @@
 package ru.megains.tartess.common.entity.player
 
 import ru.megains.nbt.tag.NBTCompound
-import ru.megains.tartess.client.Tartess
-import ru.megains.tartess.client.renderer.gui.GuiPlayerInventory
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos}
 import ru.megains.tartess.common.container.{Container, ContainerPlayerInventory}
 import ru.megains.tartess.common.entity.EntityLivingBase
@@ -87,10 +85,7 @@ class EntityPlayer(val name:String) extends EntityLivingBase(1.8f*16, 0.6f*16, 1
 
     def setHeldItem(stack: ItemPack): Unit = setItemStackToSlot(stack)
 
-    def openInventory(): Unit = {
-        openContainer = inventoryContainer
-        Tartess.tartess.guiManager.setGuiScreen(new GuiPlayerInventory(this))
-    }
+
 
     def getHeldItem: ItemPack = getItemStackFromSlot
 

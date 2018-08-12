@@ -2,6 +2,7 @@ package ru.megains.tartess.client.entity
 
 import ru.megains.tartess.client.Tartess
 import ru.megains.tartess.client.network.handler.NetHandlerPlayClient
+import ru.megains.tartess.client.renderer.gui.GuiPlayerInventory
 import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.network.packet.play.client.CPacketPlayer
@@ -20,7 +21,10 @@ class EntityPlayerSP(oc: Tartess, world: World, val connection: NetHandlerPlayCl
     private var positionUpdateTicks: Int = 0
     private var prevOnGround: Boolean = false
 
-
+    def openInventory(): Unit = {
+        openContainer = inventoryContainer
+        oc.guiManager.setGuiScreen(new GuiPlayerInventory(this))
+    }
 
 
     override def openGui(world: World, pos: BlockPos): Unit = {

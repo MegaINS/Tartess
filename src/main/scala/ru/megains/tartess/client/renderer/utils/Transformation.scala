@@ -1,6 +1,7 @@
-package ru.megains.tartess.client.renderer
+package ru.megains.tartess.client.renderer.utils
 
 import org.joml.{Matrix4f, Vector3f}
+import ru.megains.tartess.client.renderer.Camera
 import ru.megains.tartess.common.block.data.BlockPos
 import ru.megains.tartess.common.entity.Entity
 import ru.megains.tartess.common.entity.item.EntityItem

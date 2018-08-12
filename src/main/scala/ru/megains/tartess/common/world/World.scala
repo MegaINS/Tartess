@@ -2,7 +2,6 @@ package ru.megains.tartess.common.world
 
 
 
-import ru.megains.tartess.client.renderer.world.WorldRenderer
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockSidePos, BlockState}
 import ru.megains.tartess.common.entity.Entity
 import ru.megains.tartess.common.physics.{AABB, AABBs}
@@ -11,7 +10,6 @@ import ru.megains.tartess.common.tileentity.TileEntity
 import ru.megains.tartess.common.utils._
 import ru.megains.tartess.common.world.chunk.Chunk
 import ru.megains.tartess.common.world.chunk.data.{ChunkLoader, ChunkPosition, ChunkProvider}
-import ru.megains.tartess.server.world.WorldServer
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -26,7 +24,6 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
     val width: Int = 100000
     val height: Int = 10000
     val heightMap: WorldHeightMap = new WorldHeightMap(0)
-    var worldRenderer:WorldRenderer = _
     val chunkLoader: ChunkLoader = saveHandler.getChunkLoader
     val chunkProvider:IChunkProvider = new ChunkProvider(this,chunkLoader)
     val entities: ParHashSet[Entity] = new ParHashSet[Entity]()
@@ -155,9 +152,6 @@ class World(saveHandler:ISaveHandler) extends Logger[World]{
     def setBlock(blockState: BlockState): Boolean ={
         if (!blockState.pos.isValid(this)) {
             return false
-        }
-        if(!this.isInstanceOf[WorldServer]){
-            worldRenderer.reRender(blockState.pos)
         }
 
         val chunk = getChunk(blockState.pos)

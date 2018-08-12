@@ -74,6 +74,17 @@ object GameRegister {
             println("Block +\"" + block.name + "\" not register")
         }
     }
+
+
+
+    def registerBlockRender(name: String, renderBlock: TRenderBlock): Unit = {
+        val id: Int = getIdByBlockName(name)
+        if (id != -1) {
+            blockData.registerRender(id, renderBlock)
+        } else {
+            println("Block +\"" + name + "\" not register")
+        }
+    }
     def registerItemRender(item: Item , tRenderItem: TRenderItem): Unit = {
         val id: Int = getIdByItem(item)
         if (id != -1) {
@@ -131,6 +142,7 @@ object GameRegister {
 
     def getItemFromBlock(block: Block): Item = itemData.getObject(blockData.getIdByObject(block))
 
+    def getIdByBlockName(name: String): Int = blockData.getIdByName(name)
 
 
 

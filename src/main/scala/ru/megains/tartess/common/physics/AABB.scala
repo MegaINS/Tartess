@@ -2,7 +2,7 @@ package ru.megains.tartess.common.physics
 
 
 import ru.megains.tartess.common.block.data.BlockDirection
-import ru.megains.tartess.common.utils.{RayTraceResult, Vec3f}
+import ru.megains.tartess.common.utils. Vec3f
 
 class AABB( var minX:Float = .0f,
             var minY:Float = .0f,

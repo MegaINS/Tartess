@@ -5,13 +5,13 @@ import java.nio.FloatBuffer
 import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11._
-import ru.megains.old.graph.Frustum
-import ru.megains.tartess.client.{Options, Tartess}
 import ru.megains.tartess.client.periphery.Mouse
 import ru.megains.tartess.client.renderer.light.DirLight
 import ru.megains.tartess.client.renderer.shader.{GuiShaderProgram, LightShaderProgram, SceneShaderProgram, ShaderProgram}
 import ru.megains.tartess.client.renderer.texture.TextureManager
+import ru.megains.tartess.client.renderer.utils.{Frustum, Transformation}
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
+import ru.megains.tartess.client.{Options, Tartess}
 import ru.megains.tartess.common.utils.{MathHelper, RayTraceType}
 
 class Renderer(val tar: Tartess) {
@@ -24,7 +24,7 @@ class Renderer(val tar: Tartess) {
     val _proj: FloatBuffer = BufferUtils.createFloatBuffer(16)
     val _modl: FloatBuffer = BufferUtils.createFloatBuffer(16)
 
-    var frustum: Frustum = _
+   // var frustum: Frustum = _
     val transformation = new Transformation
     var worldRenderer: WorldRenderer = _
     var sceneShaderProgram:ShaderProgram = new SceneShaderProgram
@@ -85,7 +85,9 @@ class Renderer(val tar: Tartess) {
         projectionMatrix.get(_proj.clear().asInstanceOf[FloatBuffer])
         viewMatrix.get(_modl.clear().asInstanceOf[FloatBuffer])
 
-        frustum = Frustum.getFrustum(_proj, _modl)
+       // frustum = Frustum.getFrustum(_proj, _modl)
+
+       Frustum.calculateFrustum(_proj, _modl)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT)
         if (tar.world != null) renderScene()
@@ -118,14 +120,14 @@ class Renderer(val tar: Tartess) {
         mesh.render
         */
         worldRenderer.getRenderChunks(tar.player).foreach((renderChunk: RenderChunk) => {
-            if(frustum.chunkInFrustum(renderChunk.chunk.position)){
+            if(Frustum.chunkInFrustum(renderChunk.chunk.position)){
                 Renderer.currentShaderProgram.setUniform("model", transformation.buildChunkModelViewMatrix(renderChunk.chunk.position))
                 renderChunk.render(0)
             }
         })
 
-        worldRenderer.renderEntitiesItem(frustum, transformation)
-        worldRenderer.renderEntities(frustum, transformation)
+        worldRenderer.renderEntitiesItem( transformation)
+        worldRenderer.renderEntities( transformation)
         glDisable(GL_CULL_FACE)
 
 

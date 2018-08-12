@@ -2,15 +2,13 @@ package ru.megains.tartess.client.renderer.block
 
 import ru.megains.tartess.client.renderer.api.TRenderBlock
 import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas}
-import ru.megains.tartess.common.block.Block
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockState}
 import ru.megains.tartess.common.physics.AABB
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.chunk.data.ChunkPosition
 
-class RenderBlockGrass(block:Block) extends TRenderBlock{
+class RenderBlockGrass( val name:String) extends TRenderBlock{
 
-    val name = block.name
     var texture: TextureAtlas = _
     var aTextureUp: TextureAtlas = _
     var aTextureDown: TextureAtlas = _

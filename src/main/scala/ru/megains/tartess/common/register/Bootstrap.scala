@@ -1,12 +1,10 @@
 package ru.megains.tartess.common.register
 
 import ru.megains.tartess.client.Tartess
-import ru.megains.tartess.client.renderer.block.RenderBlockGrass
 import ru.megains.tartess.common.block._
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.item.{ItemMass, ItemSingle, ItemStack}
-import ru.megains.tartess.client.renderer.entity.RenderEntityCube
 import ru.megains.tartess.common.tileentity.TileEntityChest
 import ru.megains.tartess.common.utils.Logger
 
@@ -40,9 +38,7 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(6, new BlockStare("stare",0))
         GameRegister.registerBlock(7, new BlockStare("stare1",1))
 
-        val blockGrass = new BlockGrass("grass")
-
-        GameRegister.registerBlock(8,blockGrass,new RenderBlockGrass(blockGrass))
+        GameRegister.registerBlock(8,new BlockGrass("grass"))
 
 
         GameRegister.registerBlock(15, new BlockTest("test12",12))
@@ -77,6 +73,6 @@ object Bootstrap extends Logger[Tartess] {
     }
     def initEntity(): Unit = {
         GameRegister.registerEntity(0,classOf[EntityItem])
-        GameRegister.registerEntity(1,classOf[EntityCube],RenderEntityCube)
+        GameRegister.registerEntity(1,classOf[EntityCube])
     }
 }

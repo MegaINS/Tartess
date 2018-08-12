@@ -2,6 +2,7 @@ package ru.megains.tartess.client
 
 import org.lwjgl.glfw.GLFW._
 import org.lwjgl.opengl.GL11
+import ru.megains.tartess.client.entity.EntityPlayerSP
 import ru.megains.tartess.client.network.PlayerControllerMP
 import ru.megains.tartess.client.periphery.{Keyboard, Mouse, Window}
 import ru.megains.tartess.client.renderer.font.FontRender
@@ -11,14 +12,14 @@ import ru.megains.tartess.client.renderer.item.ItemRender
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.client.renderer.world.{RenderChunk, WorldRenderer}
 import ru.megains.tartess.client.renderer.{Camera, Renderer}
-import ru.megains.tartess.client.world.WorldClient
+import ru.megains.tartess.client.world.{ClientWorldEventHandler, WorldClient}
 import ru.megains.tartess.common.PacketProcess
 import ru.megains.tartess.common.block.data.BlockState
 import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.common.register.{Bootstrap, GameRegister}
+import ru.megains.tartess.common.register.GameRegister
 import ru.megains.tartess.common.utils._
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.data.AnvilSaveFormat
@@ -50,7 +51,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
     var worldRenderer: WorldRenderer = _
 
     var world:World = _
-    var player: EntityPlayer = _
+    var player: EntityPlayerSP = _
 
     var camera: Camera = _
     var cameraInc: Vec3f = _
@@ -191,7 +192,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
     }
 
 
-    def loadWorld(newWorld: World): Unit = {
+    def loadWorld(newWorld: WorldClient): Unit = {
 
 
 
@@ -203,7 +204,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
         if (newWorld != null) {
             worldRenderer = new WorldRenderer(newWorld)
             renderer.worldRenderer = worldRenderer
-
+            newWorld.addEventListener(new ClientWorldEventHandler(this, newWorld))
             if (player == null) {
                // player = new EntityPlayerSP(playerName,newWorld)
 
@@ -214,7 +215,7 @@ class Tartess(clientDir: Directory) extends PacketProcess with Logger[Tartess]  
                 if(newWorld.isInstanceOf[WorldClient]){
                     player = playerController.createClientPlayer(newWorld)
                 }else{
-                    player = new EntityPlayer(playerName)
+                   // player = new EntityPlayer(playerName)
                     //todo newWorld.saveHandler .readPlayerData(player)
                 }
 

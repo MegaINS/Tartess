@@ -3,16 +3,16 @@ package ru.megains.tartess.client.renderer.world
 import java.awt.Color
 
 import org.lwjgl.opengl.GL11.GL_LINES
-import ru.megains.old.graph.Frustum
 import ru.megains.tartess.client.Options
+import ru.megains.tartess.client.renderer.block.RenderBlock
+import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
+import ru.megains.tartess.client.renderer.Renderer
+import ru.megains.tartess.client.renderer.utils.Transformation
 import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.physics.BoundingBoxes
 import ru.megains.tartess.common.register.GameRegister
-import ru.megains.tartess.client.renderer.block.RenderBlock
-import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
-import ru.megains.tartess.client.renderer.{Renderer, Transformation}
 import ru.megains.tartess.common.utils.RayTraceResult
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.chunk.Chunk
@@ -25,7 +25,6 @@ class WorldRenderer(val world: World) {
 
 
 
-    world.worldRenderer = this
 
     val renderChunks: mutable.HashMap[Long, RenderChunk] = new mutable.HashMap[Long, RenderChunk]
 
@@ -272,7 +271,7 @@ class WorldRenderer(val world: World) {
     }
 
 
-    def renderEntitiesItem(frustum: Frustum, transformation: Transformation): Unit = {
+    def renderEntitiesItem( transformation: Transformation): Unit = {
 
 
         world.entities.filter(_.isInstanceOf[EntityItem]).splitter.foreach(
@@ -285,7 +284,7 @@ class WorldRenderer(val world: World) {
             }
         )
     }
-    def renderEntities(frustum: Frustum, transformation: Transformation): Unit = {
+    def renderEntities(transformation: Transformation): Unit = {
 
 
         world.entities.filter {

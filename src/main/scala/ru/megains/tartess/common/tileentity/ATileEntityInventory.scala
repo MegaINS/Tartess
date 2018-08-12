@@ -8,6 +8,7 @@ trait ATileEntityInventory {
 
     def getContainer(player: EntityPlayer): Container
 
+    //todo delete client
     def getGui(player: EntityPlayer): GuiContainer
 
 }

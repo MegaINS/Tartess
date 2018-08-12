@@ -1,9 +1,8 @@
 package ru.megains.tartess.client.renderer.gui
 
-import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.client.renderer.gui.base.GuiMenu
 import ru.megains.tartess.client.renderer.gui.element.GuiButton
-import ru.megains.tartess.common.world.World
+import ru.megains.tartess.common.entity.player.EntityPlayer
 
 class GuiSelectWorld(guiMainMenu: GuiMenu) extends GuiMenu {
 
@@ -40,7 +39,7 @@ class GuiSelectWorld(guiMainMenu: GuiMenu) extends GuiMenu {
         button.id match {
             case 0 =>
                 val saveHandler = tar.saveLoader.getSaveLoader(selectWorld.worldName)
-                tar.loadWorld(new World(saveHandler))
+                //tar.loadWorld(new World(saveHandler))
                 tar.guiManager.setGuiScreen(null)
 
             case 1 =>
@@ -49,7 +48,7 @@ class GuiSelectWorld(guiMainMenu: GuiMenu) extends GuiMenu {
 
             case 2 =>
                 val saveHandler = tar.saveLoader.getSaveLoader("World " + (worldsSlot.length + 1))
-                tar.loadWorld(new World(saveHandler))
+                //tar.loadWorld(new World(saveHandler))
                 tar.guiManager.setGuiScreen(null)
 
             case 5 =>

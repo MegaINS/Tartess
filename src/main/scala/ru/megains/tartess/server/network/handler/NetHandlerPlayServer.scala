@@ -89,9 +89,9 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
         var d8: Float = d5 - firstGoodY
         var d9: Float = d6 - firstGoodZ
 
-        d7 = d4 - lastGoodX
-        d8 = d5 - lastGoodY
-        d9 = d6 - lastGoodZ
+        d7 = d4 - lastGoodX - playerEntity.posX
+        d8 = d5 - lastGoodY - playerEntity.posY
+        d9 = d6 - lastGoodZ - playerEntity.posZ
 
         playerEntity.move(d7, d8, d9)
 
@@ -104,9 +104,9 @@ class NetHandlerPlayServer(server: TartessServer, val networkManager: NetworkMan
 
         server.playerList.serverUpdateMountedMovingPlayer(playerEntity)
 
-        lastGoodX = playerEntity.posX
-        lastGoodY = playerEntity.posY
-        lastGoodZ = playerEntity.posZ
+       // lastGoodX = playerEntity.posX
+       // lastGoodY = playerEntity.posY
+       // lastGoodZ = playerEntity.posZ
 
     }
 
