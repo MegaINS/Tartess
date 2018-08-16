@@ -3,7 +3,7 @@ package ru.megains.tartess.common.register
 import scala.collection.mutable
 
 
-trait RegisterRender[T] {
+class RegisterRender[T] {
 
     val idRender: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]
 
@@ -11,5 +11,5 @@ trait RegisterRender[T] {
         idRender += id -> aRender
     }
 
-    def getRender(id: Int): T = idRender(id)
+    def getRender(id: Int): T = idRender.getOrElse(id,default = null.asInstanceOf[T])
 }

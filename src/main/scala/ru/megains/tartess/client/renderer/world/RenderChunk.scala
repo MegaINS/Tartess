@@ -1,7 +1,7 @@
 package ru.megains.tartess.client.renderer.world
 
 
-import ru.megains.tartess.common.register.GameRegister
+import ru.megains.tartess.client.register.GameRegister
 import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.client.renderer.texture.TextureManager
 import ru.megains.tartess.common.world.chunk.{Chunk, ChunkVoid}

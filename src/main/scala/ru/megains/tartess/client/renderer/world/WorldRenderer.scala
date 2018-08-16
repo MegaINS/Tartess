@@ -12,7 +12,7 @@ import ru.megains.tartess.common.block.data.{BlockPos, BlockState}
 import ru.megains.tartess.common.entity.item.EntityItem
 import ru.megains.tartess.common.entity.player.EntityPlayer
 import ru.megains.tartess.common.physics.BoundingBoxes
-import ru.megains.tartess.common.register.GameRegister
+import ru.megains.tartess.client.register.GameRegister
 import ru.megains.tartess.common.utils.RayTraceResult
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.chunk.Chunk

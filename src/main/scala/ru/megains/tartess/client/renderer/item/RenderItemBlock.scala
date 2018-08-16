@@ -1,12 +1,12 @@
 package ru.megains.tartess.client.renderer.item
 
+import ru.megains.tartess.client.register.GameRegister
 import ru.megains.tartess.common.block.Block
 import ru.megains.tartess.common.block.data.{BlockDirection, BlockPos, BlockState}
 import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.client.renderer.api.TRenderItem
 import ru.megains.tartess.client.renderer.mesh.{Mesh, MeshMaker}
 import ru.megains.tartess.client.renderer.texture.{TTextureRegister, TextureAtlas, TextureManager}
-import ru.megains.tartess.common.register.GameRegister
 
 class RenderItemBlock(item: ItemBlock) extends TRenderItem {
 

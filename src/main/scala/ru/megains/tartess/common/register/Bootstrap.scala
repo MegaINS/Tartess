@@ -9,44 +9,45 @@ import ru.megains.tartess.common.tileentity.TileEntityChest
 import ru.megains.tartess.common.utils.Logger
 
 object Bootstrap extends Logger[Tartess] {
+
     var isNotInit = true
 
     def init(): Unit = {
         if (isNotInit) {
             isNotInit = false
             log.info("Blocks init...")
-            initBlocks()
+            initBlocks(GameRegister)
             log.info("Items init...")
-            initItems()
+            initItems(GameRegister)
             log.info("TileEntity init...")
-            initTileEntity()
+            initTileEntity(GameRegister)
             log.info("Entity init...")
-            initEntity()
+            initEntity(GameRegister)
         }
 
     }
 
-    def initBlocks(): Unit = {
+    def initBlocks(gameRegister:TGameRegister): Unit = {
 
-        GameRegister.registerBlock(0, BlockAir)
-        GameRegister.registerBlock(1, new BlockWG("stone"))
-        GameRegister.registerBlock(2, new BlockWG("dirt"))
+        gameRegister.registerBlock(0, BlockAir)
+        gameRegister.registerBlock(1, new BlockWG("stone"))
+        gameRegister.registerBlock(2, new BlockWG("dirt"))
 
-        GameRegister.registerBlock(3, new BlockTest("test0",0))
-        GameRegister.registerBlock(4, new BlockTest("test1",1))
-        GameRegister.registerBlock(5, new BlockTest("test2",2))
-        GameRegister.registerBlock(6, new BlockStare("stare",0))
-        GameRegister.registerBlock(7, new BlockStare("stare1",1))
+        gameRegister.registerBlock(3, new BlockTest("test0",0))
+        gameRegister.registerBlock(4, new BlockTest("test1",1))
+        gameRegister.registerBlock(5, new BlockTest("test2",2))
+        gameRegister.registerBlock(6, new BlockStare("stare",0))
+        gameRegister.registerBlock(7, new BlockStare("stare1",1))
 
-        GameRegister.registerBlock(8,new BlockGrass("grass"))
+        gameRegister.registerBlock(8,new BlockGrass("grass"))
 
 
-        GameRegister.registerBlock(15, new BlockTest("test12",12))
-        GameRegister.registerBlock(16, new BlockTest("test13",13))
-        GameRegister.registerBlock(17, new BlockTest("test14",14))
-        GameRegister.registerBlock(18, new BlockGlass("glass"))
-        GameRegister.registerBlock(19, new BlockChest("chest"))
-        GameRegister.registerBlock(20, new BlockRotateTexture())
+        gameRegister.registerBlock(15, new BlockTest("test12",12))
+        gameRegister.registerBlock(16, new BlockTest("test13",13))
+        gameRegister.registerBlock(17, new BlockTest("test14",14))
+        gameRegister.registerBlock(18, new BlockGlass("glass"))
+        gameRegister.registerBlock(19, new BlockChest("chest"))
+        gameRegister.registerBlock(20, new BlockRotateTexture())
       /*    GameRegister.registerBlock(6, new BlockTest("test3",3))
           GameRegister.registerBlock(7, new BlockTest("test4",4))
          GameRegister.registerBlock(8, new BlockTest("test5",5))
@@ -61,18 +62,18 @@ object Bootstrap extends Logger[Tartess] {
         GameRegister.registerBlock(23, new BlockTest("test17",17))*/
     }
 
-    def initItems(): Unit = {
-        GameRegister.registerItem(1000, new ItemStack("stick"))
-        GameRegister.registerItem(1001, new ItemMass("coal"))
-        GameRegister.registerItem(1002, new ItemSingle("helmet"))
+    def initItems(gameRegister:TGameRegister): Unit = {
+        gameRegister.registerItem(1000, new ItemStack("stick"))
+        gameRegister.registerItem(1001, new ItemMass("coal"))
+        gameRegister.registerItem(1002, new ItemSingle("helmet"))
     }
 
-    def initTileEntity(): Unit = {
-        GameRegister.registerTileEntity(0,classOf[TileEntityChest])
+    def initTileEntity(gameRegister:TGameRegister): Unit = {
+        gameRegister.registerTileEntity(0,classOf[TileEntityChest])
        // GameRegister.registerTileEntityRender(classOf[TileEntityChest],RenderChest)
     }
-    def initEntity(): Unit = {
-        GameRegister.registerEntity(0,classOf[EntityItem])
-        GameRegister.registerEntity(1,classOf[EntityCube])
+    def initEntity(gameRegister:TGameRegister): Unit = {
+        gameRegister.registerEntity(0,classOf[EntityItem])
+        gameRegister.registerEntity(1,classOf[EntityCube])
     }
 }

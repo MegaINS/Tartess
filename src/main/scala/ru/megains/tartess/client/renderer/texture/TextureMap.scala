@@ -2,7 +2,7 @@ package ru.megains.tartess.client.renderer.texture
 
 import org.lwjgl.opengl.GL11._
 import org.lwjgl.opengl.GL30._
-import ru.megains.tartess.common.register.GameRegister
+import ru.megains.tartess.client.register.GameRegister
 
 import scala.collection.immutable.HashMap
 

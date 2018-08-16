@@ -3,9 +3,9 @@ package ru.megains.tartess.client.renderer.item
 import java.awt.Color
 
 import ru.megains.tartess.client.Tartess
+import ru.megains.tartess.client.register.GameRegister
 import ru.megains.tartess.common.item.{Item, ItemBlock}
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.common.register.GameRegister
 import ru.megains.tartess.client.renderer.Renderer
 import ru.megains.tartess.client.renderer.font.{FontRender, Fonts}
 import ru.megains.tartess.client.renderer.gui.Gui

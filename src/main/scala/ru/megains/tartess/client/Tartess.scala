@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11
 import ru.megains.tartess.client.entity.EntityPlayerSP
 import ru.megains.tartess.client.network.PlayerControllerMP
 import ru.megains.tartess.client.periphery.{Keyboard, Mouse, Window}
+import ru.megains.tartess.client.register.{Bootstrap, GameRegister}
 import ru.megains.tartess.client.renderer.font.FontRender
 import ru.megains.tartess.client.renderer.gui.base.GuiManager
 import ru.megains.tartess.client.renderer.gui.{GuiInGameMenu, GuiPlayerSelect, GuiTestSet}
@@ -19,7 +20,6 @@ import ru.megains.tartess.common.entity.mob.EntityCube
 import ru.megains.tartess.common.entity.player.{EntityPlayer, GameType}
 import ru.megains.tartess.common.item.ItemBlock
 import ru.megains.tartess.common.item.itemstack.ItemPack
-import ru.megains.tartess.common.register.GameRegister
 import ru.megains.tartess.common.utils._
 import ru.megains.tartess.common.world.World
 import ru.megains.tartess.common.world.data.AnvilSaveFormat
