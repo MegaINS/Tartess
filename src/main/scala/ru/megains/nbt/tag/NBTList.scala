@@ -45,9 +45,8 @@ class  NBTList private[nbt]() extends NBT{
     override def read(input: DataInput): Unit = {
         val length = input.readInt()
         listType = NBTType(input.readByte())
-        var nbt:NBT = null
-        for(i<-0 until length){
-            nbt = NBT(listType)
+        for(_<-0 until length){
+            var nbt = NBT(listType)
             nbt.read(input)
             nbtList += nbt
         }

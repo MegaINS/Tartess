@@ -130,17 +130,17 @@ private[nbt] object NBTBase{
     }
 
     def apply(data:Any): NBTBase[_] = data match {
-        case _:Byte => new NBTByte(data.asInstanceOf[Byte])
-        case _:Boolean => new NBTBoolean(data.asInstanceOf[Boolean])
-        case _:Short => new NBTShort(data.asInstanceOf[Short])
-        case _:Int => new NBTInt(data.asInstanceOf[Int])
-        case _:Long => new NBTLong(data.asInstanceOf[Long])
-        case _:Float => new NBTFloat(data.asInstanceOf[Float])
-        case _:Double => new NBTDouble(data.asInstanceOf[Double])
-        case _:String => new NBTString(data.asInstanceOf[String])
-        case _:Array[Byte] => new NBTArrayByte(data.asInstanceOf[Array[Byte]])
-        case _:Array[Short] => new NBTArrayShort(data.asInstanceOf[Array[Short]])
-        case _:Array[Int] => new NBTArrayInt(data.asInstanceOf[Array[Int]])
+        case byte:Byte => new NBTByte(byte)
+        case bool:Boolean => new NBTBoolean(bool)
+        case short:Short => new NBTShort(short)
+        case int:Int => new NBTInt(int)
+        case long:Long => new NBTLong(long)
+        case float:Float => new NBTFloat(float)
+        case double:Double => new NBTDouble(double)
+        case string:String => new NBTString(string)
+        case byteArray:Array[Byte] => new NBTArrayByte(byteArray)
+        case shortArray:Array[Short] => new NBTArrayShort(shortArray)
+        case intArray:Array[Int] => new NBTArrayInt(intArray)
         case _:BoxedUnit => new NBTEnd()
         case _ => new NBTNull()
     }

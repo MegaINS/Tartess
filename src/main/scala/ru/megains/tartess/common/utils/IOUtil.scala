@@ -9,11 +9,10 @@ import org.lwjgl.BufferUtils
 import org.lwjgl.BufferUtils.createByteBuffer
 
 object IOUtil {
+
     private def resizeBuffer(buffer: ByteBuffer, newCapacity: Int) = {
-        val newBuffer = BufferUtils.createByteBuffer(newCapacity)
         buffer.flip
-        newBuffer.put(buffer)
-        newBuffer
+        BufferUtils.createByteBuffer(newCapacity).put(buffer)
     }
 
 

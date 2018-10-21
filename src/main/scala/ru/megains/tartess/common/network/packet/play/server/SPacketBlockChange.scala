@@ -6,7 +6,7 @@ import ru.megains.tartess.common.network.packet.{Packet, PacketBuffer}
 import ru.megains.tartess.common.register.Blocks
 import ru.megains.tartess.common.world.World
 
-class SPacketBlockChange() extends Packet[INetHandlerPlayClient] {
+class SPacketBlockChange extends Packet[INetHandlerPlayClient] {
 
 
     var block: BlockState = _

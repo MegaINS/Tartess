@@ -68,7 +68,7 @@ class NBTCompound private[nbt]() extends NBT{
 
    private def writeNBT(name: String, data: NBT, output: DataOutput) {
        output.writeByte(data.nbtType.id)
-       if (data.nbtType.id != 0) {
+       if (data.nbtType != NBTType.EnumNBTEnd) {
            output.writeUTF(name)
            data.write(output)
        }
@@ -85,11 +85,10 @@ class NBTCompound private[nbt]() extends NBT{
 
    override val nbtType:NBTType = EnumNBTCompound
    override def write(output: DataOutput): Unit = {
-       nbtMap.foreach(
-           (nbt)=>{
-               writeNBT(nbt._1, nbt._2, output)
-           }
-       )
+       nbtMap.foreach{ case (name,data)=>
+           writeNBT(name, data, output)
+       }
+
        writeNBT("END",NBTBase(),output)
    }
    override def read(input: DataInput): Unit = {

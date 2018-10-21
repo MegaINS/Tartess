@@ -12,9 +12,7 @@ import scala.language.postfixOps
 
 abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
 
-
-
-
+    var id: Int = -1
     var goY:Int =8
     var speed: Float = 24
     var onGround:Boolean = false
@@ -253,5 +251,14 @@ abstract class Entity(val height: Float,val wight: Float,val levelView: Float) {
         compound.setValue("OnGround", onGround)
         writeEntityToNBT(compound)
 
+    }
+}
+
+object Entity{
+
+    private var id = -1
+    def getNextId: Int ={
+        id+=1
+        id
     }
 }

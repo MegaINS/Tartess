@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/tartess3d.iml" filepath="$PROJECT_DIR$/.idea/modules/tartess3d.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tartess.iml" filepath="$PROJECT_DIR$/.idea/modules/Tartess.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/tartess3d-build.iml" filepath="$PROJECT_DIR$/.idea/modules/tartess3d-build.iml" />
     </modules>
   </component>

@@ -28,7 +28,7 @@ object NBTData{
     def readOfStream(input: DataInputStream): NBTData ={
         val nbtData = new NBTData()
         val version = input.readUTF()
-        if(!(VERSION_NBT equals version)){
+        if(VERSION_NBT != version){
             throw new Exception("Version NBT -> "+VERSION_NBT +", file -> "+ version)
         }
         nbtData.read(input)

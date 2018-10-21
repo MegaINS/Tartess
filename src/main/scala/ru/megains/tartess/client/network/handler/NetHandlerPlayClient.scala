@@ -22,7 +22,6 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
 
 
     def handleHeldItemChange(packetIn: SPacketHeldItemChange): Unit = {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
         if (InventoryPlayer.isHotBar(packetIn.heldItemHotbarIndex)) this.gameController.player.inventory.stackSelect = packetIn.heldItemHotbarIndex
     }
 
@@ -35,7 +34,6 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
     }
 
     override def handleJoinGame(packetIn: SPacketJoinGame): Unit = {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
 
         gameController.playerController = new PlayerControllerMP(gameController, this)
         clientWorldController = new WorldClient(this)
@@ -51,7 +49,6 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
 
     override def handlePlayerPosLook(packetIn: SPacketPlayerPosLook): Unit = {
 
-        //PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
         val entityplayer: EntityPlayer = gameController.player
         var d0: Float = packetIn.x
         var d1: Float = packetIn.y
@@ -80,7 +77,6 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
     }
 
     def handleChunkData(packetIn: SPacketChunkData): Unit = {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
 
         clientWorldController.doPreChunk(packetIn.position, loadChunk = true)
         if(!packetIn.chunkVoid){
@@ -96,13 +92,11 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
 
 
     def handleBlockChange(packetIn: SPacketBlockChange) {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
         clientWorldController.invalidateRegionAndSetBlock(packetIn.block)
 
     }
 
     def handleMultiBlockChange(packetIn: SPacketMultiBlockChange) {
-      //  PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
         for (blockData <- packetIn.changedBlocks) {
             clientWorldController.invalidateRegionAndSetBlock(blockData)
         }
@@ -126,7 +120,6 @@ class NetHandlerPlayClient(gameController: Tartess, previousScreen: GuiMenu, val
     }
 
     override def handlePlayerListItem(packetIn: SPacketPlayerListItem): Unit = {
-       // PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, gameController)
 
     }
 
